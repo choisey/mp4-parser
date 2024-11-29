@@ -7,15 +7,15 @@
 #include <assert.h>
 #include <stdio.h>
 
-MP4Segment::MP4Segment()
+mp4_segment::mp4_segment()
 {
 }
 
-MP4Segment::~MP4Segment()
+mp4_segment::~mp4_segment()
 {
 }
 
-bool MP4Segment::mdia_segment_time_and_sample_range(
+bool mp4_segment::mdia_segment_time_and_sample_range(
 		std::shared_ptr<mp4_abstract_box> box, uint32_t timescale,
 		std::pair<uint64_t, uint64_t> segment_time_target_range,
 		std::pair<uint64_t, uint64_t>& segment_time_range,
@@ -201,7 +201,7 @@ bool MP4Segment::mdia_segment_time_and_sample_range(
 	return true;
 }
 
-bool MP4Segment::sample_to_chunk(
+bool mp4_segment::sample_to_chunk(
 		std::shared_ptr<mp4_abstract_box> box,
 		std::pair<uint32_t, uint32_t> ss,
 		std::vector<Chunk>& chunks)
@@ -302,7 +302,7 @@ bool MP4Segment::sample_to_chunk(
 	return !chunks.empty() ? true : false;
 }
 
-bool MP4Segment::minf_divide_samples_and_chunks(
+bool mp4_segment::minf_divide_samples_and_chunks(
 		std::shared_ptr<mp4_abstract_box> minf,
 		std::pair<uint32_t, uint32_t> ss,
 		const std::vector<Chunk>& chunks,
@@ -595,7 +595,7 @@ bool MP4Segment::minf_divide_samples_and_chunks(
 	return true;
 }
 
-bool MP4Segment::divide(
+bool mp4_segment::divide(
 		std::shared_ptr<mp4_abstract_box> minf,
 		uint32_t media_timescale,
 		std::pair<uint64_t, uint64_t> segment_time_target_range,
@@ -639,7 +639,7 @@ bool MP4Segment::divide(
 }
 
 // create/update edts
-void MP4Segment::update(
+void mp4_segment::update(
 		std::shared_ptr<mp4_abstract_box> trak,
 		uint32_t movie_timescale,
 		uint32_t media_timescale,
@@ -709,7 +709,7 @@ void MP4Segment::update(
 }
 
 // update mdat
-void MP4Segment::update(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_segment::update(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 
@@ -852,5 +852,5 @@ void MP4Segment::update(std::shared_ptr<mp4_abstract_box> mp4)
 	// to make sure mdat is located at the end of the file.
 	new_mdat->data().chunks = chunks;
 	new_mdat->data().byte_ranges = byte_ranges;
-	mp4->addChild(new_mdat);
+	mp4->add_child(new_mdat);
 }

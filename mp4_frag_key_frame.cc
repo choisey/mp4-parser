@@ -6,18 +6,18 @@
 //#include "mp4.h"
 #include <assert.h>
 
-// MP4FragKeyFrameVisitor
+// mp4_frag_key_frame_visitor
 
-MP4FragKeyFrame::MP4FragKeyFrameVisitor::MP4FragKeyFrameVisitor()
+mp4_frag_key_frame::mp4_frag_key_frame_visitor::mp4_frag_key_frame_visitor()
 	: _mdat_size(0)
 {
 }
 
-MP4FragKeyFrame::MP4FragKeyFrameVisitor::~MP4FragKeyFrameVisitor()
+mp4_frag_key_frame::mp4_frag_key_frame_visitor::~mp4_frag_key_frame_visitor()
 {
 }
 
-void MP4FragKeyFrame::MP4FragKeyFrameVisitor::visit(BoxHead& head, TrackRunBox& trun)
+void mp4_frag_key_frame::mp4_frag_key_frame_visitor::visit(BoxHead& head, TrackRunBox& trun)
 {
 	if ( 1 < trun.samples.size() ) {
 		trun.samples.resize(1);
@@ -25,7 +25,7 @@ void MP4FragKeyFrame::MP4FragKeyFrameVisitor::visit(BoxHead& head, TrackRunBox& 
 	}
 }
 
-void MP4FragKeyFrame::MP4FragKeyFrameVisitor::visit(BoxHead& head, MediaDataBox& mdat)
+void mp4_frag_key_frame::mp4_frag_key_frame_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 	if ( 0 != _mdat_size ) {
 		mdat.byte_ranges.clear();
@@ -35,20 +35,20 @@ void MP4FragKeyFrame::MP4FragKeyFrameVisitor::visit(BoxHead& head, MediaDataBox&
 	}
 }
 
-// MP4FragKeyFrame
+// mp4_frag_key_frame
 
-MP4FragKeyFrame::MP4FragKeyFrame()
+mp4_frag_key_frame::mp4_frag_key_frame()
 {
 }
 
-MP4FragKeyFrame::~MP4FragKeyFrame()
+mp4_frag_key_frame::~mp4_frag_key_frame()
 {
 }
 
-void MP4FragKeyFrame::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_frag_key_frame::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 
-	MP4FragKeyFrameVisitor v;
+	mp4_frag_key_frame_visitor v;
 	mp4->accept(&v);
 }

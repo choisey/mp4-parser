@@ -5,17 +5,17 @@
 #include "mp4_dump.h"
 #include <stdio.h>
 
-// MP4DumpVisitor
+// mp4_dump_visitor
 
-MP4Dump::MP4DumpVisitor::MP4DumpVisitor()
+mp4_dump::mp4_dump_visitor::mp4_dump_visitor()
 {
 }
 
-MP4Dump::MP4DumpVisitor::~MP4DumpVisitor()
+mp4_dump::mp4_dump_visitor::~mp4_dump_visitor()
 {
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	switch ( head.boxtype ) {
 		case MP4FILE:
@@ -47,7 +47,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<m
 	_pathvector.pop_back();
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, FileTypeBox& ftyp)
 {
 	printf("%sftyp:%lu/%lu major_brand=%s, minor_version=%s, compatible_brands=",
 			_pathvector.back().c_str(), head.offset, head.boxsize,
@@ -60,7 +60,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
 	printf("\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 {
 	printf("%smvhd:%lu/%lu creation_time=%lu, modification_time=%lu, timescale=%u, duration=%lu, rate=0x0%x, volume=0x0%x, matrix={ ",
 			_pathvector.back().c_str(), head.offset, head.boxsize,
@@ -73,7 +73,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 	printf(" }, next_track_ID=%u\n", mvhd.next_track_ID);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MovieExtendsHeaderBox& mhed)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, MovieExtendsHeaderBox& mhed)
 {
 	printf("%smhev:%lu/%lu fragment_duration=%lu\n",
 			_pathvector.back().c_str(),
@@ -81,7 +81,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MovieExtendsHeaderBox& mhed)
 			mhed.fragment_duration);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 {
 	printf("%stkhd:%lu/%lu creation_time=%lu, modification_time=%lu, track_ID=%u, duration=%lu, volume=0x0%x, matrix={ ",
 			_pathvector.back().c_str(), head.offset, head.boxsize,
@@ -94,7 +94,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 	printf(" }, width=%u, height=%u\n", tkhd.width, tkhd.height);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 {
 	printf("%smdhd:%lu/%lu creation_time=%lu, modification_time=%lu, timescale=%u, duration=%lu, language=%c%c%c\n",
 			_pathvector.back().c_str(), head.offset, head.boxsize,
@@ -102,7 +102,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 			mdhd.language[0], mdhd.language[1], mdhd.language[2]);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, HandlerBox& hdlr)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, HandlerBox& hdlr)
 {
 	printf("%shdlr:%lu/%lu handler_type=%c%c%c%c, name=%s\n",
 			_pathvector.back().c_str(), head.offset, head.boxsize,
@@ -114,28 +114,28 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, HandlerBox& hdlr)
 			hdlr.name.c_str());
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 {
 	printf("%svmhd:%lu/%lu graphicsmode=%u, opcolor[]={ %u, %u, %u }\n",
 			_pathvector.back().c_str(), head.offset, head.boxsize,
 			vmhd.graphicsmode, vmhd.opcolor[0], vmhd.opcolor[1], vmhd.opcolor[2]);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
 {
 	printf("%ssmhd:%lu/%lu balance=%u\n",
 			_pathvector.back().c_str(), head.offset, head.boxsize,
 			smhd.balance);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 {
 	printf("%ssmhd:%lu/%lu maxPDUsize=%u, avgPDUsize=%u, maxbitrate=%u, avgbitrate=%u\n",
 			_pathvector.back().c_str(), head.offset, head.boxsize,
 			hmhd.maxPDUsize, hmhd.avgPDUsize, hmhd.maxbitrate, hmhd.avgbitrate);
 }
 
-//void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleDescriptionBox::VisualSampleEntry& sd)
+//void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SampleDescriptionBox::VisualSampleEntry& sd)
 //{
 //	std::string compressorname;
 //	for ( size_t i = 0; i < sizeof(sd.compressorname); i++ ) {
@@ -178,7 +178,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	}
 //}
 //
-//void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleDescriptionBox::AudioSampleEntry& sd)
+//void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SampleDescriptionBox::AudioSampleEntry& sd)
 //{
 //	printf("%s%c%c%c%c:%lu/%lu ",
 //			_pathvector.back().c_str(),
@@ -214,7 +214,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	}
 //}
 //
-//void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleDescriptionBox::HintSampleEntry& sd)
+//void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SampleDescriptionBox::HintSampleEntry& sd)
 //{
 //	printf("%s%c%c%c%c:%lu/%lu data_reference_index=%u, data={",
 //			_pathvector.back().c_str(),
@@ -232,7 +232,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	printf(" }\n");
 //}
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 {
 	printf("%sstts:%lu/%lu entry_count=%lu, (sample_count, sample_delta)={ ", _pathvector.back().c_str(), head.offset, head.boxsize, stts.entries.size());
 	int count = 0;
@@ -243,7 +243,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 {
 	printf("%sctts:%lu/%lu entry_count=%lu, (sample_count, sample_offset)={ ", _pathvector.back().c_str(), head.offset, head.boxsize, ctts.entries.size());
 	int count = 0;
@@ -254,7 +254,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 {
 	printf("%sstsc:%lu/%lu entry_count=%lu, (first_chunk, samples_per_chunk, sample_description_index)={ ",
 			_pathvector.back().c_str(), head.offset, head.boxsize, stsc.entries.size());
@@ -266,7 +266,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 {
 	printf("%sstsz:%lu/%lu sample_size=%u, sample_count=%lu, entry_sizes={ ", _pathvector.back().c_str(), head.offset, head.boxsize, stsz.sample_size, stsz.entry_sizes.size());
 	int count = 0;
@@ -277,7 +277,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 {
 	printf("%sstco:%lu/%lu entry_count=%lu, chunk_offsets={ ", _pathvector.back().c_str(), head.offset, head.boxsize, stco.chunk_offsets.size());
 	int count = 0;
@@ -288,7 +288,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 {
 	printf("%sco64:%lu/%lu entry_count=%lu, chunk_offsets={ ", _pathvector.back().c_str(), head.offset, head.boxsize, co64.chunk_offsets.size());
 	int count = 0;
@@ -299,7 +299,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SyncSampleBox& stss)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SyncSampleBox& stss)
 {
 	printf("%sstss:%lu/%lu entry_count=%lu, sample_numbers={ ", _pathvector.back().c_str(), head.offset, head.boxsize, stss.sample_numbers.size());
 	int count = 0;
@@ -310,7 +310,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SyncSampleBox& stss)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleDependencyTypeBox& sdtp)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SampleDependencyTypeBox& sdtp)
 {
 	printf("%ssdtp:%lu/%lu entry_count=%lu, sample_dependencies={ ", _pathvector.back().c_str(), head.offset, head.boxsize, sdtp.sample_dependencies.size());
 	int count = 0;
@@ -321,7 +321,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SampleDependencyTypeBox& sdtp
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, EditListBox& elst)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, EditListBox& elst)
 {
 	printf("%selst:%lu/%lu entry_count=%lu, (segment_duration, media_time, media_rate_integer, media_rate_fraction)={ ", _pathvector.back().c_str(), head.offset, head.boxsize, elst.entries.size());
 	int count = 0;
@@ -332,7 +332,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, EditListBox& elst)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 {
 	printf("%stfhd:%lu/%lu flag=0x%x, track_id=%u", _pathvector.back().c_str(),
 			head.offset, head.boxsize,
@@ -361,14 +361,14 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 	printf("\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
 {
 	printf("%stfdt:%lu/%lu decode_time=%lu\n", _pathvector.back().c_str(),
 			head.offset, head.boxsize,
 			tfdt.decode_time);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackRunBox& trun)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, TrackRunBox& trun)
 {
 	printf("%strun:%lu/%lu flag=0x%x, ", _pathvector.back().c_str(), head.offset, head.boxsize, head.flag);
 
@@ -451,7 +451,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackRunBox& trun)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SegmentIndexBox& sidx)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 {
 	printf("%ssidx:%lu/%lu reference_id=%u, timescale=%u, earliest_presentation_time=%lu, first_offset=%lu, entry_count=%lu, (reference_type, reference_size, subsequent_duration, contains_SAP, SAP_delta_time)={ ",
 			_pathvector.back().c_str(),
@@ -465,7 +465,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
 {
 	printf("%smfhd:%lu/%lu sequence_number=%u\n",
 			_pathvector.back().c_str(),
@@ -473,7 +473,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
 			mfhd.sequence_number);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackFragmentRandomAccessBox& tfra)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, TrackFragmentRandomAccessBox& tfra)
 {
 	printf("%stfra:%lu/%lu track_ID=%u, (time, moof_offset, #traf, #trun, #sample)={ ",
 			_pathvector.back().c_str(),
@@ -487,7 +487,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackFragmentRandomAccessBox&
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MovieFragmentRandomAccessOffsetBox& mfro)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, MovieFragmentRandomAccessOffsetBox& mfro)
 {
 	printf("%smfro:%lu/%lu size=%u\n",
 			_pathvector.back().c_str(),
@@ -495,7 +495,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MovieFragmentRandomAccessOffs
 			mfro.size);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackExtendsBox& trex)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, TrackExtendsBox& trex)
 {
 	printf("%strex:%lu/%lu track_ID=%u, default_sample_description_index=%u, default_sample_duration=%u, default_sample_size=%u, default_sample_flags=%u\n",
 			_pathvector.back().c_str(),
@@ -507,7 +507,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, TrackExtendsBox& trex)
 			trex.default_sample_flags);
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MediaDataBox& mdat)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 	printf("%smdat:%lu/%lu uri=%s, size=%lu, byte_ranges={ ", _pathvector.back().c_str(), head.offset, head.boxsize, mdat.uri.c_str(), mdat.size());
 
@@ -526,7 +526,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, MediaDataBox& mdat)
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
 {
 	printf("%s%c%c%c%c:%lu/%lu { ",
 			_pathvector.back().c_str(),
@@ -543,7 +543,7 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>
 	printf(" }\n");
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, EmptyBox&)
+void mp4_dump::mp4_dump_visitor::visit(BoxHead& head, EmptyBox&)
 {
 	printf("%s%c%c%c%c:%lu/%lu\n",
 			_pathvector.back().c_str(),
@@ -554,17 +554,17 @@ void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, EmptyBox&)
 			head.offset, head.boxsize);
 }
 
-// MP4Dump
+// mp4_dump
 
-MP4Dump::MP4Dump()
+mp4_dump::mp4_dump()
 {
 }
 
-MP4Dump::~MP4Dump()
+mp4_dump::~mp4_dump()
 {
 }
 
-void MP4Dump::execute(std::shared_ptr<mp4_abstract_box> box)
+void mp4_dump::execute(std::shared_ptr<mp4_abstract_box> box)
 {
 	box->accept(&_v);
 }

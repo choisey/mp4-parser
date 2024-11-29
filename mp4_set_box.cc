@@ -6,9 +6,9 @@
 #include "mp4.h"
 #include <assert.h>
 
-// MP4SetBoxVisitor
+// mp4_set_box_visitor
 
-MP4SetBox::MP4SetBoxVisitor::MP4SetBoxVisitor(const std::vector<std::string>& params)
+mp4_set_box::mp4_set_box_visitor::mp4_set_box_visitor(const std::vector<std::string>& params)
 {
 	for ( auto& param: params ) {
 		size_t eq = param.find_first_of('=');
@@ -31,11 +31,11 @@ MP4SetBox::MP4SetBoxVisitor::MP4SetBoxVisitor(const std::vector<std::string>& pa
 	}
 }
 
-MP4SetBox::MP4SetBoxVisitor::~MP4SetBoxVisitor()
+mp4_set_box::mp4_set_box_visitor::~mp4_set_box_visitor()
 {
 }
 
-void MP4SetBox::MP4SetBoxVisitor::visit(BoxHead& head, MediaDataBox& mdat)
+void mp4_set_box::mp4_set_box_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 	auto si = _substitutions.find("mdat");
 	if ( _substitutions.end() != si ) {
@@ -49,21 +49,21 @@ void MP4SetBox::MP4SetBoxVisitor::visit(BoxHead& head, MediaDataBox& mdat)
 	}
 }
 
-// MP4SetBox
+// mp4_set_box
 
-MP4SetBox::MP4SetBox(const std::vector<std::string>& params)
+mp4_set_box::mp4_set_box(const std::vector<std::string>& params)
 	: _params(params)
 {
 }
 
-MP4SetBox::~MP4SetBox()
+mp4_set_box::~mp4_set_box()
 {
 }
 
-void MP4SetBox::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_set_box::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 
-	MP4SetBoxVisitor v(_params);
+	mp4_set_box_visitor v(_params);
 	mp4->accept(&v);
 }

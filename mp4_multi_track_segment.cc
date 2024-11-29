@@ -9,17 +9,17 @@
 
 #define INC0306664
 
-MP4MultiTrackSegment::MP4MultiTrackSegment(uint64_t time, uint32_t duration)
+mp4_multi_track_segment::mp4_multi_track_segment(uint64_t time, uint32_t duration)
 	: _segment_time_in_millisecond(time)
 	, _segment_duration_in_second(duration)
 {
 }
 
-MP4MultiTrackSegment::~MP4MultiTrackSegment()
+mp4_multi_track_segment::~mp4_multi_track_segment()
 {
 }
 
-bool MP4MultiTrackSegment::mp4_segment_boundary(
+bool mp4_multi_track_segment::mp4_segment_boundary(
 		std::shared_ptr<mp4_abstract_box> box,
 		std::pair<uint64_t, uint64_t>& segment_time_range)
 {
@@ -222,7 +222,7 @@ bool MP4MultiTrackSegment::mp4_segment_boundary(
 	return false;
 }
 
-void MP4MultiTrackSegment::make_empty(std::shared_ptr<mp4_abstract_box> box)
+void mp4_multi_track_segment::make_empty(std::shared_ptr<mp4_abstract_box> box)
 {
 	assert( TRAK == box->head().boxtype );
 
@@ -268,7 +268,7 @@ void MP4MultiTrackSegment::make_empty(std::shared_ptr<mp4_abstract_box> box)
 	}
 }
 
-void MP4MultiTrackSegment::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_multi_track_segment::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 

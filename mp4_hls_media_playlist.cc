@@ -8,18 +8,18 @@
 #include <stdio.h>
 #include <string.h>
 
-// MP4HlsMediaPlaylist
+// mp4_hls_media_playlist
 
-MP4HlsMediaPlaylist::MP4HlsMediaPlaylist(uint32_t track_id, uint32_t duration)
-	: _track_id(track_id), MP4Playlist(duration)
+mp4_hls_media_playlist::mp4_hls_media_playlist(uint32_t track_id, uint32_t duration)
+	: _track_id(track_id), mp4_playlist(duration)
 {
 }
 
-MP4HlsMediaPlaylist::~MP4HlsMediaPlaylist()
+mp4_hls_media_playlist::~mp4_hls_media_playlist()
 {
 }
 
-void MP4HlsMediaPlaylist::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_hls_media_playlist::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	/*
 		+------+       +------+
@@ -121,7 +121,7 @@ void MP4HlsMediaPlaylist::execute(std::shared_ptr<mp4_abstract_box> mp4)
 	}
 }
 
-void MP4HlsMediaPlaylist::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_hls_media_playlist::execute(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
 	assert( mp4files.size() <= 1 );
 

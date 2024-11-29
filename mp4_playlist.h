@@ -6,10 +6,10 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4Playlist : public mp4_abstract_action {
+class mp4_playlist : public mp4_abstract_action {
 	public:
-		MP4Playlist(uint32_t);
-		virtual ~MP4Playlist();
+		mp4_playlist(uint32_t);
+		virtual ~mp4_playlist();
 
 	private:
 		uint32_t _segment_duration_in_second;

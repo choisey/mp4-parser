@@ -72,6 +72,6 @@ class mp4_abstract_box : public mp4_object {
 		virtual void select(const std::type_info&, std::vector<std::shared_ptr<mp4_abstract_box>>&) = 0;
 		virtual bool istype(const std::type_info&) const = 0;
 
-		virtual void addChild(std::shared_ptr<mp4_abstract_box>);
+		virtual void add_child(std::shared_ptr<mp4_abstract_box>);
 		virtual mp4_abstract_box& operator<<(std::shared_ptr<mp4_abstract_box>);
 };

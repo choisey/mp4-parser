@@ -26,6 +26,6 @@ class mp4_container_box : public mp4_abstract_box {
 		virtual bool istype(const std::type_info&) const;
 
 		mp4_container_box& operator=(const mp4_container_box&);
-		virtual void addChild(std::shared_ptr<mp4_abstract_box>);
+		virtual void add_child(std::shared_ptr<mp4_abstract_box>);
 		virtual mp4_abstract_box& operator<<(std::shared_ptr<mp4_abstract_box>);
 };

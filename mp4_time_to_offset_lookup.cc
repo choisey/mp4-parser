@@ -6,17 +6,17 @@
 #include "mp4.h"
 #include <assert.h>
 
-MP4TimeToOffsetLookup::MP4TimeToOffsetLookup(uint32_t track_id, uint64_t time)
+mp4_time_to_offset_lookup::mp4_time_to_offset_lookup(uint32_t track_id, uint64_t time)
 	: _track_id(track_id)
 	, _time(time)
 {
 }
 
-MP4TimeToOffsetLookup::~MP4TimeToOffsetLookup()
+mp4_time_to_offset_lookup::~mp4_time_to_offset_lookup()
 {
 }
 
-void MP4TimeToOffsetLookup::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_time_to_offset_lookup::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 

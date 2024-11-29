@@ -6,12 +6,12 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4InitializationSegment : public mp4_abstract_action {
+class mp4_initialization_segment : public mp4_abstract_action {
 	protected:
-		class MP4InitializationSegmentVisitor : public mp4_visitor {
+		class mp4_initialization_segment_visitor : public mp4_visitor {
 			public:
-				MP4InitializationSegmentVisitor(uint32_t);
-				virtual ~MP4InitializationSegmentVisitor();
+				mp4_initialization_segment_visitor(uint32_t);
+				virtual ~mp4_initialization_segment_visitor();
 
 			protected:
 				uint32_t _track_id;
@@ -33,12 +33,12 @@ class MP4InitializationSegment : public mp4_abstract_action {
 		};
 
 	public:
-		MP4InitializationSegment(uint32_t);
-		virtual ~MP4InitializationSegment();
+		mp4_initialization_segment(uint32_t);
+		virtual ~mp4_initialization_segment();
 
 	protected:
 		uint32_t _track_id;
 
 	public:
-		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
+		virtual void execute(std::vector<std::shared_ptr<mp4_file>>&);
 };

@@ -6,15 +6,15 @@
 
 #include "mp4_playlist.h"
 
-class MP4HlsMediaPlaylist : public MP4Playlist {
+class mp4_hls_media_playlist : public mp4_playlist {
 	public:
-		MP4HlsMediaPlaylist(uint32_t, uint32_t);
-		virtual ~MP4HlsMediaPlaylist();
+		mp4_hls_media_playlist(uint32_t, uint32_t);
+		virtual ~mp4_hls_media_playlist();
 
 	protected:
 		uint32_t _track_id;
 
 	public:
 		virtual void execute(std::shared_ptr<mp4_abstract_box>);
-		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
+		virtual void execute(std::vector<std::shared_ptr<mp4_file>>&);
 };

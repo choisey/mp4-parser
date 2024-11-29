@@ -10,18 +10,18 @@
 
 #define SLASH '/'
 
-// MP4HlsM3u8
+// mp4_hls_m3u8
 
-MP4HlsM3u8::MP4HlsM3u8(uint32_t duration)
-	: MP4Playlist(duration)
+mp4_hls_m3u8::mp4_hls_m3u8(uint32_t duration)
+	: mp4_playlist(duration)
 {
 }
 
-MP4HlsM3u8::~MP4HlsM3u8()
+mp4_hls_m3u8::~mp4_hls_m3u8()
 {
 }
 
-void MP4HlsM3u8::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_hls_m3u8::execute(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
 	/*
 		+------+       +------+

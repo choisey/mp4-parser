@@ -1030,7 +1030,7 @@ void mp4_abstract_action::execute(std::shared_ptr<mp4_abstract_box> box)
 #endif
 }
 
-void mp4_abstract_action::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_abstract_action::execute(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
 	for ( auto mp4: mp4files ) {
 		execute(mp4);

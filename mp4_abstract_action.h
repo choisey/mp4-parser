@@ -100,5 +100,5 @@ class mp4_abstract_action : public mp4_object {
 
 	public:
 		virtual void execute(std::shared_ptr<mp4_abstract_box>);
-		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
+		virtual void execute(std::vector<std::shared_ptr<mp4_file>>&);
 };

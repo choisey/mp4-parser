@@ -6,10 +6,10 @@
 
 #include "mp4_segment.h"
 
-class MP4SingleTrackSegment : public MP4Segment {
+class mp4_single_track_segment : public mp4_segment {
 	public:
-		MP4SingleTrackSegment(uint32_t, uint64_t, uint32_t);
-		virtual ~MP4SingleTrackSegment();
+		mp4_single_track_segment(uint32_t, uint64_t, uint32_t);
+		virtual ~mp4_single_track_segment();
 
 	protected:
 		uint32_t _track_id;

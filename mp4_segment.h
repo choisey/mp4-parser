@@ -6,7 +6,7 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4Segment : public mp4_abstract_action {
+class mp4_segment : public mp4_abstract_action {
 	protected:
 		struct Chunk {
 			uint32_t chunk_number;
@@ -17,8 +17,8 @@ class MP4Segment : public mp4_abstract_action {
 		};
 
 	public:
-		MP4Segment();
-		virtual ~MP4Segment();
+		mp4_segment();
+		virtual ~mp4_segment();
 
 	private:
 		bool mdia_segment_time_and_sample_range(

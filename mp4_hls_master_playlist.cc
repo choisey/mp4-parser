@@ -11,17 +11,17 @@
 #define SLASH '/'
 #define MAX_FILENAME 260
 
-// MP4HlsMasterPlaylist
+// mp4_hls_master_playlist
 
-MP4HlsMasterPlaylist::MP4HlsMasterPlaylist(uint32_t v) : _version(v)
+mp4_hls_master_playlist::mp4_hls_master_playlist(uint32_t v) : _version(v)
 {
 }
 
-MP4HlsMasterPlaylist::~MP4HlsMasterPlaylist()
+mp4_hls_master_playlist::~mp4_hls_master_playlist()
 {
 }
 
-void MP4HlsMasterPlaylist::langCodeToName(
+void mp4_hls_master_playlist::langCodeToName(
 		uint8_t cc1, uint8_t cc2, uint8_t cc3,
 		std::string& lang2,
 		std::string& langName)
@@ -33,7 +33,7 @@ void MP4HlsMasterPlaylist::langCodeToName(
 			lang2, langName);
 }
 
-void MP4HlsMasterPlaylist::langCodeToName(
+void mp4_hls_master_playlist::langCodeToName(
 		uint32_t langCode,
 		std::string& lang2,
 		std::string& langName)
@@ -184,7 +184,7 @@ void MP4HlsMasterPlaylist::langCodeToName(
 	}
 }
 
-void MP4HlsMasterPlaylist::hls3_master_m3u8(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_hls_master_playlist::hls3_master_m3u8(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
 	printf("#EXTM3U\n");
 
@@ -312,7 +312,7 @@ void MP4HlsMasterPlaylist::hls3_master_m3u8(std::vector<std::shared_ptr<MP4File>
 	}
 }
 
-void MP4HlsMasterPlaylist::hls7_master_m3u8(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_hls_master_playlist::hls7_master_m3u8(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
 	printf("#EXTM3U\n");
 	printf("#EXT-X-VERSION:6\n");
@@ -529,7 +529,7 @@ void MP4HlsMasterPlaylist::hls7_master_m3u8(std::vector<std::shared_ptr<MP4File>
 	}
 }
 
-void MP4HlsMasterPlaylist::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_hls_master_playlist::execute(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
 	/*
 		+------+       +------+

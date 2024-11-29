@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 			uint32_t d = std::stoul(argv[++i]);
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4Playlist(d)
+						new mp4_playlist(d)
 						)
 					);
 		}
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
 						// master playlist
 						actions.push_back(
 								std::unique_ptr<mp4_abstract_action>(
-									new MP4HlsMasterPlaylist()
+									new mp4_hls_master_playlist()
 									)
 								);
 						break;
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 						uint32_t d = std::stoul(argv[++i]);
 						actions.push_back(
 								std::unique_ptr<mp4_abstract_action>(
-									new MP4HlsM3u8(d)
+									new mp4_hls_m3u8(d)
 									)
 								);
 						break;
@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 						uint32_t d = std::stoul(argv[++i]);
 						actions.push_back(
 								std::unique_ptr<mp4_abstract_action>(
-									new MP4HlsMediaPlaylist(track_id, d)
+									new mp4_hls_media_playlist(track_id, d)
 									)
 								);
 						break;
@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
 			uint32_t v = ( 1 == cparams ) ? std::stoul(argv[++i]) : 7;
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4HlsMasterPlaylist( v )
+						new mp4_hls_master_playlist( v )
 						)
 					);
 			break;
@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
 			uint32_t d = std::stoul(argv[++i]);
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4DashMpd(d)
+						new mp4_dash_mpd(d)
 						)
 					);
 		}
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
 			uint32_t track_id = std::stoul(argv[++i]);
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4InitializationSegment(track_id)
+						new mp4_initialization_segment(track_id)
 						)
 					);
 		}
@@ -168,12 +168,12 @@ int main(int argc, char* argv[])
 						uint32_t duration = std::stoul(argv[++i]);
 						actions.push_back(
 								std::unique_ptr<mp4_abstract_action>(
-									new MP4SingleTrackSegment(track_id, start, duration)
+									new mp4_single_track_segment(track_id, start, duration)
 									)
 								);
 						actions.push_back(
 								std::unique_ptr<mp4_abstract_action>(
-									new MP4Fragment(start)
+									new mp4_fragment(start)
 									)
 								);
 						break;
@@ -193,7 +193,7 @@ int main(int argc, char* argv[])
 						uint32_t duration = std::stoul(argv[++i]);
 						actions.push_back(
 								std::unique_ptr<mp4_abstract_action>(
-									new MP4MultiTrackSegment(start, duration)
+									new mp4_multi_track_segment(start, duration)
 									)
 								);
 						break;
@@ -206,7 +206,7 @@ int main(int argc, char* argv[])
 						uint32_t duration = std::stoul(argv[++i]);
 						actions.push_back(
 								std::unique_ptr<mp4_abstract_action>(
-									new MP4SingleTrackSegment(track_id, start, duration)
+									new mp4_single_track_segment(track_id, start, duration)
 									)
 								);
 						break;
@@ -226,7 +226,7 @@ int main(int argc, char* argv[])
 						uint32_t duration = std::stoul(argv[++i]);
 						actions.push_back(
 								std::unique_ptr<mp4_abstract_action>(
-									new MP4MultiTrackSegmentBySequenceNumber(seq, duration)
+									new mp4_multi_track_segment_by_sequence_number(seq, duration)
 									)
 								);
 						break;
@@ -248,7 +248,7 @@ int main(int argc, char* argv[])
 
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4TimeToOffsetLoad(argv[++i])
+						new mp4_time_to_offset_load(argv[++i])
 						)
 					);
 		}
@@ -262,7 +262,7 @@ int main(int argc, char* argv[])
 			uint64_t time = std::stoull(argv[++i]);
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4TimeToOffsetLookup(track_id, time)
+						new mp4_time_to_offset_lookup(track_id, time)
 						)
 					);
 		}
@@ -274,7 +274,7 @@ int main(int argc, char* argv[])
 
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4FragKeyFrame()
+						new mp4_frag_key_frame()
 						)
 					);
 		}
@@ -289,7 +289,7 @@ int main(int argc, char* argv[])
 
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4Dump()
+						new mp4_dump()
 						)
 					);
 		}
@@ -301,7 +301,7 @@ int main(int argc, char* argv[])
 
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4MediaStat()
+						new mp4_media_stat()
 						)
 					);
 		}
@@ -319,7 +319,7 @@ int main(int argc, char* argv[])
 
 			actions.push_back(
 					std::unique_ptr<mp4_abstract_action>(
-						new MP4SetBox(params)
+						new mp4_set_box(params)
 						)
 					);
 		}
@@ -368,7 +368,7 @@ int main(int argc, char* argv[])
 
 	// execute commands
 
-	std::vector<std::shared_ptr<MP4File>> mp4files;
+	std::vector<std::shared_ptr<mp4_file>> mp4files;
 
 	for ( auto iter = actions.begin(); iter != actions.end(); iter++ ) {
 		(*iter)->execute(mp4files);

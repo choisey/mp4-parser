@@ -84,7 +84,7 @@ mp4_container_box& mp4_container_box::operator=(const mp4_container_box& b)
 	return *this;
 }
 
-void mp4_container_box::addChild(std::shared_ptr<mp4_abstract_box> box)
+void mp4_container_box::add_child(std::shared_ptr<mp4_abstract_box> box)
 {
 	_boxes.push_back(box);
 }

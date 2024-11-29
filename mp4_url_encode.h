@@ -6,10 +6,10 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4URLEncode {
+class mp4_url_encode {
 	public:
-		MP4URLEncode();
-		virtual ~MP4URLEncode();
+		mp4_url_encode();
+		virtual ~mp4_url_encode();
 
 	protected:
 		std::string url_encode(const std::string&);

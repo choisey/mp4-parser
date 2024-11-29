@@ -9,10 +9,10 @@
 
 class mp4_save : public mp4_abstract_action {
 	protected:
-		class mp4_saveVisitor : public mp4_visitor {
+		class mp4_save_visitor : public mp4_visitor {
 			public:
-				mp4_saveVisitor(FILE*);
-				virtual ~mp4_saveVisitor();
+				mp4_save_visitor(FILE*);
+				virtual ~mp4_save_visitor();
 
 			private:
 				FILE* _fp;

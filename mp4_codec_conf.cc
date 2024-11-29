@@ -10,18 +10,18 @@
 // VisualSampleEntry is SampleEntry + 70 bytes
 #define STSD_VISUALSAMPLEENTRY_SIZE	( 8 + 70 )
 
-// MP4CodecConf
+// mp4_codec_conf
 
-MP4CodecConf::MP4CodecConf()
+mp4_codec_conf::mp4_codec_conf()
 {
 }
 
-MP4CodecConf::~MP4CodecConf()
+mp4_codec_conf::~mp4_codec_conf()
 {
 }
 
 // codec info
-bool MP4CodecConf::decoder_conf_string(std::shared_ptr<mp4_abstract_box> minf, std::string& codecs)
+bool mp4_codec_conf::decoder_conf_string(std::shared_ptr<mp4_abstract_box> minf, std::string& codecs)
 {
 	assert( MINF == minf->head().boxtype);
 

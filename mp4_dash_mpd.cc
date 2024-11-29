@@ -17,18 +17,18 @@
 #define SLASH '/'
 #define MAX_FILENAME 260
 
-// MP4DashMpd
+// mp4_dash_mpd
 
-MP4DashMpd::MP4DashMpd(uint32_t duration)
-	: MP4Playlist(duration)
+mp4_dash_mpd::mp4_dash_mpd(uint32_t duration)
+	: mp4_playlist(duration)
 {
 }
 
-MP4DashMpd::~MP4DashMpd()
+mp4_dash_mpd::~mp4_dash_mpd()
 {
 }
 
-void MP4DashMpd::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_dash_mpd::execute(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
 	/*
 		+------+       +------+

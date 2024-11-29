@@ -6,10 +6,10 @@
 
 #include "mp4_container_box.h"
 
-class MP4File : public mp4_container_box {
+class mp4_file : public mp4_container_box {
 	public:
-		MP4File(const std::string&);
-		virtual ~MP4File();
+		mp4_file(const std::string&);
+		virtual ~mp4_file();
 
 	protected:
 		std::string _path;

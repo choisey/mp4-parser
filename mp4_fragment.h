@@ -6,12 +6,12 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4Fragment : public mp4_abstract_action {
+class mp4_fragment : public mp4_abstract_action {
 	protected:
-		class MP4FragmentVisitor : public mp4_visitor {
+		class mp4_fragment_visitor : public mp4_visitor {
 			public:
-				MP4FragmentVisitor(uint64_t);
-				virtual ~MP4FragmentVisitor();
+				mp4_fragment_visitor(uint64_t);
+				virtual ~mp4_fragment_visitor();
 
 			protected:
 				uint64_t _decode_time;
@@ -21,8 +21,8 @@ class MP4Fragment : public mp4_abstract_action {
 		};
 
 	public:
-		MP4Fragment(uint64_t);
-		virtual ~MP4Fragment();
+		mp4_fragment(uint64_t);
+		virtual ~mp4_fragment();
 
 	protected:
 		uint64_t _decode_time;

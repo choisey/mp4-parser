@@ -6,9 +6,9 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4SelectTrack : public mp4_abstract_action {
+class mp4_select_track : public mp4_abstract_action {
 	protected:
-		class MP4SelectTrackVisitor : public mp4_visitor {
+		class mp4_select_track_visitor : public mp4_visitor {
 			public:
 				class SelectStrategy {
 					public:
@@ -45,11 +45,11 @@ class MP4SelectTrack : public mp4_abstract_action {
 				};
 
 			public:
-				MP4SelectTrackVisitor(std::shared_ptr<MP4SelectTrackVisitor::SelectStrategy>);
-				virtual ~MP4SelectTrackVisitor();
+				mp4_select_track_visitor(std::shared_ptr<mp4_select_track_visitor::SelectStrategy>);
+				virtual ~mp4_select_track_visitor();
 
 			protected:
-				std::shared_ptr<MP4SelectTrackVisitor::SelectStrategy> _selector;
+				std::shared_ptr<mp4_select_track_visitor::SelectStrategy> _selector;
 
 			public:
 				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
@@ -58,12 +58,12 @@ class MP4SelectTrack : public mp4_abstract_action {
 		};
 
 	public:
-		MP4SelectTrack(uint32_t);
-		MP4SelectTrack(const char*);
-		virtual ~MP4SelectTrack();
+		mp4_select_track(uint32_t);
+		mp4_select_track(const char*);
+		virtual ~mp4_select_track();
 
 	protected:
-		std::shared_ptr<MP4SelectTrackVisitor::SelectStrategy> _selector;
+		std::shared_ptr<mp4_select_track_visitor::SelectStrategy> _selector;
 
 	public:
 		virtual void execute(std::shared_ptr<mp4_abstract_box>);

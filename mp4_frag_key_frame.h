@@ -6,12 +6,12 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4FragKeyFrame : public mp4_abstract_action {
+class mp4_frag_key_frame : public mp4_abstract_action {
 	protected:
-		class MP4FragKeyFrameVisitor : public mp4_visitor {
+		class mp4_frag_key_frame_visitor : public mp4_visitor {
 			public:
-				MP4FragKeyFrameVisitor();
-				virtual ~MP4FragKeyFrameVisitor();
+				mp4_frag_key_frame_visitor();
+				virtual ~mp4_frag_key_frame_visitor();
 
 			protected:
 				size_t _mdat_size;
@@ -22,8 +22,8 @@ class MP4FragKeyFrame : public mp4_abstract_action {
 		};
 
 	public:
-		MP4FragKeyFrame();
-		virtual ~MP4FragKeyFrame();
+		mp4_frag_key_frame();
+		virtual ~mp4_frag_key_frame();
 
 	public:
 		virtual void execute(std::shared_ptr<mp4_abstract_box>);

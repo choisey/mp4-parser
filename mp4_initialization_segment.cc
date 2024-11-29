@@ -6,18 +6,18 @@
 #include "mp4.h"
 #include <assert.h>
 
-// MP4InitializationSegmentVisitor
+// mp4_initialization_segment_visitor
 
-MP4InitializationSegment::MP4InitializationSegmentVisitor::MP4InitializationSegmentVisitor(uint32_t track_id)
+mp4_initialization_segment::mp4_initialization_segment_visitor::mp4_initialization_segment_visitor(uint32_t track_id)
 	: _track_id(track_id)
 {
 }
 
-MP4InitializationSegment::MP4InitializationSegmentVisitor::~MP4InitializationSegmentVisitor()
+mp4_initialization_segment::mp4_initialization_segment_visitor::~mp4_initialization_segment_visitor()
 {
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	switch ( head.boxtype ) {
 		case MP4FILE:
@@ -66,8 +66,8 @@ void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& h
 				std::shared_ptr<mp4_container_box> mvex = std::make_shared<mp4_container_box>(
 						BoxHead { 0, 0, 0, MVEX, 0, 0 }
 						);
-				mvex->addChild(mehd);
-				mvex->addChild(trex);
+				mvex->add_child(mehd);
+				mvex->add_child(trex);
 
 				std::vector<std::shared_ptr<mp4_abstract_box>> bb;
 
@@ -159,81 +159,81 @@ void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& h
 	}
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, FileTypeBox& ftyp)
 {
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 {
 	mvhd.duration = 0;
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 {
 	tkhd.duration = 0;
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 {
 	mdhd.duration = 0;
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 {
 	stts.entries.clear();
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 {
 	ctts.entries.clear();
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 {
 	stsc.entries.clear();
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 {
 	stsz.sample_size = 0;
 	stsz.entry_sizes.clear();
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 {
 	stco.chunk_offsets.clear();
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 {
 	co64.chunk_offsets.clear();
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, SyncSampleBox& stss)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, SyncSampleBox& stss)
 {
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, MediaDataBox& mdat)
+void mp4_initialization_segment::mp4_initialization_segment_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 }
 
-// MP4InitializationSegment
+// mp4_initialization_segment
 
-MP4InitializationSegment::MP4InitializationSegment(uint32_t track_id)
+mp4_initialization_segment::mp4_initialization_segment(uint32_t track_id)
 	: _track_id(track_id)
 {
 }
 
-MP4InitializationSegment::~MP4InitializationSegment()
+mp4_initialization_segment::~mp4_initialization_segment()
 {
 }
 
-void MP4InitializationSegment::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_initialization_segment::execute(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
 	assert( mp4files.size() <= 1 );
 
 	if ( !mp4files.empty() ) {
-		MP4InitializationSegmentVisitor v(_track_id);
+		mp4_initialization_segment_visitor v(_track_id);
 		mp4files[0]->accept(&v);
 	}
 }

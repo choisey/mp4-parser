@@ -6,12 +6,12 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4SetBox : public mp4_abstract_action {
+class mp4_set_box : public mp4_abstract_action {
 	protected:
-		class MP4SetBoxVisitor : public mp4_visitor {
+		class mp4_set_box_visitor : public mp4_visitor {
 			public:
-				MP4SetBoxVisitor(const std::vector<std::string>& params);
-				virtual ~MP4SetBoxVisitor();
+				mp4_set_box_visitor(const std::vector<std::string>& params);
+				virtual ~mp4_set_box_visitor();
 
 			protected:
 				std::map<std::string, std::vector<std::pair<std::string, std::string>>> _substitutions;
@@ -21,8 +21,8 @@ class MP4SetBox : public mp4_abstract_action {
 		};
 
 	public:
-		MP4SetBox(const std::vector<std::string>&);
-		virtual ~MP4SetBox();
+		mp4_set_box(const std::vector<std::string>&);
+		virtual ~mp4_set_box();
 
 	protected:
 		std::vector<std::string> _params;

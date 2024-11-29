@@ -14,20 +14,20 @@
 #include <assert.h>
 #include <map>
 
-// mp4_loadVisitor
+// mp4_load_visitor
 
-mp4_load::mp4_loadVisitor::mp4_loadVisitor(std::shared_ptr<io_file> f)
+mp4_load::mp4_load_visitor::mp4_load_visitor(std::shared_ptr<io_file> f)
 	: _f(f)
 {
 	assert( _f->is_open() );
 }
 
-mp4_load::mp4_loadVisitor::~mp4_loadVisitor()
+mp4_load::mp4_load_visitor::~mp4_load_visitor()
 {
 	assert( !_f->is_open() );
 }
 
-bool mp4_load::mp4_loadVisitor::readI32(int& i32)
+bool mp4_load::mp4_load_visitor::readI32(int& i32)
 {
 	uint8_t buf[4];
 	if ( _f->read(buf, sizeof(buf)) == sizeof(buf) ) {
@@ -38,7 +38,7 @@ bool mp4_load::mp4_loadVisitor::readI32(int& i32)
 	return false;
 }
 
-bool mp4_load::mp4_loadVisitor::readU8(uint8_t& u8)
+bool mp4_load::mp4_load_visitor::readU8(uint8_t& u8)
 {
 	uint8_t buf[1];
 	if ( _f->read(buf, sizeof(buf)) == sizeof(buf) ) {
@@ -49,7 +49,7 @@ bool mp4_load::mp4_loadVisitor::readU8(uint8_t& u8)
 	return false;
 }
 
-bool mp4_load::mp4_loadVisitor::readU32(uint32_t& u32)
+bool mp4_load::mp4_load_visitor::readU32(uint32_t& u32)
 {
 	uint8_t buf[4];
 	if ( _f->read(buf, sizeof(buf)) == sizeof(buf) ) {
@@ -60,7 +60,7 @@ bool mp4_load::mp4_loadVisitor::readU32(uint32_t& u32)
 	return false;
 }
 
-bool mp4_load::mp4_loadVisitor::readU64(uint64_t& u64)
+bool mp4_load::mp4_load_visitor::readU64(uint64_t& u64)
 {
 	uint8_t buf[8];
 	if ( _f->read(buf, sizeof(buf)) == sizeof(buf) ) {
@@ -71,7 +71,7 @@ bool mp4_load::mp4_loadVisitor::readU64(uint64_t& u64)
 	return false;
 }
 
-bool mp4_load::mp4_loadVisitor::readBoxHead(BoxHead& boxhead)
+bool mp4_load::mp4_load_visitor::readBoxHead(BoxHead& boxhead)
 {
 	assert( _f->is_open() );
 
@@ -161,7 +161,7 @@ bool mp4_load::mp4_loadVisitor::readBoxHead(BoxHead& boxhead)
 	return true;
 }
 
-size_t mp4_load::mp4_loadVisitor::readBox(size_t offset, uint32_t ctype, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _f->is_open() );
 
@@ -791,7 +791,7 @@ size_t mp4_load::mp4_loadVisitor::readBox(size_t offset, uint32_t ctype, std::ve
 	return head.boxsize;
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _f->is_open() );
 
@@ -874,7 +874,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, std::vector<std::shared_ptr
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, FileTypeBox& ftyp)
 {
 	size_t size = head.boxsize - head.boxheadsize;
 	uint8_t buf[size];
@@ -893,7 +893,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 {
 	if ( 1 == head.version ) {
 		uint8_t buf[ mvhd.size(head.version) ];
@@ -943,7 +943,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
 {
 	if ( 1 == head.version ) {
 		uint8_t buf[8];
@@ -963,7 +963,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 {
 	if ( 1 == head.version ) {
 		uint8_t buf[ tkhd.size(head.version) ];
@@ -1011,7 +1011,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 {
 	if ( 1 == head.version ) {
 		uint8_t buf[ mdhd.size(head.version) ];
@@ -1045,7 +1045,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, HandlerBox& hdlr)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, HandlerBox& hdlr)
 {
 	uint8_t buf[ head.boxsize - head.boxheadsize ];
 	if ( _f->read(buf, sizeof(buf)) != sizeof(buf) ) {
@@ -1062,7 +1062,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, HandlerBox& hdlr)
 	_handler_types.push_back(hdlr.handler_type);
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 {
 	uint8_t buf[8];
 	if ( _f->read(buf, sizeof(buf)) != sizeof(buf) ) {
@@ -1074,7 +1074,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 	vmhd.opcolor[2] = U16(buf[6], buf[7]);
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
 {
 	uint8_t buf[4];
 	if ( _f->read(buf, sizeof(buf)) != sizeof(buf) ) {
@@ -1083,7 +1083,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
 	smhd.balance = U16(buf[0], buf[1]);
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 {
 	uint8_t buf[16];
 	if ( _f->read(buf, sizeof(buf)) != sizeof(buf) ) {
@@ -1095,7 +1095,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 	hmhd.avgbitrate = U32(buf[8], buf[9], buf[10], buf[11]);
 }
 
-//void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleDescriptionBox::VisualSampleEntry& sd)
+//void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleDescriptionBox::VisualSampleEntry& sd)
 //{
 //	uint8_t buf[78];
 //	if ( 1 != fread(buf, sizeof(buf), 1, _fp) ) {
@@ -1155,7 +1155,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	assert( cur == head.boxsize );
 //}
 //
-//void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleDescriptionBox::AudioSampleEntry& sd)
+//void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleDescriptionBox::AudioSampleEntry& sd)
 //{
 //	uint8_t buf[28];
 //	if ( 1 != fread(buf, sizeof(buf), 1, _fp) ) {
@@ -1203,7 +1203,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	assert( cur == head.boxsize );
 //}
 //
-//void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleDescriptionBox::HintSampleEntry& sd)
+//void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleDescriptionBox::HintSampleEntry& sd)
 //{
 //	size_t size = head.boxsize - head.boxheadsize;
 //	uint8_t buf[size];
@@ -1213,7 +1213,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	sd.data.assign(buf, buf + size);
 //}
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 {
 	uint32_t entry_count;
 	if ( !readU32(entry_count) ) {
@@ -1231,7 +1231,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 {
 	uint32_t entry_count;
 	if ( !readU32(entry_count) ) {
@@ -1249,7 +1249,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 {
 	uint32_t entry_count;
 	if ( !readU32(entry_count) ) {
@@ -1268,7 +1268,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 {
 	uint8_t buf[8];
 	if ( _f->read(buf, sizeof(buf)) != sizeof(buf) ) {
@@ -1287,7 +1287,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 {
 	uint32_t entry_count;
 	if ( !readU32(entry_count) ) {
@@ -1302,7 +1302,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 {
 	uint32_t entry_count;
 	if ( !readU32(entry_count) ) {
@@ -1317,7 +1317,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SyncSampleBox& stss)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, SyncSampleBox& stss)
 {
 	uint32_t entry_count;
 	if ( !readU32(entry_count) ) {
@@ -1332,7 +1332,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SyncSampleBox& stss)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleDependencyTypeBox& sdtp)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleDependencyTypeBox& sdtp)
 {
 	uint32_t entry_count = ( head.boxsize - head.boxheadsize ) / sizeof(uint8_t);;
 
@@ -1345,7 +1345,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SampleDependencyTypeBox& sd
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, EditListBox& elst)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, EditListBox& elst)
 {
 	uint32_t entry_count;
 	if ( !readU32(entry_count) ) {
@@ -1382,7 +1382,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, EditListBox& elst)
 }
 
 /*
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, DataReferenceBox& dref)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, DataReferenceBox& dref)
 {
 	uint32_t entry_count;
 	if ( !readU32(entry_count) ) {
@@ -1440,7 +1440,7 @@ std::cerr << "DREF" << std::endl;
 }
 */
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 {
 	if ( !readU32(tfhd.track_ID) ) {
 		return;
@@ -1477,7 +1477,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfh
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackRunBox& trun)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackRunBox& trun)
 {
 	uint32_t sample_count;
 	if ( !readU32(sample_count) ) {
@@ -1537,7 +1537,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackRunBox& trun)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SegmentIndexBox& sidx)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 {
 	uint32_t entry_count;
 	if ( 1 == head.version ) {
@@ -1582,21 +1582,21 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
 {
 	if ( !readU32(mfhd.sequence_number) ) {
 		return;
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
 {
 	if ( !readU64(tfdt.decode_time) ) {
 		return;
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackFragmentRandomAccessBox& tfra)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentRandomAccessBox& tfra)
 {
 	if ( !readU32(tfra.track_ID) ) {
 		return;
@@ -1692,14 +1692,14 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackFragmentRandomAccessBo
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MovieFragmentRandomAccessOffsetBox& mfro)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, MovieFragmentRandomAccessOffsetBox& mfro)
 {
 	if ( !readU32(mfro.size) ) {
 		return;
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackExtendsBox& trex)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackExtendsBox& trex)
 {
 	uint8_t buf[20];
 	if ( _f->read(buf, sizeof(buf)) != sizeof(buf) ) {
@@ -1712,7 +1712,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, TrackExtendsBox& trex)
 	trex.default_sample_flags = U32(buf[16], buf[17], buf[18], buf[19]);
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MediaDataBox& mdat)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 	mdat.uri = _f->uri();
 	//mdat.chunks.push_back( {
@@ -1724,7 +1724,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, MediaDataBox& mdat)
 	mdat.chunks.clear();
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
 {
 	size_t size = head.boxsize - head.boxheadsize;
 	if ( 0 < size ) {
@@ -1736,7 +1736,7 @@ void mp4_load::mp4_loadVisitor::visit(BoxHead& head, DataBox<std::vector<uint8_t
 	}
 }
 
-void mp4_load::mp4_loadVisitor::visit(BoxHead& head, EmptyBox&)
+void mp4_load::mp4_load_visitor::visit(BoxHead& head, EmptyBox&)
 {
 }
 
@@ -1759,7 +1759,7 @@ void mp4_load::execute(std::shared_ptr<mp4_abstract_box> box)
 		box->head().boxheadsize = 0;
 		box->head().boxsize = f->size();
 
-		mp4_loadVisitor v(f);
+		mp4_load_visitor v(f);
 		box->accept(&v);
 		f->close();
 	}
@@ -1770,9 +1770,9 @@ void mp4_load::execute(std::shared_ptr<mp4_abstract_box> box)
 #endif
 }
 
-void mp4_load::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_load::execute(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
-	std::shared_ptr<MP4File> mp4 = std::make_shared<MP4File>( _uri );
+	std::shared_ptr<mp4_file> mp4 = std::make_shared<mp4_file>( _uri );
 	execute(mp4);
 	mp4files.push_back( mp4 );
 }

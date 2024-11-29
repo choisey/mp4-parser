@@ -8,16 +8,16 @@
 
 #define SLASH '/'
 
-MP4SequenceToTime::MP4SequenceToTime(uint32_t duration)
-	: MP4Playlist(duration)
+mp4_sequence_to_time::mp4_sequence_to_time(uint32_t duration)
+	: mp4_playlist(duration)
 {
 }
 
-MP4SequenceToTime::~MP4SequenceToTime()
+mp4_sequence_to_time::~mp4_sequence_to_time()
 {
 }
 
-uint64_t MP4SequenceToTime::multi_track_segment_time(std::shared_ptr<mp4_abstract_box> mp4, uint32_t segment_seq)
+uint64_t mp4_sequence_to_time::multi_track_segment_time(std::shared_ptr<mp4_abstract_box> mp4, uint32_t segment_seq)
 {
 	const uint32_t track_precedence[] = {
 		HandlerBox::VIDEO,
@@ -84,7 +84,7 @@ uint64_t MP4SequenceToTime::multi_track_segment_time(std::shared_ptr<mp4_abstrac
 	return 0;
 }
 
-uint64_t MP4SequenceToTime::single_track_segment_time(std::shared_ptr<mp4_abstract_box> mp4, uint32_t track_id, uint32_t segment_seq)
+uint64_t mp4_sequence_to_time::single_track_segment_time(std::shared_ptr<mp4_abstract_box> mp4, uint32_t track_id, uint32_t segment_seq)
 {
 	for ( auto trak: select(mp4, TRAK) ) {
 		const auto& tkhd = select<TrackHeaderBox>(trak);
@@ -141,7 +141,7 @@ uint64_t MP4SequenceToTime::single_track_segment_time(std::shared_ptr<mp4_abstra
 	return 0;
 }
 
-void MP4SequenceToTime::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_sequence_to_time::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	// This is not supposed to be executed.
 	assert( false );

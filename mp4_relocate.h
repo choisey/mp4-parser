@@ -7,12 +7,12 @@
 #include "mp4_abstract_action.h"
 #include <stdio.h>
 
-class MP4Relocate : public mp4_abstract_action {
+class mp4_relocate : public mp4_abstract_action {
 	protected:
-		class MP4RelocateVisitor : public mp4_visitor {
+		class mp4_relocate_visitor : public mp4_visitor {
 			public:
-				MP4RelocateVisitor(size_t);
-				virtual ~MP4RelocateVisitor();
+				mp4_relocate_visitor(size_t);
+				virtual ~mp4_relocate_visitor();
 
 			protected:
 				size_t _offset;
@@ -55,8 +55,8 @@ class MP4Relocate : public mp4_abstract_action {
 		};
 
 	public:
-		MP4Relocate(size_t = 0);
-		virtual ~MP4Relocate();
+		mp4_relocate(size_t = 0);
+		virtual ~mp4_relocate();
 
 	protected:
 		size_t _offset;

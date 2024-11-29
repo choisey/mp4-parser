@@ -6,18 +6,18 @@
 #include "mp4.h"
 #include <assert.h>
 
-MP4SingleTrackSegment::MP4SingleTrackSegment(uint32_t track_id, uint64_t time, uint32_t duration)
+mp4_single_track_segment::mp4_single_track_segment(uint32_t track_id, uint64_t time, uint32_t duration)
 	: _track_id(track_id)
 	, _segment_time_in_timescale(time)
 	, _segment_duration_in_second(duration)
 {
 }
 
-MP4SingleTrackSegment::~MP4SingleTrackSegment()
+mp4_single_track_segment::~mp4_single_track_segment()
 {
 }
 
-void MP4SingleTrackSegment::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_single_track_segment::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 

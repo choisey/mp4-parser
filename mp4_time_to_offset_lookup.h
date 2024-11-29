@@ -6,10 +6,10 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4TimeToOffsetLookup : public mp4_abstract_action {
+class mp4_time_to_offset_lookup : public mp4_abstract_action {
 	public:
-		MP4TimeToOffsetLookup(uint32_t, uint64_t);
-		virtual ~MP4TimeToOffsetLookup();
+		mp4_time_to_offset_lookup(uint32_t, uint64_t);
+		virtual ~mp4_time_to_offset_lookup();
 
 	protected:
 		uint32_t _track_id;

@@ -37,7 +37,7 @@ mp4_abstract_box::~mp4_abstract_box()
 {
 }
 
-void mp4_abstract_box::addChild(std::shared_ptr<mp4_abstract_box> box)
+void mp4_abstract_box::add_child(std::shared_ptr<mp4_abstract_box> box)
 {
 	assert( false );
 }

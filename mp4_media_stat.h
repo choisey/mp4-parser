@@ -6,10 +6,10 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4MediaStat : public mp4_abstract_action {
+class mp4_media_stat : public mp4_abstract_action {
 	public:
-		MP4MediaStat();
-		virtual ~MP4MediaStat();
+		mp4_media_stat();
+		virtual ~mp4_media_stat();
 
 	protected:
 		struct Track {

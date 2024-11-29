@@ -7,10 +7,10 @@
 #include "mp4_multi_track_segment.h"
 #include "mp4_playlist.h"
 
-class MP4SequenceToTime : public MP4Playlist {
+class mp4_sequence_to_time : public mp4_playlist {
 	public:
-		MP4SequenceToTime(uint32_t);
-		virtual ~MP4SequenceToTime();
+		mp4_sequence_to_time(uint32_t);
+		virtual ~mp4_sequence_to_time();
 
 	public:
 		virtual void execute(std::shared_ptr<mp4_abstract_box>);

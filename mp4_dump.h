@@ -6,12 +6,12 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4Dump : public mp4_abstract_action {
+class mp4_dump : public mp4_abstract_action {
 	protected:
-		class MP4DumpVisitor : public mp4_visitor {
+		class mp4_dump_visitor : public mp4_visitor {
 			public:
-				MP4DumpVisitor();
-				virtual ~MP4DumpVisitor();
+				mp4_dump_visitor();
+				virtual ~mp4_dump_visitor();
 
 			private:
 				std::vector<std::string> _pathvector;
@@ -53,11 +53,11 @@ class MP4Dump : public mp4_abstract_action {
 		};
 
 	public:
-		MP4Dump();
-		virtual ~MP4Dump();
+		mp4_dump();
+		virtual ~mp4_dump();
 
 	protected:
-		MP4DumpVisitor _v;
+		mp4_dump_visitor _v;
 
 	public:
 		virtual void execute(std::shared_ptr<mp4_abstract_box>);

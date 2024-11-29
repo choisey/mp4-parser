@@ -14,18 +14,18 @@
 #define TRUN_SAMPLE_FLAGS_PRESENT	0x000400
 #define TRUN_SAMPLE_COMPOSITION_TIME_OFFSETS_PRESENT 0x000800
 
-// MP4FragmentVisitor
+// mp4_fragment_visitor
 
-MP4Fragment::MP4FragmentVisitor::MP4FragmentVisitor(uint64_t decode_time)
+mp4_fragment::mp4_fragment_visitor::mp4_fragment_visitor(uint64_t decode_time)
 	: _decode_time(decode_time)
 {
 }
 
-MP4Fragment::MP4FragmentVisitor::~MP4FragmentVisitor()
+mp4_fragment::mp4_fragment_visitor::~mp4_fragment_visitor()
 {
 }
 
-void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_fragment::mp4_fragment_visitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( MP4FILE == head.boxtype );
 
@@ -67,7 +67,7 @@ void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shar
 							BoxHead { 0, 0, 0, MFHD, 0, 0 }
 							);
 					mfhd->data().sequence_number = 1;
-					moof->addChild(mfhd);
+					moof->add_child(mfhd);
 
 					// assert in _DEBUG
 					// fmp4 with multiple moof in NDEBUG
@@ -186,10 +186,10 @@ void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shar
 								BoxHead { 0, 0, 0, TRAF, 0, 0 }
 								);
 
-						traf->addChild(tfhd);
-						traf->addChild(tfdt);
-						traf->addChild(trun);
-						moof->addChild(traf);
+						traf->add_child(tfhd);
+						traf->add_child(tfdt);
+						traf->add_child(trun);
+						moof->add_child(traf);
 
 						Relocate(moof);
 
@@ -245,20 +245,20 @@ void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shar
 	boxes = fmp4_boxes;
 }
 
-// MP4Fragment
+// mp4_fragment
 
-MP4Fragment::MP4Fragment(uint64_t time)
+mp4_fragment::mp4_fragment(uint64_t time)
 	: _decode_time(time)
 {
 }
 
-MP4Fragment::~MP4Fragment()
+mp4_fragment::~mp4_fragment()
 {
 }
 
-void MP4Fragment::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_fragment::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
-	MP4FragmentVisitor v(_decode_time);
+	mp4_fragment_visitor v(_decode_time);
 	mp4->accept(&v);
 }

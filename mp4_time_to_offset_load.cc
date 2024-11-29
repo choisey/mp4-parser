@@ -12,18 +12,18 @@
 
 #define MFRO_OFFSET	-16
 
-// MP4TimeToOffsetLoadVisitor
+// mp4_time_to_offset_load_visitor
 
-MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::MP4TimeToOffsetLoadVisitor(std::shared_ptr<io_file> f)
-	: mp4_loadVisitor(f)
+mp4_time_to_offset_load::mp4_time_to_offset_load_visitor::mp4_time_to_offset_load_visitor(std::shared_ptr<io_file> f)
+	: mp4_load_visitor(f)
 {
 }
 
-MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::~MP4TimeToOffsetLoadVisitor()
+mp4_time_to_offset_load::mp4_time_to_offset_load_visitor::~mp4_time_to_offset_load_visitor()
 {
 }
 
-void MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_time_to_offset_load::mp4_time_to_offset_load_visitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _f->is_open() );
 
@@ -64,22 +64,22 @@ void MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::visit(BoxHead& head, std::
 	}
 	else {
 		assert( 0 != head.offset );
-		mp4_loadVisitor::visit(head, boxes);
+		mp4_load_visitor::visit(head, boxes);
 	}
 }
 
-// MP4TimeToOffsetLoad
+// mp4_time_to_offset_load
 
-MP4TimeToOffsetLoad::MP4TimeToOffsetLoad(const char* uri)
+mp4_time_to_offset_load::mp4_time_to_offset_load(const char* uri)
 	: mp4_load(uri)
 {
 }
 
-MP4TimeToOffsetLoad::~MP4TimeToOffsetLoad()
+mp4_time_to_offset_load::~mp4_time_to_offset_load()
 {
 }
 
-void MP4TimeToOffsetLoad::execute(std::shared_ptr<mp4_abstract_box> box)
+void mp4_time_to_offset_load::execute(std::shared_ptr<mp4_abstract_box> box)
 {
 	auto f = io::instance()->open( _uri );
 	if ( f->is_open() ) {
@@ -87,7 +87,7 @@ void MP4TimeToOffsetLoad::execute(std::shared_ptr<mp4_abstract_box> box)
 		box->head().boxheadsize = 0;
 		box->head().boxsize = f->size();
 
-		MP4TimeToOffsetLoadVisitor v(f);
+		mp4_time_to_offset_load_visitor v(f);
 		box->accept(&v);
 		f->close();
 	}
@@ -98,9 +98,9 @@ void MP4TimeToOffsetLoad::execute(std::shared_ptr<mp4_abstract_box> box)
 #endif
 }
 
-void MP4TimeToOffsetLoad::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_time_to_offset_load::execute(std::vector<std::shared_ptr<mp4_file>>& mp4files)
 {
-	std::shared_ptr<MP4File> mp4 = std::make_shared<MP4File>( _uri );
+	std::shared_ptr<mp4_file> mp4 = std::make_shared<mp4_file>( _uri );
 	execute(mp4);
 	mp4files.push_back( mp4 );
 }

@@ -9,17 +9,17 @@
 #include <string.h>
 #include <typeinfo>
 
-// MP4MediaStat
+// mp4_media_stat
 
-MP4MediaStat::MP4MediaStat()
+mp4_media_stat::mp4_media_stat()
 {
 }
 
-MP4MediaStat::~MP4MediaStat()
+mp4_media_stat::~mp4_media_stat()
 {
 }
 
-void MP4MediaStat::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_media_stat::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	std::vector<Track> tracks;
 	for ( auto trak: select(mp4, TRAK) ) {

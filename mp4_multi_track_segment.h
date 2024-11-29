@@ -6,10 +6,10 @@
 
 #include "mp4_segment.h"
 
-class MP4MultiTrackSegment : public MP4Segment {
+class mp4_multi_track_segment : public mp4_segment {
 	public:
-		MP4MultiTrackSegment(uint64_t, uint32_t);
-		virtual ~MP4MultiTrackSegment();
+		mp4_multi_track_segment(uint64_t, uint32_t);
+		virtual ~mp4_multi_track_segment();
 
 	protected:
 		uint64_t _segment_time_in_millisecond;

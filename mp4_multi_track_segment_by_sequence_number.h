@@ -7,10 +7,10 @@
 #include "mp4_multi_track_segment.h"
 #include "mp4_playlist.h"
 
-class MP4MultiTrackSegmentBySequenceNumber : public MP4MultiTrackSegment {
+class mp4_multi_track_segment_by_sequence_number : public mp4_multi_track_segment {
 	public:
-		MP4MultiTrackSegmentBySequenceNumber(uint32_t, uint32_t);
-		virtual ~MP4MultiTrackSegmentBySequenceNumber();
+		mp4_multi_track_segment_by_sequence_number(uint32_t, uint32_t);
+		virtual ~mp4_multi_track_segment_by_sequence_number();
 
 	protected:
 		uint32_t _segment_sequence;

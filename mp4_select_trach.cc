@@ -7,25 +7,25 @@
 #include <assert.h>
 #include <string.h>
 
-MP4SelectTrack::MP4SelectTrackVisitor::SelectStrategy::SelectStrategy()
+mp4_select_track::mp4_select_track_visitor::SelectStrategy::SelectStrategy()
 {
 }
 
-MP4SelectTrack::MP4SelectTrackVisitor::SelectStrategy::~SelectStrategy()
+mp4_select_track::mp4_select_track_visitor::SelectStrategy::~SelectStrategy()
 {
 }
 
-MP4SelectTrack::MP4SelectTrackVisitor::SelectByNumber::SelectByNumber(uint32_t track_id)
+mp4_select_track::mp4_select_track_visitor::SelectByNumber::SelectByNumber(uint32_t track_id)
 	: _track_id(track_id)
 {
 	 _track_id = track_id;
 }
 
-MP4SelectTrack::MP4SelectTrackVisitor::SelectByNumber::~SelectByNumber()
+mp4_select_track::mp4_select_track_visitor::SelectByNumber::~SelectByNumber()
 {
 }
 
-bool MP4SelectTrack::MP4SelectTrackVisitor::SelectByNumber::is_selected(std::shared_ptr<mp4_abstract_box> trak)
+bool mp4_select_track::mp4_select_track_visitor::SelectByNumber::is_selected(std::shared_ptr<mp4_abstract_box> trak)
 {
 	const auto& tkhd = select<TrackHeaderBox>(trak);
 	assert( 1 == tkhd.size() );
@@ -33,17 +33,17 @@ bool MP4SelectTrack::MP4SelectTrackVisitor::SelectByNumber::is_selected(std::sha
 	return ( tkhd[0]->data().track_ID == _track_id ) ? true : false;
 }
 
-MP4SelectTrack::MP4SelectTrackVisitor::SelectByMedia::SelectByMedia(const char* media_type)
+mp4_select_track::mp4_select_track_visitor::SelectByMedia::SelectByMedia(const char* media_type)
 	: _media_type(media_type)
 	, _selected(0)
 {
 }
 
-MP4SelectTrack::MP4SelectTrackVisitor::SelectByMedia::~SelectByMedia()
+mp4_select_track::mp4_select_track_visitor::SelectByMedia::~SelectByMedia()
 {
 }
 
-bool MP4SelectTrack::MP4SelectTrackVisitor::SelectByMedia::is_selected(std::shared_ptr<mp4_abstract_box> trak)
+bool mp4_select_track::mp4_select_track_visitor::SelectByMedia::is_selected(std::shared_ptr<mp4_abstract_box> trak)
 {
 	const auto& hdlr = select<HandlerBox>(trak);
 	assert( 1 == hdlr.size() );
@@ -56,18 +56,18 @@ bool MP4SelectTrack::MP4SelectTrackVisitor::SelectByMedia::is_selected(std::shar
 	return false;
 }
 
-// MP4SelectTrackVisitor
+// mp4_select_track_visitor
 
-MP4SelectTrack::MP4SelectTrackVisitor::MP4SelectTrackVisitor(std::shared_ptr<MP4SelectTrack::MP4SelectTrackVisitor::SelectStrategy> selector)
+mp4_select_track::mp4_select_track_visitor::mp4_select_track_visitor(std::shared_ptr<mp4_select_track::mp4_select_track_visitor::SelectStrategy> selector)
 	: _selector(selector)
 {
 }
 
-MP4SelectTrack::MP4SelectTrackVisitor::~MP4SelectTrackVisitor()
+mp4_select_track::mp4_select_track_visitor::~mp4_select_track_visitor()
 {
 }
 
-void MP4SelectTrack::MP4SelectTrackVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_select_track::mp4_select_track_visitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	switch ( head.boxtype ) {
 		// moov
@@ -94,33 +94,33 @@ void MP4SelectTrack::MP4SelectTrackVisitor::visit(BoxHead& head, std::vector<std
 	}
 }
 
-void MP4SelectTrack::MP4SelectTrackVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
+void mp4_select_track::mp4_select_track_visitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 {
 	mvhd.next_track_ID = 2;
 }
 
-void MP4SelectTrack::MP4SelectTrackVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
+void mp4_select_track::mp4_select_track_visitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 {
 	tkhd.track_ID = 1;
 }
 
-// MP4SelectTrack
+// mp4_select_track
 
-MP4SelectTrack::MP4SelectTrack(uint32_t track_id)
+mp4_select_track::mp4_select_track(uint32_t track_id)
 {
-	_selector = std::make_shared<MP4SelectTrack::MP4SelectTrackVisitor::SelectByNumber>(track_id);
+	_selector = std::make_shared<mp4_select_track::mp4_select_track_visitor::SelectByNumber>(track_id);
 }
 
-MP4SelectTrack::MP4SelectTrack(const char* media_type)
+mp4_select_track::mp4_select_track(const char* media_type)
 {
-	_selector = std::make_shared<MP4SelectTrack::MP4SelectTrackVisitor::SelectByMedia>(media_type);
+	_selector = std::make_shared<mp4_select_track::mp4_select_track_visitor::SelectByMedia>(media_type);
 }
 
-MP4SelectTrack::~MP4SelectTrack()
+mp4_select_track::~mp4_select_track()
 {
 }
 
-void MP4SelectTrack::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_select_track::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 
@@ -136,6 +136,6 @@ void MP4SelectTrack::execute(std::shared_ptr<mp4_abstract_box> mp4)
 	//			          +-- | MDIA |
 	//			              +------+
 
-	MP4SelectTrackVisitor v(_selector);
+	mp4_select_track_visitor v(_selector);
 	mp4->accept(&v);
 }

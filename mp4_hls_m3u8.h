@@ -7,11 +7,11 @@
 #include "mp4_playlist.h"
 #include "mp4_url_encode.h"
 
-class MP4HlsM3u8 : public MP4Playlist, public MP4URLEncode {
+class mp4_hls_m3u8 : public mp4_playlist, public mp4_url_encode {
 	public:
-		MP4HlsM3u8(uint32_t);
-		virtual ~MP4HlsM3u8();
+		mp4_hls_m3u8(uint32_t);
+		virtual ~mp4_hls_m3u8();
 
 	public:
-		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
+		virtual void execute(std::vector<std::shared_ptr<mp4_file>>&);
 };

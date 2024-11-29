@@ -10,10 +10,10 @@
 
 class mp4_load : public mp4_abstract_action {
 	protected:
-		class mp4_loadVisitor : public mp4_visitor {
+		class mp4_load_visitor : public mp4_visitor {
 			public:
-				mp4_loadVisitor(std::shared_ptr<io_file>);
-				virtual ~mp4_loadVisitor();
+				mp4_load_visitor(std::shared_ptr<io_file>);
+				virtual ~mp4_load_visitor();
 
 			protected:
 				std::shared_ptr<io_file> _f;
@@ -121,5 +121,5 @@ class mp4_load : public mp4_abstract_action {
 
 	public:
 		virtual void execute(std::shared_ptr<mp4_abstract_box>);
-		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
+		virtual void execute(std::vector<std::shared_ptr<mp4_file>>&);
 };

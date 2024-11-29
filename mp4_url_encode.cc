@@ -6,17 +6,17 @@
 #include "mp4.h"
 #include <assert.h>
 
-// MP4URLEncode
+// mp4_url_encode
 
-MP4URLEncode::MP4URLEncode()
+mp4_url_encode::mp4_url_encode()
 {
 }
 
-MP4URLEncode::~MP4URLEncode()
+mp4_url_encode::~mp4_url_encode()
 {
 }
 
-std::string MP4URLEncode::url_encode(const std::string& url)
+std::string mp4_url_encode::url_encode(const std::string& url)
 {
 	std::string encoded_url = "";
 
