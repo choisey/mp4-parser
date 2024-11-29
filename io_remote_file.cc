@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "RemoteFile.h"
+#include "io_remote_file.h"
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,20 +10,20 @@
 //#define BUFFER_SIZE	( 1024 * 1024 * 1 ) // 1MB
 #define BUFFER_SIZE	( 1024 * 512 ) // 512KB
 
-size_t RemoteFile::curl_header_callback(void *ptr, size_t size, size_t nmemb, void *stream)
+size_t io_remote_file::curl_header_callback(void *ptr, size_t size, size_t nmemb, void *stream)
 {
 	// This function is called by cUrl library with line-by-line data from the header.
 
-	RemoteFile* pRemoteFile = (RemoteFile*) stream;
+	io_remote_file* pio_remote_file = (io_remote_file*) stream;
 
-	// TO DO : check if pRemoteFile is still valid.
+	// TO DO : check if pio_remote_file is still valid.
 
-	if ( pRemoteFile )
+	if ( pio_remote_file )
 	{
 		try
 		{
 			size_t bytes = size * nmemb;
-			if ( pRemoteFile->onHeader(ptr, bytes) )
+			if ( pio_remote_file->onHeader(ptr, bytes) )
 			{
 				return bytes;
 			}
@@ -37,23 +37,23 @@ size_t RemoteFile::curl_header_callback(void *ptr, size_t size, size_t nmemb, vo
 	return 0;
 }
 
-size_t RemoteFile::curl_download_callback(void *ptr, size_t size, size_t nmemb, void *stream)
+size_t io_remote_file::curl_download_callback(void *ptr, size_t size, size_t nmemb, void *stream)
 {
 	// This function gets called by libcurl as soon as there is data received that needs to be saved.
 	// The size of the data pointed to by ptr is size multiplied with nmemb, it will not be zero terminated.
 	// Return the number of bytes actually taken care of. If that amount differs from the amount passed to your function,
 	// it'll signal an error to the library and it will abort the transfer and return CURLE_WRITE_ERROR.
 
-	RemoteFile* pRemoteFile = (RemoteFile*) stream;
+	io_remote_file* pio_remote_file = (io_remote_file*) stream;
 
-	// TO DO : check if pRemoteFile is still valid.
+	// TO DO : check if pio_remote_file is still valid.
 
-	if ( pRemoteFile )
+	if ( pio_remote_file )
 	{
 		try
 		{
 			size_t bytes = size * nmemb;
-			if ( pRemoteFile->onContent(ptr, bytes) )
+			if ( pio_remote_file->onContent(ptr, bytes) )
 			{
 				return bytes;
 			}
@@ -68,7 +68,7 @@ size_t RemoteFile::curl_download_callback(void *ptr, size_t size, size_t nmemb, 
 }
 
 #ifdef _DEBUG
-int RemoteFile::curl_debug_callback(CURL* cp, curl_infotype type, char* ptr, size_t size, void* data)
+int io_remote_file::curl_debug_callback(CURL* cp, curl_infotype type, char* ptr, size_t size, void* data)
 {
 	switch ( type )
 	{
@@ -110,31 +110,31 @@ int RemoteFile::curl_debug_callback(CURL* cp, curl_infotype type, char* ptr, siz
 }
 #endif
 
-// RemoteFile
+// io_remote_file
 
-RemoteFile::RemoteFile()
+io_remote_file::io_remote_file()
 	: _cp(NULL)
 {
 }
 
-RemoteFile::RemoteFile(const std::string& uri)
-	: File(uri)
+io_remote_file::io_remote_file(const std::string& uri)
+	: io_file(uri)
 	, _cp(NULL)
 {
 	open(uri);
 }
 
-RemoteFile::~RemoteFile()
+io_remote_file::~io_remote_file()
 {
 	close();
 }
 
-std::shared_ptr<File::Block> RemoteFile::allocateBlock(size_t size)
+std::shared_ptr<io_file::block> io_remote_file::allocate_block(size_t size)
 {
-	return std::make_shared<File::Block>( ( 0 != size ) ? size : BUFFER_SIZE );
+	return std::make_shared<io_file::block>( ( 0 != size ) ? size : BUFFER_SIZE );
 }
 
-bool RemoteFile::onHeader(void* ptr, size_t size)
+bool io_remote_file::onHeader(void* ptr, size_t size)
 {
 	std::string header_line((char*) ptr, size);
 
@@ -211,7 +211,7 @@ bool RemoteFile::onHeader(void* ptr, size_t size)
 	return true;
 }
 
-bool RemoteFile::onContent(void* ptr, size_t size)
+bool io_remote_file::onContent(void* ptr, size_t size)
 {
 	if ( NULL != ptr && 0 < size )
 	{
@@ -236,7 +236,7 @@ bool RemoteFile::onContent(void* ptr, size_t size)
 	return false;
 }
 
-bool RemoteFile::open(const std::string& uri)
+bool io_remote_file::open(const std::string& uri)
 {
 	assert( NULL == _cp );
 	if ( NULL != _cp ) {
@@ -308,7 +308,7 @@ bool RemoteFile::open(const std::string& uri)
 	}
 }
 
-bool RemoteFile::seek(off_t offset, int origin)
+bool io_remote_file::seek(off_t offset, int origin)
 {
 	switch ( origin ) {
 		case SEEK_SET:
@@ -332,7 +332,7 @@ bool RemoteFile::seek(off_t offset, int origin)
 	return false;
 }
 
-size_t RemoteFile::read(void* buf, size_t size)
+size_t io_remote_file::read(void* buf, size_t size)
 {
 	assert( NULL != _cp );
 
@@ -371,7 +371,7 @@ size_t RemoteFile::read(void* buf, size_t size)
 	return _buffer.filled;
 }
 
-void RemoteFile::close()
+void io_remote_file::close()
 {
 	if ( _cp )
 	{

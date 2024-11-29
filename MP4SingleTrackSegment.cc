@@ -3,7 +3,7 @@
  */
 
 #include "MP4SingleTrackSegment.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 
 MP4SingleTrackSegment::MP4SingleTrackSegment(uint32_t track_id, uint64_t time, uint32_t duration)

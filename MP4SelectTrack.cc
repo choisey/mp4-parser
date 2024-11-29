@@ -3,7 +3,7 @@
  */
 
 #include "MP4SelectTrack.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 #include <string.h>
 

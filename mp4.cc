@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4.h"
+#include "mp4.h"
 #include <stdarg.h>
 
 std::vector<std::shared_ptr<MP4AbstractBox>> select(std::shared_ptr<MP4AbstractBox> b, uint32_t t)

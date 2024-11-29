@@ -6,15 +6,15 @@
 // based on ISO/IEC 14496-12:2005(E)
 
 #include "MP4TimeToOffsetLoad.h"
-#include "MP4.h"
-#include "IO.h"
+#include "mp4.h"
+#include "io.h"
 #include <assert.h>
 
 #define MFRO_OFFSET	-16
 
 // MP4TimeToOffsetLoadVisitor
 
-MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::MP4TimeToOffsetLoadVisitor(std::shared_ptr<File> f)
+MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::MP4TimeToOffsetLoadVisitor(std::shared_ptr<io_file> f)
 	: MP4LoadVisitor(f)
 {
 }
@@ -81,7 +81,7 @@ MP4TimeToOffsetLoad::~MP4TimeToOffsetLoad()
 
 void MP4TimeToOffsetLoad::execute(std::shared_ptr<MP4AbstractBox> box)
 {
-	auto f = IO::Instance()->open( _uri );
+	auto f = io::instance()->open( _uri );
 	if ( f->is_open() ) {
 		box->head().offset = 0;
 		box->head().boxheadsize = 0;

@@ -3,7 +3,7 @@
  */
 
 #include "MP4AbstractAction.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 
 #ifdef _DEBUG

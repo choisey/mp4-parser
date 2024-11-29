@@ -29,11 +29,11 @@ srcs := $(srcdir)/MP4Obj.cc \
 	$(srcdir)/MP4MediaStat.cc \
 	$(srcdir)/MP4TimeToOffsetLoad.cc \
 	$(srcdir)/MP4TimeToOffsetLookup.cc \
-	$(srcdir)/MP4.cc \
-	$(srcdir)/File.cc \
-	$(srcdir)/LocalFile.cc \
-	$(srcdir)/RemoteFile.cc \
-	$(srcdir)/IO.cc \
+	$(srcdir)/mp4.cc \
+	$(srcdir)/io_file.cc \
+	$(srcdir)/io_local_file.cc \
+	$(srcdir)/io_remote_file.cc \
+	$(srcdir)/io.cc \
 	$(srcdir)/main.cc
 
 DEBUGFLAGS = -g -D _DEBUG

@@ -4,21 +4,21 @@
 
 #pragma once
 
-#include "File.h"
+#include "io_file.h"
 #include <stdio.h>
 
-class LocalFile : public File
+class io_local_file : public io_file
 {
         public:
-                LocalFile();
-                LocalFile(const std::string&);
-                virtual ~LocalFile();
+                io_local_file();
+                io_local_file(const std::string&);
+                virtual ~io_local_file();
 
         protected:
                 FILE* _fp;
 
         public:
-                virtual std::shared_ptr<File::Block> allocateBlock(size_t = 0);
+                virtual std::shared_ptr<io_file::block> allocate_block(size_t = 0);
 
                 virtual bool open(const std::string&);
                 virtual bool is_open() const { return ( NULL != _fp ); }

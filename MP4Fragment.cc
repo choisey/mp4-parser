@@ -4,7 +4,7 @@
 
 #include "MP4Fragment.h"
 #include "MP4Relocate.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 
 #define TRUN_DATA_OFFSET_PRESENT	0x000001

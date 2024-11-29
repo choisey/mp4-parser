@@ -2,34 +2,34 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "LocalFile.h"
+#include "io_local_file.h"
 #include <assert.h>
 
-// LocalFile
+// io_local_file
 
-LocalFile::LocalFile()
+io_local_file::io_local_file()
 	: _fp(NULL)
 {
 }
 
-LocalFile::LocalFile(const std::string& uri)
-	: File(uri)
+io_local_file::io_local_file(const std::string& uri)
+	: io_file(uri)
 	, _fp(NULL)
 {
 	open(uri);
 }
 
-LocalFile::~LocalFile()
+io_local_file::~io_local_file()
 {
 	close();
 }
 
-std::shared_ptr<File::Block> LocalFile::allocateBlock(size_t size)
+std::shared_ptr<io_file::block> io_local_file::allocate_block(size_t size)
 {
-	return std::make_shared<File::Block>( ( 0 != size ) ? size : BUFSIZ );
+	return std::make_shared<io_file::block>( ( 0 != size ) ? size : BUFSIZ );
 }
 
-bool LocalFile::open(const std::string& uri)
+bool io_local_file::open(const std::string& uri)
 {
 	assert( NULL == _fp );
 	if ( NULL != _fp ) {
@@ -49,7 +49,7 @@ bool LocalFile::open(const std::string& uri)
 	return true;
 }
 
-off_t LocalFile::position() const
+off_t io_local_file::position() const
 {
 	assert( NULL != _fp );
 
@@ -58,7 +58,7 @@ off_t LocalFile::position() const
 		: 0;
 }
 
-bool LocalFile::seek(off_t offset, int origin)
+bool io_local_file::seek(off_t offset, int origin)
 {
 	assert( ( SEEK_SET != origin ) || ( 0 <= offset && (size_t) offset <= _size ) );
 	assert( ( SEEK_END != origin ) || ( 0 <= -offset && (size_t) -offset <= _size ) );
@@ -68,7 +68,7 @@ bool LocalFile::seek(off_t offset, int origin)
 		: false;
 }
 
-size_t LocalFile::read(void* buf, size_t size)
+size_t io_local_file::read(void* buf, size_t size)
 {
 	assert( 1 <= size );
 	// It is not unusual to attempt to read beyond the upper boundary of file.
@@ -79,7 +79,7 @@ size_t LocalFile::read(void* buf, size_t size)
 		: 0L;
 }
 
-void LocalFile::close()
+void io_local_file::close()
 {
 	if ( NULL != _fp ) {
 		fclose( _fp );

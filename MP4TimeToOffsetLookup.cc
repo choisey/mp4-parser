@@ -3,7 +3,7 @@
  */
 
 #include "MP4TimeToOffsetLookup.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 
 MP4TimeToOffsetLookup::MP4TimeToOffsetLookup(uint32_t track_id, uint64_t time)

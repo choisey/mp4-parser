@@ -3,7 +3,7 @@
  */
 
 #include "MP4Relocate.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 
 MP4Relocate::MP4RelocateVisitor::MP4RelocateVisitor(size_t offset)

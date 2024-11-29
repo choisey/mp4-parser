@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4.h"
+#include "mp4.h"
 #include "MP4File.h"
 #include "MP4Load.h"
 #include "MP4Save.h"
@@ -22,7 +22,7 @@
 #include "MP4SetBox.h"
 #include "MP4FragKeyFrame.h"
 #include "MP4MediaStat.h"
-#include "IO.h"
+#include "io.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -374,5 +374,5 @@ int main(int argc, char* argv[])
 		(*iter)->execute(mp4files);
 	}
 
-	IO::cleanup();
+	io::cleanup();
 }

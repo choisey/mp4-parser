@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include "File.h"
+#include "io_file.h"
 #include <curl/curl.h>
 #include <map>
 
-class RemoteFile : public File
+class io_remote_file : public io_file
 {
         public:
                 static size_t curl_header_callback(void*, size_t, size_t, void*);
@@ -18,9 +18,9 @@ class RemoteFile : public File
 #endif
 
         public:
-                RemoteFile();
-                RemoteFile(const std::string&);
-                virtual ~RemoteFile();
+                io_remote_file();
+                io_remote_file(const std::string&);
+                virtual ~io_remote_file();
 
         protected:
                 const long TIMEOUT = 30;
@@ -48,7 +48,7 @@ class RemoteFile : public File
                 bool onContent(void*, size_t);
 
         public:
-                virtual std::shared_ptr<File::Block> allocateBlock(size_t = 0);
+                virtual std::shared_ptr<io_file::block> allocate_block(size_t = 0);
 
                 virtual bool open(const std::string&);
                 virtual bool is_open() const { return ( NULL != _cp ); }

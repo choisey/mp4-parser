@@ -3,7 +3,7 @@
  */
 
 #include "MP4URLEncode.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 
 // MP4URLEncode

@@ -3,7 +3,7 @@
  */
 
 #include "MP4CodecConf.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 
 // SampleEntry is 8 bytes

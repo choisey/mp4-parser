@@ -5,8 +5,8 @@
 #include "MP4Save.h"
 #include "MP4Relocate.h"
 //#include "MP4File.h"
-#include "MP4.h"
-#include "IO.h"
+#include "mp4.h"
+#include "io.h"
 #include <assert.h>
 #include <map>
 
@@ -535,10 +535,10 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MediaDataBox& mdat)
 	if ( !mdat.byte_ranges.empty() ) {
 		writeBoxHead(head);
 
-		auto f = IO::Instance()->open(mdat.uri.c_str());
+		auto f = io::instance()->open(mdat.uri.c_str());
 		if ( f->is_open() ) {
 			//uint8_t buf[BUFFER_SIZE];
-			auto buf = f->allocateBlock();
+			auto buf = f->allocate_block();
 
 #ifdef _DEBUG
 			uint32_t debug_byte_ranges = 0;

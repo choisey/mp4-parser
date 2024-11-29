@@ -5,18 +5,18 @@
 #pragma once
 
 #include "MP4AbstractAction.h"
-#include "File.h"
+#include "io_file.h"
 #include <map>
 
 class MP4Load : public MP4AbstractAction {
 	protected:
 		class MP4LoadVisitor : public MP4Visitor {
 			public:
-				MP4LoadVisitor(std::shared_ptr<File>);
+				MP4LoadVisitor(std::shared_ptr<io_file>);
 				virtual ~MP4LoadVisitor();
 
 			protected:
-				std::shared_ptr<File> _f;
+				std::shared_ptr<io_file> _f;
 				std::vector<uint32_t> _handler_types;
 
 			protected:

@@ -6,17 +6,17 @@
 // based on ISO/IEC 14496-12:2005(E)
 
 #include "MP4Load.h"
-#include "MP4.h"
+#include "mp4.h"
 #include "MP4ConcreteBox.h"
 #include "MP4ContainerBox.h"
 #include "MP4File.h"
-#include "IO.h"
+#include "io.h"
 #include <assert.h>
 #include <map>
 
 // MP4LoadVisitor
 
-MP4Load::MP4LoadVisitor::MP4LoadVisitor(std::shared_ptr<File> f)
+MP4Load::MP4LoadVisitor::MP4LoadVisitor(std::shared_ptr<io_file> f)
 	: _f(f)
 {
 	assert( _f->is_open() );
@@ -1753,7 +1753,7 @@ MP4Load::~MP4Load()
 
 void MP4Load::execute(std::shared_ptr<MP4AbstractBox> box)
 {
-	auto f = IO::Instance()->open( _uri );
+	auto f = io::instance()->open( _uri );
 	if ( f->is_open() ) {
 		box->head().offset = 0;
 		box->head().boxheadsize = 0;

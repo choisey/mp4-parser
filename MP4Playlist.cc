@@ -3,7 +3,7 @@
  */
 
 #include "MP4Playlist.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 #include <stdio.h>
 

@@ -3,7 +3,7 @@
  */
 
 #include "MP4SequenceToTime.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 
 #define SLASH '/'

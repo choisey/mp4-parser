@@ -3,7 +3,7 @@
  */
 
 #include "MP4HlsM3u8.h"
-#include "MP4.h"
+#include "mp4.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>

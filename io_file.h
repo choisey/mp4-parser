@@ -9,17 +9,17 @@
 #include <string>
 #include <memory>
 
-class File
+class io_file
 {
         public:
-                class Block {
+                class block {
                         public:
-                                Block(size_t size) : _size(size)
+                                block(size_t size) : _size(size)
                                 {
                                         assert( 0 != size );
                                         _p = new uint8_t[size];
                                 }
-                                ~Block()
+                                ~block()
                                 {
                                         assert( NULL != _p );
                                         if ( NULL != _p ) {
@@ -37,16 +37,16 @@ class File
                 };
 
         public:
-                File();
-                File(const std::string&);
-                virtual ~File();
+                io_file();
+                io_file(const std::string&);
+                virtual ~io_file();
 
         protected:
                 std::string _uri;
                 size_t _size;
 
         public:
-                virtual std::shared_ptr<Block> allocateBlock(size_t = 0) = 0;
+                virtual std::shared_ptr<block> allocate_block(size_t = 0) = 0;
 
                 const std::string& uri() const { return _uri; }
                 size_t size() const { return _size; }
