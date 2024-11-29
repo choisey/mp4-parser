@@ -16,7 +16,7 @@
 
 // MP4LoadVisitor
 
-MP4Load::MP4LoadVisitor::MP4LoadVisitor(std::shared_ptr<DCP::File> f)
+MP4Load::MP4LoadVisitor::MP4LoadVisitor(std::shared_ptr<File> f)
 	: _f(f)
 {
 	assert( _f->is_open() );
@@ -1753,7 +1753,7 @@ MP4Load::~MP4Load()
 
 void MP4Load::execute(std::shared_ptr<MP4AbstractBox> box)
 {
-	auto f = DCP::IO::Instance()->open( _uri );
+	auto f = IO::Instance()->open( _uri );
 	if ( f->is_open() ) {
 		box->head().offset = 0;
 		box->head().boxheadsize = 0;

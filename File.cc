@@ -6,17 +6,17 @@
 
 // File
 
-DCP::File::File()
+File::File()
 	: _size(0)
 {
 }
 
-DCP::File::File(const std::string& uri)
+File::File(const std::string& uri)
 	: _uri(uri)
 	, _size(0)
 {
 }
 
-DCP::File::~File()
+File::~File()
 {
 }

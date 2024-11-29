@@ -535,7 +535,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MediaDataBox& mdat)
 	if ( !mdat.byte_ranges.empty() ) {
 		writeBoxHead(head);
 
-		auto f = DCP::IO::Instance()->open(mdat.uri.c_str());
+		auto f = IO::Instance()->open(mdat.uri.c_str());
 		if ( f->is_open() ) {
 			//uint8_t buf[BUFFER_SIZE];
 			auto buf = f->allocateBlock();

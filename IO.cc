@@ -12,9 +12,9 @@
 
 // Singleton
 
-DCP::IO* DCP::IO::_instance = NULL;
+IO* IO::_instance = NULL;
 
-DCP::IO* DCP::IO::Instance()
+IO* IO::Instance()
 {
 	if ( NULL == _instance ) {
 		_instance = new IO();
@@ -22,7 +22,7 @@ DCP::IO* DCP::IO::Instance()
 	return _instance;
 }
 
-void DCP::IO::cleanup()
+void IO::cleanup()
 {
 	if ( NULL != _instance ) {
 		delete _instance;
@@ -32,26 +32,26 @@ void DCP::IO::cleanup()
 
 // IO
 
-DCP::IO::IO()
+IO::IO()
 {
 	// If we don't properly initialize using curl_global_init, we will get seg fault.
 	// https://curl.haxx.se/mail/lib-2009-11/0258.html
 	curl_global_init(CURL_GLOBAL_NOTHING);
 }
 
-DCP::IO::~IO()
+IO::~IO()
 {
 	curl_global_cleanup();
 }
 
-std::shared_ptr<DCP::File> DCP::IO::open(const std::string& uri)
+std::shared_ptr<File> IO::open(const std::string& uri)
 {
 	if ( 0 == uri.compare(0, strlen(SCHEME_HTTP), SCHEME_HTTP) ) {
-		std::shared_ptr<DCP::File> f = std::make_shared<DCP::RemoteFile>(uri);
+		std::shared_ptr<File> f = std::make_shared<RemoteFile>(uri);
 		return f;
 	}
 	else {
-		std::shared_ptr<DCP::File> f = std::make_shared<DCP::LocalFile>(uri);
+		std::shared_ptr<File> f = std::make_shared<LocalFile>(uri);
 		return f;
 	}
 }

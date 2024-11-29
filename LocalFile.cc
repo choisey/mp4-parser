@@ -7,29 +7,29 @@
 
 // LocalFile
 
-DCP::LocalFile::LocalFile()
+LocalFile::LocalFile()
 	: _fp(NULL)
 {
 }
 
-DCP::LocalFile::LocalFile(const std::string& uri)
+LocalFile::LocalFile(const std::string& uri)
 	: File(uri)
 	, _fp(NULL)
 {
 	open(uri);
 }
 
-DCP::LocalFile::~LocalFile()
+LocalFile::~LocalFile()
 {
 	close();
 }
 
-std::shared_ptr<DCP::File::Block> DCP::LocalFile::allocateBlock(size_t size)
+std::shared_ptr<File::Block> LocalFile::allocateBlock(size_t size)
 {
-	return std::make_shared<DCP::File::Block>( ( 0 != size ) ? size : BUFSIZ );
+	return std::make_shared<File::Block>( ( 0 != size ) ? size : BUFSIZ );
 }
 
-bool DCP::LocalFile::open(const std::string& uri)
+bool LocalFile::open(const std::string& uri)
 {
 	assert( NULL == _fp );
 	if ( NULL != _fp ) {
@@ -49,7 +49,7 @@ bool DCP::LocalFile::open(const std::string& uri)
 	return true;
 }
 
-off_t DCP::LocalFile::position() const
+off_t LocalFile::position() const
 {
 	assert( NULL != _fp );
 
@@ -58,7 +58,7 @@ off_t DCP::LocalFile::position() const
 		: 0;
 }
 
-bool DCP::LocalFile::seek(off_t offset, int origin)
+bool LocalFile::seek(off_t offset, int origin)
 {
 	assert( ( SEEK_SET != origin ) || ( 0 <= offset && (size_t) offset <= _size ) );
 	assert( ( SEEK_END != origin ) || ( 0 <= -offset && (size_t) -offset <= _size ) );
@@ -68,7 +68,7 @@ bool DCP::LocalFile::seek(off_t offset, int origin)
 		: false;
 }
 
-size_t DCP::LocalFile::read(void* buf, size_t size)
+size_t LocalFile::read(void* buf, size_t size)
 {
 	assert( 1 <= size );
 	// It is not unusual to attempt to read beyond the upper boundary of file.
@@ -79,7 +79,7 @@ size_t DCP::LocalFile::read(void* buf, size_t size)
 		: 0L;
 }
 
-void DCP::LocalFile::close()
+void LocalFile::close()
 {
 	if ( NULL != _fp ) {
 		fclose( _fp );

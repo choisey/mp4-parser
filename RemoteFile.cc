@@ -10,11 +10,11 @@
 //#define BUFFER_SIZE	( 1024 * 1024 * 1 ) // 1MB
 #define BUFFER_SIZE	( 1024 * 512 ) // 512KB
 
-size_t DCP::RemoteFile::curl_header_callback(void *ptr, size_t size, size_t nmemb, void *stream)
+size_t RemoteFile::curl_header_callback(void *ptr, size_t size, size_t nmemb, void *stream)
 {
 	// This function is called by cUrl library with line-by-line data from the header.
 
-	DCP::RemoteFile* pRemoteFile = (DCP::RemoteFile*) stream;
+	RemoteFile* pRemoteFile = (RemoteFile*) stream;
 
 	// TO DO : check if pRemoteFile is still valid.
 
@@ -37,14 +37,14 @@ size_t DCP::RemoteFile::curl_header_callback(void *ptr, size_t size, size_t nmem
 	return 0;
 }
 
-size_t DCP::RemoteFile::curl_download_callback(void *ptr, size_t size, size_t nmemb, void *stream)
+size_t RemoteFile::curl_download_callback(void *ptr, size_t size, size_t nmemb, void *stream)
 {
 	// This function gets called by libcurl as soon as there is data received that needs to be saved.
 	// The size of the data pointed to by ptr is size multiplied with nmemb, it will not be zero terminated.
 	// Return the number of bytes actually taken care of. If that amount differs from the amount passed to your function,
 	// it'll signal an error to the library and it will abort the transfer and return CURLE_WRITE_ERROR.
 
-	DCP::RemoteFile* pRemoteFile = (DCP::RemoteFile*) stream;
+	RemoteFile* pRemoteFile = (RemoteFile*) stream;
 
 	// TO DO : check if pRemoteFile is still valid.
 
@@ -68,7 +68,7 @@ size_t DCP::RemoteFile::curl_download_callback(void *ptr, size_t size, size_t nm
 }
 
 #ifdef _DEBUG
-int DCP::RemoteFile::curl_debug_callback(CURL* cp, curl_infotype type, char* ptr, size_t size, void* data)
+int RemoteFile::curl_debug_callback(CURL* cp, curl_infotype type, char* ptr, size_t size, void* data)
 {
 	switch ( type )
 	{
@@ -112,29 +112,29 @@ int DCP::RemoteFile::curl_debug_callback(CURL* cp, curl_infotype type, char* ptr
 
 // RemoteFile
 
-DCP::RemoteFile::RemoteFile()
+RemoteFile::RemoteFile()
 	: _cp(NULL)
 {
 }
 
-DCP::RemoteFile::RemoteFile(const std::string& uri)
+RemoteFile::RemoteFile(const std::string& uri)
 	: File(uri)
 	, _cp(NULL)
 {
 	open(uri);
 }
 
-DCP::RemoteFile::~RemoteFile()
+RemoteFile::~RemoteFile()
 {
 	close();
 }
 
-std::shared_ptr<DCP::File::Block> DCP::RemoteFile::allocateBlock(size_t size)
+std::shared_ptr<File::Block> RemoteFile::allocateBlock(size_t size)
 {
-	return std::make_shared<DCP::File::Block>( ( 0 != size ) ? size : BUFFER_SIZE );
+	return std::make_shared<File::Block>( ( 0 != size ) ? size : BUFFER_SIZE );
 }
 
-bool DCP::RemoteFile::onHeader(void* ptr, size_t size)
+bool RemoteFile::onHeader(void* ptr, size_t size)
 {
 	std::string header_line((char*) ptr, size);
 
@@ -211,7 +211,7 @@ bool DCP::RemoteFile::onHeader(void* ptr, size_t size)
 	return true;
 }
 
-bool DCP::RemoteFile::onContent(void* ptr, size_t size)
+bool RemoteFile::onContent(void* ptr, size_t size)
 {
 	if ( NULL != ptr && 0 < size )
 	{
@@ -236,7 +236,7 @@ bool DCP::RemoteFile::onContent(void* ptr, size_t size)
 	return false;
 }
 
-bool DCP::RemoteFile::open(const std::string& uri)
+bool RemoteFile::open(const std::string& uri)
 {
 	assert( NULL == _cp );
 	if ( NULL != _cp ) {
@@ -308,7 +308,7 @@ bool DCP::RemoteFile::open(const std::string& uri)
 	}
 }
 
-bool DCP::RemoteFile::seek(off_t offset, int origin)
+bool RemoteFile::seek(off_t offset, int origin)
 {
 	switch ( origin ) {
 		case SEEK_SET:
@@ -332,7 +332,7 @@ bool DCP::RemoteFile::seek(off_t offset, int origin)
 	return false;
 }
 
-size_t DCP::RemoteFile::read(void* buf, size_t size)
+size_t RemoteFile::read(void* buf, size_t size)
 {
 	assert( NULL != _cp );
 
@@ -371,7 +371,7 @@ size_t DCP::RemoteFile::read(void* buf, size_t size)
 	return _buffer.filled;
 }
 
-void DCP::RemoteFile::close()
+void RemoteFile::close()
 {
 	if ( _cp )
 	{

@@ -30,7 +30,6 @@ srcs := $(srcdir)/MP4Obj.cc \
 	$(srcdir)/MP4TimeToOffsetLoad.cc \
 	$(srcdir)/MP4TimeToOffsetLookup.cc \
 	$(srcdir)/MP4.cc \
-	$(srcdir)/DCP.cc \
 	$(srcdir)/File.cc \
 	$(srcdir)/LocalFile.cc \
 	$(srcdir)/RemoteFile.cc \

@@ -374,5 +374,5 @@ int main(int argc, char* argv[])
 		(*iter)->execute(mp4files);
 	}
 
-	DCP::IO::cleanup();
+	IO::cleanup();
 }

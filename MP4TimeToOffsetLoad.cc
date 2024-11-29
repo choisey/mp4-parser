@@ -14,7 +14,7 @@
 
 // MP4TimeToOffsetLoadVisitor
 
-MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::MP4TimeToOffsetLoadVisitor(std::shared_ptr<DCP::File> f)
+MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::MP4TimeToOffsetLoadVisitor(std::shared_ptr<File> f)
 	: MP4LoadVisitor(f)
 {
 }
@@ -81,7 +81,7 @@ MP4TimeToOffsetLoad::~MP4TimeToOffsetLoad()
 
 void MP4TimeToOffsetLoad::execute(std::shared_ptr<MP4AbstractBox> box)
 {
-	auto f = DCP::IO::Instance()->open( _uri );
+	auto f = IO::Instance()->open( _uri );
 	if ( f->is_open() ) {
 		box->head().offset = 0;
 		box->head().boxheadsize = 0;

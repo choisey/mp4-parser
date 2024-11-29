@@ -11,7 +11,7 @@ class MP4TimeToOffsetLoad : public MP4Load {
 	protected:
 		class MP4TimeToOffsetLoadVisitor : public MP4LoadVisitor {
 			public:
-				MP4TimeToOffsetLoadVisitor(std::shared_ptr<DCP::File>);
+				MP4TimeToOffsetLoadVisitor(std::shared_ptr<File>);
 				virtual ~MP4TimeToOffsetLoadVisitor();
 
 			public:
