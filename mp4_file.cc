@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4File.h"
+#include "mp4_file.h"
 #include <assert.h>
 
 MP4File::MP4File(const std::string& path)

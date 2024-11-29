@@ -1,10 +1,10 @@
 srcdir := .
-srcs := $(srcdir)/MP4Obj.cc \
-	$(srcdir)/MP4BoxTypes.cc \
-	$(srcdir)/MP4AbstractBox.cc \
-	$(srcdir)/MP4ContainerBox.cc \
-	$(srcdir)/MP4File.cc \
-	$(srcdir)/MP4AbstractAction.cc \
+srcs := $(srcdir)/mp4_object.cc \
+	$(srcdir)/mp4_box_types.cc \
+	$(srcdir)/mp4_abstract_box.cc \
+	$(srcdir)/mp4_container_box.cc \
+	$(srcdir)/mp4_file.cc \
+	$(srcdir)/mp4_abstract_action.cc \
 	$(srcdir)/MP4Playlist.cc \
 	$(srcdir)/MP4CodecConf.cc \
 	$(srcdir)/MP4URLEncode.cc \
@@ -23,7 +23,7 @@ srcs := $(srcdir)/MP4Obj.cc \
 	$(srcdir)/MP4Relocate.cc \
 	$(srcdir)/MP4Load.cc \
 	$(srcdir)/MP4Save.cc \
-	$(srcdir)/MP4Dump.cc \
+	$(srcdir)/mp4_dump.cc \
 	$(srcdir)/MP4SetBox.cc \
 	$(srcdir)/MP4FragKeyFrame.cc \
 	$(srcdir)/MP4MediaStat.cc \

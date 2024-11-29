@@ -3,10 +3,10 @@
  */
 
 #include "mp4.h"
-#include "MP4File.h"
+#include "mp4_file.h"
 #include "MP4Load.h"
 #include "MP4Save.h"
-#include "MP4Dump.h"
+#include "mp4_dump.h"
 #include "MP4HlsM3u8.h"
 #include "MP4HlsMasterPlaylist.h"
 #include "MP4HlsMediaPlaylist.h"

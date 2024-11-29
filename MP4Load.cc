@@ -9,7 +9,7 @@
 #include "mp4.h"
 #include "mp4_concrete_box.h"
 #include "mp4_container_box.h"
-#include "MP4File.h"
+#include "mp4_file.h"
 #include "io.h"
 #include <assert.h>
 #include <map>

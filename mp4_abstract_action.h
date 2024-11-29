@@ -6,7 +6,7 @@
 
 #include "mp4_object.h"
 #include "mp4_abstract_box.h"
-#include "MP4File.h"
+#include "mp4_file.h"
 
 #define MIN_DURATION_OF_LAST_SEGMENT	1
 

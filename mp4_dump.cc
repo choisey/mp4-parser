@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4Dump.h"
+#include "mp4_dump.h"
 #include <stdio.h>
 
 // MP4DumpVisitor
