@@ -1,5 +1,4 @@
-#ifndef __MP4SAVE_H__
-#define __MP4SAVE_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 #include <stdio.h>
@@ -68,5 +67,3 @@ class MP4Save : public MP4AbstractAction {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

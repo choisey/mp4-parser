@@ -1,5 +1,4 @@
-#ifndef __MP4BOXTYPES_H__
-#define __MP4BOXTYPES_H__
+#pragma once
 
 #include <stdint.h>
 
@@ -640,5 +639,3 @@ struct MediaDataBox {
 
 	size_t size() const;
 };
-
-#endif

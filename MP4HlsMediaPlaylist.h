@@ -1,5 +1,4 @@
-#ifndef __MP4HLS_MEDIA_PLAYLIST_H__
-#define __MP4HLS_MEDIA_PLAYLIST_H__
+#pragma once
 
 #include "MP4Playlist.h"
 
@@ -15,5 +14,3 @@ class MP4HlsMediaPlaylist : public MP4Playlist {
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };
-
-#endif

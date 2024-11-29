@@ -1,5 +1,4 @@
-#ifndef __MP4HLS_MASTER_PLAYLIST_H__
-#define __MP4HLS_MASTER_PLAYLIST_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 #include "MP4CodecConf.h"
@@ -22,5 +21,3 @@ class MP4HlsMasterPlaylist : public MP4AbstractAction, public MP4CodecConf, publ
 	public:
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };
-
-#endif

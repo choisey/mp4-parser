@@ -1,5 +1,4 @@
-#ifndef __LOCALFILE_H__
-#define __LOCALFILE_H__
+#pragma once
 
 #include "File.h"
 #include <stdio.h>
@@ -26,5 +25,3 @@ namespace DCP {
 			virtual void close();
 	};
 };
-
-#endif

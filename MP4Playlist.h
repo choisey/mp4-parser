@@ -1,5 +1,4 @@
-#ifndef __MP4MANIFEST_H__
-#define __MP4MANIFEST_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 
@@ -31,5 +30,3 @@ class MP4Playlist : public MP4AbstractAction {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

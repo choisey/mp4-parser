@@ -1,5 +1,4 @@
-#ifndef __FILE_H__
-#define __FILE_H__
+#pragma once
 
 #include "DCP.h"
 #include <assert.h>
@@ -58,5 +57,3 @@ namespace DCP {
 			virtual void close() = 0;
 	};
 };
-
-#endif

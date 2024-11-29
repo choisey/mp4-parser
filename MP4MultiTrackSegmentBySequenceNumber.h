@@ -1,5 +1,4 @@
-#ifndef __MP4_MULTI_TRACK_SEGMENT_BY_SEQUENCE_NUMBER_H__
-#define __MP4_MULTI_TRACK_SEGMENT_BY_SEQUENCE_NUMBER_H__
+#pragma once
 
 #include "MP4MultiTrackSegment.h"
 #include "MP4Playlist.h"
@@ -15,5 +14,3 @@ class MP4MultiTrackSegmentBySequenceNumber : public MP4MultiTrackSegment {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

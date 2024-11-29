@@ -1,5 +1,4 @@
-#ifndef __MP4CONTAINERBOX_H__
-#define __MP4CONTAINERBOX_H__
+#pragma once
 
 #include "MP4AbstractBox.h"
 #include <memory>
@@ -26,5 +25,3 @@ class MP4ContainerBox : public MP4AbstractBox {
 		virtual void addChild(std::shared_ptr<MP4AbstractBox>);
 		virtual MP4AbstractBox& operator<<(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

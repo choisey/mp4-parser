@@ -1,5 +1,4 @@
-#ifndef __MP4FILE_H__
-#define __MP4FILE_H__
+#pragma once
 
 #include "MP4ContainerBox.h"
 
@@ -15,5 +14,3 @@ class MP4File : public MP4ContainerBox {
 		const std::string& path() const { return _path; }
 		void path(const std::string& path) { _path = path; }
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __REMOTEFILE_H__
-#define __REMOTEFILE_H__
+#pragma once
 
 #include "File.h"
 #include <curl/curl.h>
@@ -56,5 +55,3 @@ namespace DCP {
 			virtual void close();
 	};
 };
-
-#endif

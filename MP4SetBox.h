@@ -1,5 +1,4 @@
-#ifndef __MP4_SET_BOX_H__
-#define __MP4_SET_BOX_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 
@@ -27,5 +26,3 @@ class MP4SetBox : public MP4AbstractAction {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

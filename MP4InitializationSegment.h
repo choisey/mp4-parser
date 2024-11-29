@@ -1,5 +1,4 @@
-#ifndef __MP4_INITIALIZATION_SEGMENT_H__
-#define __MP4_INITIALIZATION_SEGMENT_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 
@@ -39,5 +38,3 @@ class MP4InitializationSegment : public MP4AbstractAction {
 	public:
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };
-
-#endif

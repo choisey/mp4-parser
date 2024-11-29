@@ -1,5 +1,4 @@
-#ifndef __MP4CONCRETEBOX_H__
-#define __MP4CONCRETEBOX_H__
+#pragma once
 
 #include "MP4AbstractBox.h"
 
@@ -41,5 +40,3 @@ class MP4ConcreteBox : public MP4AbstractBox {
 			return *this;
 		}
 };
-
-#endif

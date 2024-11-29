@@ -1,5 +1,4 @@
-#ifndef __IO_H__
-#define __IO_H__
+#pragma once
 
 #include "DCP.h"
 #include "File.h"
@@ -22,5 +21,3 @@ namespace DCP {
 			std::shared_ptr<File> open(const std::string&);
 	};
 };
-
-#endif

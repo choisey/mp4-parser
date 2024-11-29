@@ -1,5 +1,4 @@
-#ifndef __MP4_TIME_TO_OFFSET_LOAD_H__
-#define __MP4_TIME_TO_OFFSET_LOAD_H__
+#pragma once
 
 #include "MP4Load.h"
 #include <map>
@@ -23,5 +22,3 @@ class MP4TimeToOffsetLoad : public MP4Load {
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };
-
-#endif

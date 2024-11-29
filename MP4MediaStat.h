@@ -1,5 +1,4 @@
-#ifndef __MP4MEDTASTAT_H__
-#define __MP4MEDTASTAT_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 
@@ -20,5 +19,3 @@ class MP4MediaStat : public MP4AbstractAction {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

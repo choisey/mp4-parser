@@ -1,5 +1,4 @@
-#ifndef __DCP_H__
-#define __DCP_H__
+#pragma once
 
 namespace DCP {
 	class Object {
@@ -8,5 +7,3 @@ namespace DCP {
 			virtual ~Object();
 	};
 };
-
-#endif

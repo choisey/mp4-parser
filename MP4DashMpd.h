@@ -1,5 +1,4 @@
-#ifndef __MP4DASH_MPD_H__
-#define __MP4DASH_MPD_H__
+#pragma once
 
 #include "MP4Playlist.h"
 #include "MP4CodecConf.h"
@@ -14,5 +13,3 @@ class MP4DashMpd : public MP4Playlist, public MP4CodecConf, public MP4URLEncode 
 		//virtual void execute(std::shared_ptr<MP4AbstractBox>);
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };
-
-#endif

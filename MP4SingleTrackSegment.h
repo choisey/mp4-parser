@@ -1,5 +1,4 @@
-#ifndef __MP4_SINGLE_TRACK_SEGMENT_H__
-#define __MP4_SINGLE_TRACK_SEGMENT_H__
+#pragma once
 
 #include "MP4Segment.h"
 
@@ -16,5 +15,3 @@ class MP4SingleTrackSegment : public MP4Segment {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

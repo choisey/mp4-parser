@@ -1,5 +1,4 @@
-#ifndef __MP4RELOCATE_H__
-#define __MP4RELOCATE_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 #include <stdio.h>
@@ -63,5 +62,3 @@ class MP4Relocate : public MP4AbstractAction {
 };
 
 void Relocate(std::shared_ptr<MP4AbstractBox>, size_t = 0);
-
-#endif

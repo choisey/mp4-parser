@@ -1,5 +1,4 @@
-#ifndef __MP4ABSTRACTACTION_H__
-#define __MP4ABSTRACTACTION_H__
+#pragma once
 
 #include "MP4Obj.h"
 #include "MP4AbstractBox.h"
@@ -99,5 +98,3 @@ class MP4AbstractAction : public MP4Object {
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __MP4_FRAG_KEYFRAME_H__
-#define __MP4_FRAG_KEYFRAME_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 
@@ -25,5 +24,3 @@ class MP4FragKeyFrame : public MP4AbstractAction {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __MP4URLENCODE_H__
-#define __MP4URLENCODE_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 
@@ -11,5 +10,3 @@ class MP4URLEncode {
 	protected:
 		std::string url_encode(const std::string&);
 };
-
-#endif

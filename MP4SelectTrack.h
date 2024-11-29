@@ -1,5 +1,4 @@
-#ifndef __MP4SELECTTRACK_H__
-#define __MP4SELECTTRACK_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 
@@ -65,5 +64,3 @@ class MP4SelectTrack : public MP4AbstractAction {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

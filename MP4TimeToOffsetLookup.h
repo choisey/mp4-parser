@@ -1,5 +1,4 @@
-#ifndef __MP4_TIME_TO_OFFSET_LOOKUP_H__
-#define __MP4_TIME_TO_OFFSET_LOOKUP_H__
+#pragma once
 
 #include "MP4AbstractAction.h"
 
@@ -15,5 +14,3 @@ class MP4TimeToOffsetLookup : public MP4AbstractAction {
 	public:
 		virtual void execute(std::shared_ptr<MP4AbstractBox>);
 };
-
-#endif

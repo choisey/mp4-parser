@@ -1,5 +1,4 @@
-#ifndef __MP4_H__
-#define __MP4_H__
+#pragma once
 
 #include "MP4ContainerBox.h"
 #include "MP4ConcreteBox.h"
@@ -95,6 +94,4 @@ std::ostream& operator<<(std::ostream&, const std::map<uint64_t, std::pair<uint3
 std::ostream& operator<<(std::ostream&, const std::map<uint64_t, std::pair<uint64_t, uint32_t>>&);
 std::ostream& operator<<(std::ostream&, const std::map<uint32_t, std::vector<uint64_t>>&);
 std::ostream& operator<<(std::ostream&, const std::map<uint64_t, std::vector<uint64_t>>&);
-#endif
-
 #endif
