@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4FragKeyFrame.h"
+#include "mp4_frag_key_frame.h"
 //#include "mp4.h"
 #include <assert.h>
 

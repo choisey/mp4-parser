@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4TimeToOffsetLookup.h"
+#include "mp4_time_to_offset_lookup.h"
 #include "mp4.h"
 #include <assert.h>
 

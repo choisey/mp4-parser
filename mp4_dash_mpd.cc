@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4DashMpd.h"
+#include "mp4_dash_mpd.h"
 #include "mp4.h"
 #include <assert.h>
 #include <stdio.h>

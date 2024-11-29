@@ -10,25 +10,25 @@ srcs := $(srcdir)/mp4_object.cc \
 	$(srcdir)/mp4_url_encode.cc \
 	$(srcdir)/mp4_segment.cc \
 	$(srcdir)/mp4_fragment.cc \
-	$(srcdir)/MP4MultiTrackSegment.cc \
-	$(srcdir)/MP4SingleTrackSegment.cc \
-	$(srcdir)/MP4SequenceToTime.cc \
-	$(srcdir)/MP4MultiTrackSegmentBySequenceNumber.cc \
-	$(srcdir)/MP4SingleTrackSegmentBySequenceNumber.cc \
-	$(srcdir)/MP4HlsM3u8.cc \
-	$(srcdir)/MP4HlsMasterPlaylist.cc \
-	$(srcdir)/MP4HlsMediaPlaylist.cc \
-	$(srcdir)/MP4DashMpd.cc \
-	$(srcdir)/MP4InitializationSegment.cc \
-	$(srcdir)/MP4Relocate.cc \
+	$(srcdir)/mp4_multi_track_segment.cc \
+	$(srcdir)/mp4_single_track_segment.cc \
+	$(srcdir)/mp4_sequence_to_time.cc \
+	$(srcdir)/mp4_multi_track_segment_by_sequence_number.cc \
+	$(srcdir)/mp4_single_track_segment_by_sequence_number.cc \
+	$(srcdir)/mp4_hls_m3u8.cc \
+	$(srcdir)/mp4_hls_master_playlist.cc \
+	$(srcdir)/mp4_hls_media_playlist.cc \
+	$(srcdir)/mp4_dash_mpd.cc \
+	$(srcdir)/mp4_initialization_segment.cc \
+	$(srcdir)/mp4_relocate.cc \
 	$(srcdir)/mp4_load.cc \
 	$(srcdir)/mp4_save.cc \
 	$(srcdir)/mp4_dump.cc \
-	$(srcdir)/MP4SetBox.cc \
-	$(srcdir)/MP4FragKeyFrame.cc \
+	$(srcdir)/mp4_set_box.cc \
+	$(srcdir)/mp4_frag_key_frame.cc \
 	$(srcdir)/mp4_media_stat.cc \
-	$(srcdir)/MP4TimeToOffsetLoad.cc \
-	$(srcdir)/MP4TimeToOffsetLookup.cc \
+	$(srcdir)/mp4_time_to_offset_load.cc \
+	$(srcdir)/mp4_time_to_offset_lookup.cc \
 	$(srcdir)/mp4.cc \
 	$(srcdir)/io_file.cc \
 	$(srcdir)/io_local_file.cc \

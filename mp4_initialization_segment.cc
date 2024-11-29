@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4InitializationSegment.h"
+#include "mp4_initialization_segment.h"
 #include "mp4.h"
 #include <assert.h>
 

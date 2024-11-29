@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4SingleTrackSegment.h"
+#include "mp4_single_track_segment.h"
 #include "mp4.h"
 #include <assert.h>
 

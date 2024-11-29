@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4HlsM3u8.h"
+#include "mp4_hls_m3u8.h"
 #include "mp4.h"
 #include <assert.h>
 #include <stdio.h>

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "MP4SingleTrackSegment.h"
+#include "mp4_single_track_segment.h"
 
 class MP4SingleTrackSegmentBySequenceNumber : public MP4SingleTrackSegment {
 	public:

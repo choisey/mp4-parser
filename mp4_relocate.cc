@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4Relocate.h"
+#include "mp4_relocate.h"
 #include "mp4.h"
 #include <assert.h>
 

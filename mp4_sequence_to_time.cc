@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4SequenceToTime.h"
+#include "mp4_sequence_to_time.h"
 #include "mp4.h"
 #include <assert.h>
 

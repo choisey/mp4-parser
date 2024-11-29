@@ -5,7 +5,7 @@
 // MP4 parser
 // based on ISO/IEC 14496-12:2005(E)
 
-#include "MP4TimeToOffsetLoad.h"
+#include "mp4_time_to_offset_load.h"
 #include "mp4.h"
 #include "io.h"
 #include <assert.h>

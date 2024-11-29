@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4SetBox.h"
+#include "mp4_set_box.h"
 #include "mp4.h"
 #include <assert.h>
 

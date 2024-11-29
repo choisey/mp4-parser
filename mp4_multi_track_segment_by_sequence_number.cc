@@ -2,8 +2,8 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4MultiTrackSegmentBySequenceNumber.h"
-#include "MP4SequenceToTime.h"
+#include "mp4_multi_track_segment_by_sequence_number.h"
+#include "mp4_sequence_to_time.h"
 #include "mp4.h"
 #include <assert.h>
 

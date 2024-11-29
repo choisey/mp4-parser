@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4SelectTrack.h"
+#include "mp4_select_track.h"
 #include "mp4.h"
 #include <assert.h>
 #include <string.h>
