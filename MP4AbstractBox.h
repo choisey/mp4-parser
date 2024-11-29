@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "MP4Obj.h"
+#include "mp4_object.h"
 #include "MP4BoxTypes.h"
 #include <assert.h>
 #include <typeinfo>

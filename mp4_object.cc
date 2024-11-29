@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4Obj.h"
+#include "mp4_object.h"
 
 MP4Object::MP4Object()
 {
