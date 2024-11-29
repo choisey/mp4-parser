@@ -32,7 +32,7 @@ void MP4Relocate::MP4RelocateVisitor::relocateHead(BoxHead& head)
 	head.boxheadsize = head.size();
 }
 
-void MP4Relocate::MP4RelocateVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4Relocate::MP4RelocateVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _XX_ != head.boxtype );
 
@@ -324,13 +324,13 @@ MP4Relocate::~MP4Relocate()
 {
 }
 
-void MP4Relocate::execute(std::shared_ptr<MP4AbstractBox> box)
+void MP4Relocate::execute(std::shared_ptr<mp4_abstract_box> box)
 {
 	MP4RelocateVisitor relocator(_offset);
 	box->accept(&relocator);
 }
 
-void Relocate(std::shared_ptr<MP4AbstractBox> box, size_t offset)
+void Relocate(std::shared_ptr<mp4_abstract_box> box, size_t offset)
 {
 	MP4Relocate relocator(offset);
 	relocator.execute(box);

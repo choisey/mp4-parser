@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4BoxTypes.h"
+#include "mp4_box_types.h"
 #include <assert.h>
 
 bool BoxHead::is_fullbox() const

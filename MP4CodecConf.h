@@ -12,5 +12,5 @@ class MP4CodecConf {
 		virtual ~MP4CodecConf();
 
 	protected:
-		bool decoder_conf_string(std::shared_ptr<MP4AbstractBox>, std::string&);
+		bool decoder_conf_string(std::shared_ptr<mp4_abstract_box>, std::string&);
 };

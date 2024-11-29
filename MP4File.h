@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "MP4ContainerBox.h"
+#include "mp4_container_box.h"
 
-class MP4File : public MP4ContainerBox {
+class MP4File : public mp4_container_box {
 	public:
 		MP4File(const std::string&);
 		virtual ~MP4File();

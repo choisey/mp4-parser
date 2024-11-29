@@ -14,6 +14,6 @@ class MP4DashMpd : public MP4Playlist, public MP4CodecConf, public MP4URLEncode 
 		virtual ~MP4DashMpd();
 
 	public:
-		//virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		//virtual void execute(std::shared_ptr<mp4_abstract_box>);
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };

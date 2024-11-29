@@ -15,7 +15,7 @@ MP4Dump::MP4DumpVisitor::~MP4DumpVisitor()
 {
 }
 
-void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4Dump::MP4DumpVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	switch ( head.boxtype ) {
 		case MP4FILE:
@@ -564,7 +564,7 @@ MP4Dump::~MP4Dump()
 {
 }
 
-void MP4Dump::execute(std::shared_ptr<MP4AbstractBox> box)
+void MP4Dump::execute(std::shared_ptr<mp4_abstract_box> box)
 {
 	box->accept(&_v);
 }

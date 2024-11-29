@@ -17,7 +17,7 @@ class MP4InitializationSegment : public MP4AbstractAction {
 				uint32_t _track_id;
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 				virtual void visit(BoxHead&, FileTypeBox&);
 				virtual void visit(BoxHead&, MovieHeaderBox&);
 				virtual void visit(BoxHead&, TrackHeaderBox&);

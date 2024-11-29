@@ -19,7 +19,7 @@ MP4MediaStat::~MP4MediaStat()
 {
 }
 
-void MP4MediaStat::execute(std::shared_ptr<MP4AbstractBox> mp4)
+void MP4MediaStat::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	std::vector<Track> tracks;
 	for ( auto trak: select(mp4, TRAK) ) {

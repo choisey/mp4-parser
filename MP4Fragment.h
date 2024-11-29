@@ -17,7 +17,7 @@ class MP4Fragment : public MP4AbstractAction {
 				uint64_t _decode_time;
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 		};
 
 	public:
@@ -28,5 +28,5 @@ class MP4Fragment : public MP4AbstractAction {
 		uint64_t _decode_time;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

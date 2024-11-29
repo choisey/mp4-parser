@@ -15,5 +15,5 @@ class MP4SingleTrackSegmentBySequenceNumber : public MP4SingleTrackSegment {
 		uint32_t _segment_sequence;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

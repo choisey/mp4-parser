@@ -17,12 +17,12 @@ MP4InitializationSegment::MP4InitializationSegmentVisitor::~MP4InitializationSeg
 {
 }
 
-void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	switch ( head.boxtype ) {
 		case MP4FILE:
 			{
-				std::vector<std::shared_ptr<MP4AbstractBox>> bb;
+				std::vector<std::shared_ptr<mp4_abstract_box>> bb;
 
 				for ( auto child: boxes ) {
 					switch ( child->head().boxtype ) {
@@ -45,14 +45,14 @@ void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& h
 		case MOOV:
 			{
 				// mehd
-				std::shared_ptr<MP4ConcreteBox<MovieExtendsHeaderBox>> mehd = std::make_shared<MP4ConcreteBox<MovieExtendsHeaderBox>>(
+				std::shared_ptr<mp4_concrete_box<MovieExtendsHeaderBox>> mehd = std::make_shared<mp4_concrete_box<MovieExtendsHeaderBox>>(
 						BoxHead { 0, 0, 0, MEHD, 0, 0 }
 						);
 
 				mehd->data().fragment_duration = 0;
 
 				// trex
-				std::shared_ptr<MP4ConcreteBox<TrackExtendsBox>> trex = std::make_shared<MP4ConcreteBox<TrackExtendsBox>>(
+				std::shared_ptr<mp4_concrete_box<TrackExtendsBox>> trex = std::make_shared<mp4_concrete_box<TrackExtendsBox>>(
 						BoxHead { 0, 0, 0, TREX, 0, 0 }
 						);
 
@@ -63,13 +63,13 @@ void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& h
 				trex->data().default_sample_flags = 0;
 
 				// mvex
-				std::shared_ptr<MP4ContainerBox> mvex = std::make_shared<MP4ContainerBox>(
+				std::shared_ptr<mp4_container_box> mvex = std::make_shared<mp4_container_box>(
 						BoxHead { 0, 0, 0, MVEX, 0, 0 }
 						);
 				mvex->addChild(mehd);
 				mvex->addChild(trex);
 
-				std::vector<std::shared_ptr<MP4AbstractBox>> bb;
+				std::vector<std::shared_ptr<mp4_abstract_box>> bb;
 
 				for ( auto child: boxes ) {
 					switch ( child->head().boxtype ) {
@@ -115,7 +115,7 @@ void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& h
 
 		case TRAK:
 			{
-				std::vector<std::shared_ptr<MP4AbstractBox>> bb;
+				std::vector<std::shared_ptr<mp4_abstract_box>> bb;
 
 				for ( auto child: boxes ) {
 					switch ( child->head().boxtype ) {
@@ -135,7 +135,7 @@ void MP4InitializationSegment::MP4InitializationSegmentVisitor::visit(BoxHead& h
 
 		case STBL:
 			{
-				std::vector<std::shared_ptr<MP4AbstractBox>> stbl_new_child_boxes;
+				std::vector<std::shared_ptr<mp4_abstract_box>> stbl_new_child_boxes;
 
 				for ( auto child: boxes ) {
 					switch ( child->head().boxtype ) {

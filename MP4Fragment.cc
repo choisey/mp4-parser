@@ -25,14 +25,14 @@ MP4Fragment::MP4FragmentVisitor::~MP4FragmentVisitor()
 {
 }
 
-void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( MP4FILE == head.boxtype );
 
-	std::vector<std::shared_ptr<MP4AbstractBox>> fmp4_boxes;
+	std::vector<std::shared_ptr<mp4_abstract_box>> fmp4_boxes;
 
 	// sidx
-	std::shared_ptr<MP4ConcreteBox<SegmentIndexBox>> sidx = std::make_shared<MP4ConcreteBox<SegmentIndexBox>>(
+	std::shared_ptr<mp4_concrete_box<SegmentIndexBox>> sidx = std::make_shared<mp4_concrete_box<SegmentIndexBox>>(
 			BoxHead { 0, 0, 0, SIDX, 0, 0 }
 			);
 	sidx->data().reference_id = 1;
@@ -41,12 +41,12 @@ void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shar
 	sidx->data().first_offset = 0;
 
 	// moof
-	std::shared_ptr<MP4ContainerBox> moof = std::make_shared<MP4ContainerBox>(
+	std::shared_ptr<mp4_container_box> moof = std::make_shared<mp4_container_box>(
 			BoxHead { 0, 0, 0, MOOF, 0, 0 }
 			);
 
 	// mdat
-	std::shared_ptr<MP4AbstractBox> mdat;
+	std::shared_ptr<mp4_abstract_box> mdat;
 
 	uint32_t duration = 0;
 	uint32_t reference_size = 0;
@@ -63,7 +63,7 @@ void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shar
 					assert( 1 == mvhd.size() );
 					if ( 1 != mvhd.size() ) continue;
 
-					std::shared_ptr<MP4ConcreteBox<MovieFragmentHeaderBox>> mfhd = std::make_shared<MP4ConcreteBox<MovieFragmentHeaderBox>>(
+					std::shared_ptr<mp4_concrete_box<MovieFragmentHeaderBox>> mfhd = std::make_shared<mp4_concrete_box<MovieFragmentHeaderBox>>(
 							BoxHead { 0, 0, 0, MFHD, 0, 0 }
 							);
 					mfhd->data().sequence_number = 1;
@@ -98,20 +98,20 @@ void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shar
 						sidx->data().timescale = mdhd[0]->data().timescale;
 
 						// tfhd
-						std::shared_ptr<MP4ConcreteBox<TrackFragmentHeaderBox>> tfhd = std::make_shared<MP4ConcreteBox<TrackFragmentHeaderBox>>(
+						std::shared_ptr<mp4_concrete_box<TrackFragmentHeaderBox>> tfhd = std::make_shared<mp4_concrete_box<TrackFragmentHeaderBox>>(
 								BoxHead { 0, 0, 0, TFHD, 0, 0 }
 								);
 						tfhd->head().flag = 0;
 						tfhd->data().track_ID = tkhd[0]->data().track_ID;;
 
 						// tfdt
-						std::shared_ptr<MP4ConcreteBox<TrackFragmentDecodeTimeBox>> tfdt = std::make_shared<MP4ConcreteBox<TrackFragmentDecodeTimeBox>>(
+						std::shared_ptr<mp4_concrete_box<TrackFragmentDecodeTimeBox>> tfdt = std::make_shared<mp4_concrete_box<TrackFragmentDecodeTimeBox>>(
 								BoxHead { 0, 0, 0, TFDT, 0, 0 }
 								);
 						tfdt->data().decode_time = _decode_time;
 
 						// trun
-						std::shared_ptr<MP4ConcreteBox<TrackRunBox>> trun = std::make_shared<MP4ConcreteBox<TrackRunBox>>(
+						std::shared_ptr<mp4_concrete_box<TrackRunBox>> trun = std::make_shared<mp4_concrete_box<TrackRunBox>>(
 								BoxHead { 0, 0, 0, TRUN, 0, 0 }
 								);
 						trun->head().flag =
@@ -182,7 +182,7 @@ void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shar
 							assert( cti == ctts[0]->data().entries.end() );
 						}
 
-						std::shared_ptr<MP4ContainerBox> traf = std::make_shared<MP4ContainerBox>(
+						std::shared_ptr<mp4_container_box> traf = std::make_shared<mp4_container_box>(
 								BoxHead { 0, 0, 0, TRAF, 0, 0 }
 								);
 
@@ -220,7 +220,7 @@ void MP4Fragment::MP4FragmentVisitor::visit(BoxHead& head, std::vector<std::shar
 				assert( child->istype( typeid(MediaDataBox) ) );
 				reference_size += (
 						sizeof(uint32_t) * 2
-						+  std::static_pointer_cast<MP4ConcreteBox<MediaDataBox>>(child)->data().size()
+						+  std::static_pointer_cast<mp4_concrete_box<MediaDataBox>>(child)->data().size()
 						);
 				mdat = child;
 				break;
@@ -256,7 +256,7 @@ MP4Fragment::~MP4Fragment()
 {
 }
 
-void MP4Fragment::execute(std::shared_ptr<MP4AbstractBox> mp4)
+void MP4Fragment::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 	MP4FragmentVisitor v(_decode_time);

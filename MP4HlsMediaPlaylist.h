@@ -15,6 +15,6 @@ class MP4HlsMediaPlaylist : public MP4Playlist {
 		uint32_t _track_id;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };

@@ -45,7 +45,7 @@ MP4FragKeyFrame::~MP4FragKeyFrame()
 {
 }
 
-void MP4FragKeyFrame::execute(std::shared_ptr<MP4AbstractBox> mp4)
+void MP4FragKeyFrame::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 

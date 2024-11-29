@@ -13,8 +13,8 @@ class MP4SequenceToTime : public MP4Playlist {
 		virtual ~MP4SequenceToTime();
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 
-		uint64_t multi_track_segment_time(std::shared_ptr<MP4AbstractBox>, uint32_t);
-		uint64_t single_track_segment_time(std::shared_ptr<MP4AbstractBox>, uint32_t, uint32_t);
+		uint64_t multi_track_segment_time(std::shared_ptr<mp4_abstract_box>, uint32_t);
+		uint64_t single_track_segment_time(std::shared_ptr<mp4_abstract_box>, uint32_t, uint32_t);
 };

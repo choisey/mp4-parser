@@ -27,7 +27,7 @@ class MP4Save : public MP4AbstractAction {
 				void writeBoxHead(const BoxHead&);
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 				virtual void visit(BoxHead&, FileTypeBox&);
 				virtual void visit(BoxHead&, MovieHeaderBox&);
 				virtual void visit(BoxHead&, MovieExtendsHeaderBox&);
@@ -69,5 +69,5 @@ class MP4Save : public MP4AbstractAction {
 		std::string _filename;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

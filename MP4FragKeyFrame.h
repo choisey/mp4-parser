@@ -26,5 +26,5 @@ class MP4FragKeyFrame : public MP4AbstractAction {
 		virtual ~MP4FragKeyFrame();
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

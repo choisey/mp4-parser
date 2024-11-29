@@ -99,7 +99,7 @@ void MP4Save::MP4SaveVisitor::writeBoxHead(const BoxHead& head)
 #endif
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4Save::MP4SaveVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _XX_ != head.boxtype );
 
@@ -632,7 +632,7 @@ MP4Save::~MP4Save()
 {
 }
 
-void MP4Save::execute(std::shared_ptr<MP4AbstractBox> mp4)
+void MP4Save::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( typeid(*mp4) == typeid(MP4File) );
 	assert( MP4FILE == mp4->head().boxtype );

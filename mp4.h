@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "MP4ContainerBox.h"
-#include "MP4ConcreteBox.h"
+#include "mp4_container_box.h"
+#include "mp4_concrete_box.h"
 #include <typeinfo>
 #include <iostream>
 
@@ -14,13 +14,13 @@
 static const uint32_t MAX_32BIT	= 0xFFFFFFFF;
 static const uint64_t MAX_64BIT	= 0xFFFFFFFFFFFFFFFF;
 
-std::vector<std::shared_ptr<MP4AbstractBox>> select(
-		std::shared_ptr<MP4AbstractBox>,
+std::vector<std::shared_ptr<mp4_abstract_box>> select(
+		std::shared_ptr<mp4_abstract_box>,
 		uint32_t);
 
 template<typename T>
-std::vector<std::shared_ptr<MP4ConcreteBox<T>>> select(std::shared_ptr<MP4AbstractBox> b) {
-	std::vector<std::shared_ptr<MP4AbstractBox>> v;
+std::vector<std::shared_ptr<mp4_concrete_box<T>>> select(std::shared_ptr<mp4_abstract_box> b) {
+	std::vector<std::shared_ptr<mp4_abstract_box>> v;
 
 	if ( b->istype( typeid(T) ) ) {
 		v.push_back( b );
@@ -28,9 +28,9 @@ std::vector<std::shared_ptr<MP4ConcreteBox<T>>> select(std::shared_ptr<MP4Abstra
 
 	b->select(typeid(T), v);
 
-	std::vector<std::shared_ptr<MP4ConcreteBox<T>>> vc;
+	std::vector<std::shared_ptr<mp4_concrete_box<T>>> vc;
 	for ( auto iter = v.begin(); iter != v.end(); iter++ ) {
-		vc.push_back( std::static_pointer_cast<MP4ConcreteBox<T>>( *iter ) );
+		vc.push_back( std::static_pointer_cast<mp4_concrete_box<T>>( *iter ) );
 	}
 
 	return vc;
@@ -81,14 +81,14 @@ std::ostream& mp4_debug_dump_map(std::ostream& os, const std::map<T1, T2>& data)
 	return os;
 }
 
-std::ostream& operator<<(std::ostream&, std::shared_ptr<MP4AbstractBox>);
+std::ostream& operator<<(std::ostream&, std::shared_ptr<mp4_abstract_box>);
 std::ostream& operator<<(std::ostream&, const std::pair<uint32_t, uint32_t>);
 std::ostream& operator<<(std::ostream&, const std::pair<uint64_t, uint32_t>);
 std::ostream& operator<<(std::ostream&, const std::pair<uint64_t, uint64_t>);
 std::ostream& operator<<(std::ostream&, const std::vector<uint32_t>&);
 std::ostream& operator<<(std::ostream&, const std::vector<uint64_t>&);
 std::ostream& operator<<(std::ostream&, const std::vector<std::pair<uint64_t, uint64_t>>&);
-std::ostream& operator<<(std::ostream&, const std::vector<std::shared_ptr<MP4AbstractBox>>&);
+std::ostream& operator<<(std::ostream&, const std::vector<std::shared_ptr<mp4_abstract_box>>&);
 std::ostream& operator<<(std::ostream&, const std::vector<std::vector<uint32_t>>&);
 std::ostream& operator<<(std::ostream&, const std::map<uint32_t, uint32_t>&);
 std::ostream& operator<<(std::ostream&, const std::map<uint32_t, uint64_t>&);

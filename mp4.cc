@@ -5,9 +5,9 @@
 #include "mp4.h"
 #include <stdarg.h>
 
-std::vector<std::shared_ptr<MP4AbstractBox>> select(std::shared_ptr<MP4AbstractBox> b, uint32_t t)
+std::vector<std::shared_ptr<mp4_abstract_box>> select(std::shared_ptr<mp4_abstract_box> b, uint32_t t)
 {
-	std::vector<std::shared_ptr<MP4AbstractBox>> v;
+	std::vector<std::shared_ptr<mp4_abstract_box>> v;
 
 	if ( b->head().boxtype == t ) {
 		v.push_back( b );
@@ -20,7 +20,7 @@ std::vector<std::shared_ptr<MP4AbstractBox>> select(std::shared_ptr<MP4AbstractB
 
 #ifdef _DEBUG
 
-std::ostream& operator<<(std::ostream& os, std::shared_ptr<MP4AbstractBox> box)
+std::ostream& operator<<(std::ostream& os, std::shared_ptr<mp4_abstract_box> box)
 {
 	os << '(' << box->head().offset << ',' << box->head().boxsize << ')';
 	return os;
@@ -99,9 +99,9 @@ std::ostream& operator<<(std::ostream& os, const std::vector<std::pair<uint64_t,
 //	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const std::vector<std::shared_ptr<MP4AbstractBox>>& data)
+std::ostream& operator<<(std::ostream& os, const std::vector<std::shared_ptr<mp4_abstract_box>>& data)
 {
-	return mp4_debug_dump_vector<std::shared_ptr<MP4AbstractBox>>(os, data);
+	return mp4_debug_dump_vector<std::shared_ptr<mp4_abstract_box>>(os, data);
 //	os << '{';
 //	int count = 0;
 //	for ( auto e: data ) {

@@ -21,5 +21,5 @@ class MP4MediaStat : public MP4AbstractAction {
 		};
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

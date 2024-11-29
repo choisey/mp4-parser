@@ -5,7 +5,7 @@
 #pragma once
 
 #include "mp4_object.h"
-#include "MP4AbstractBox.h"
+#include "mp4_abstract_box.h"
 #include "MP4File.h"
 
 #define MIN_DURATION_OF_LAST_SEGMENT	1
@@ -47,7 +47,7 @@ class MP4AbstractAction : public MP4Object {
 				std::vector<std::pair<uint64_t, uint64_t>> _chunks;
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 				virtual void visit(BoxHead&, FileTypeBox&);
 				virtual void visit(BoxHead&, MovieHeaderBox&);
 				virtual void visit(BoxHead&, MovieExtendsHeaderBox&);
@@ -91,14 +91,14 @@ class MP4AbstractAction : public MP4Object {
 		};
 
 	protected:
-		bool validate_moov(std::shared_ptr<MP4AbstractBox>, Context&);
-		bool validate_trak(std::shared_ptr<MP4AbstractBox>, Context&);
-		bool validate_mdia(std::shared_ptr<MP4AbstractBox>, Context&);
-		bool validate_edts(std::shared_ptr<MP4AbstractBox>, std::shared_ptr<MP4AbstractBox>, Context&);
-		bool validate(std::shared_ptr<MP4AbstractBox>, Context&);
+		bool validate_moov(std::shared_ptr<mp4_abstract_box>, Context&);
+		bool validate_trak(std::shared_ptr<mp4_abstract_box>, Context&);
+		bool validate_mdia(std::shared_ptr<mp4_abstract_box>, Context&);
+		bool validate_edts(std::shared_ptr<mp4_abstract_box>, std::shared_ptr<mp4_abstract_box>, Context&);
+		bool validate(std::shared_ptr<mp4_abstract_box>, Context&);
 #endif
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };

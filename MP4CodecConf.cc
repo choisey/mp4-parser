@@ -21,7 +21,7 @@ MP4CodecConf::~MP4CodecConf()
 }
 
 // codec info
-bool MP4CodecConf::decoder_conf_string(std::shared_ptr<MP4AbstractBox> minf, std::string& codecs)
+bool MP4CodecConf::decoder_conf_string(std::shared_ptr<mp4_abstract_box> minf, std::string& codecs)
 {
 	assert( MINF == minf->head().boxtype);
 

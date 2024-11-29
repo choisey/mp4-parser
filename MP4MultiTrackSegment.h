@@ -17,11 +17,11 @@ class MP4MultiTrackSegment : public MP4Segment {
 
 	protected:
 		bool mp4_segment_boundary(
-				std::shared_ptr<MP4AbstractBox>,
+				std::shared_ptr<mp4_abstract_box>,
 				std::pair<uint64_t, uint64_t>&);
 
-		void make_empty(std::shared_ptr<MP4AbstractBox>);
+		void make_empty(std::shared_ptr<mp4_abstract_box>);
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

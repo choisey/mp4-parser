@@ -22,22 +22,22 @@ class MP4Segment : public MP4AbstractAction {
 
 	private:
 		bool mdia_segment_time_and_sample_range(
-				std::shared_ptr<MP4AbstractBox>, uint32_t,
+				std::shared_ptr<mp4_abstract_box>, uint32_t,
 				std::pair<uint64_t, uint64_t>,
 				std::pair<uint64_t, uint64_t>&,
 				std::pair<uint32_t, uint32_t>&);
 		bool sample_to_chunk(
-				std::shared_ptr<MP4AbstractBox>,
+				std::shared_ptr<mp4_abstract_box>,
 				std::pair<uint32_t, uint32_t>,
 				std::vector<Chunk>&);
 		bool minf_divide_samples_and_chunks(
-				std::shared_ptr<MP4AbstractBox>,
+				std::shared_ptr<mp4_abstract_box>,
 				std::pair<uint32_t, uint32_t>,
 				const std::vector<Chunk>&, uint64_t&);
 
 	protected:
 		bool divide(
-				std::shared_ptr<MP4AbstractBox>,
+				std::shared_ptr<mp4_abstract_box>,
 				uint32_t,
 				std::pair<uint64_t, uint64_t>,
 				uint64_t&);
@@ -45,15 +45,15 @@ class MP4Segment : public MP4AbstractAction {
 		// create/update edts box in trak
 		//	using timescale and duration
 		void update(
-				std::shared_ptr<MP4AbstractBox>,
+				std::shared_ptr<mp4_abstract_box>,
 				uint32_t, uint32_t,
 				uint64_t,
 				uint64_t);
 
 		// update mdat
 		//	using chunk offsets
-		void update(std::shared_ptr<MP4AbstractBox> box);
+		void update(std::shared_ptr<mp4_abstract_box> box);
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>) = 0;
+		virtual void execute(std::shared_ptr<mp4_abstract_box>) = 0;
 };

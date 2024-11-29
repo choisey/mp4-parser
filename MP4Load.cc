@@ -7,8 +7,8 @@
 
 #include "MP4Load.h"
 #include "mp4.h"
-#include "MP4ConcreteBox.h"
-#include "MP4ContainerBox.h"
+#include "mp4_concrete_box.h"
+#include "mp4_container_box.h"
 #include "MP4File.h"
 #include "io.h"
 #include <assert.h>
@@ -161,7 +161,7 @@ bool MP4Load::MP4LoadVisitor::readBoxHead(BoxHead& boxhead)
 	return true;
 }
 
-size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _f->is_open() );
 
@@ -178,7 +178,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 		case FREE:
 		case SKIP:
 			{
-				auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+				auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 				b->accept(this);
 				boxes.push_back(b);
 				return head.boxsize;
@@ -194,7 +194,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case META:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						return head.boxsize;
@@ -206,7 +206,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case META:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						return head.boxsize;
@@ -224,7 +224,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			{
 				case FTYP:
 					{
-						auto b = newBox<MP4ConcreteBox<FileTypeBox>>(head);
+						auto b = newBox<mp4_concrete_box<FileTypeBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -234,7 +234,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 				case MOOF:
 				case MOOV:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -242,7 +242,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case MDAT:
 					{
-						auto b = newBox<MP4ConcreteBox<MediaDataBox>>(head);
+						auto b = newBox<mp4_concrete_box<MediaDataBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -250,7 +250,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case ABST:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -258,7 +258,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case SIDX:
 					{
-						auto b = newBox<MP4ConcreteBox<SegmentIndexBox>>(head);
+						auto b = newBox<mp4_concrete_box<SegmentIndexBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -266,7 +266,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -278,7 +278,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case MVHD:
 					{
-						auto b = newBox<MP4ConcreteBox<MovieHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<MovieHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -288,7 +288,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 				case TRAK:
 				case UDTA:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -296,7 +296,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -308,7 +308,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case TKHD:
 					{
-						auto b = newBox<MP4ConcreteBox<TrackHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<TrackHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -318,7 +318,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 				case MDIA:
 				case UDTA:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -326,7 +326,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case TREF:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -334,7 +334,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -346,7 +346,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case MDHD:
 					{
-						auto b = newBox<MP4ConcreteBox<MediaHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<MediaHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -354,7 +354,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case HDLR:
 					{
-						auto b = newBox<MP4ConcreteBox<HandlerBox>>(head);
+						auto b = newBox<mp4_concrete_box<HandlerBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -362,7 +362,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case MINF:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -370,7 +370,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -383,7 +383,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 				case DINF:
 				case STBL:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -391,7 +391,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case VMHD:
 					{
-						auto b = newBox<MP4ConcreteBox<VideoMediaHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<VideoMediaHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -399,7 +399,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case SMHD:
 					{
-						auto b = newBox<MP4ConcreteBox<SoundMediaHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<SoundMediaHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -407,7 +407,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case HMHD:
 					{
-						auto b = newBox<MP4ConcreteBox<HintMediaHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<HintMediaHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -415,7 +415,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case NMHD:
 					{
-						auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -423,7 +423,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -435,7 +435,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case STSD:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -443,7 +443,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case STTS:
 					{
-						auto b = newBox<MP4ConcreteBox<TimeToSampleBox>>(head);
+						auto b = newBox<mp4_concrete_box<TimeToSampleBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -451,7 +451,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case CTTS:
 					{
-						auto b = newBox<MP4ConcreteBox<CompositionOffsetBox>>(head);
+						auto b = newBox<mp4_concrete_box<CompositionOffsetBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -459,7 +459,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case STSC:
 					{
-						auto b = newBox<MP4ConcreteBox<SampleToChunkBox>>(head);
+						auto b = newBox<mp4_concrete_box<SampleToChunkBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -467,7 +467,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case STSZ:
 					{
-						auto b = newBox<MP4ConcreteBox<SampleSizeBox>>(head);
+						auto b = newBox<mp4_concrete_box<SampleSizeBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -475,7 +475,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case STCO:
 					{
-						auto b = newBox<MP4ConcreteBox<ChunkOffsetBox>>(head);
+						auto b = newBox<mp4_concrete_box<ChunkOffsetBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -483,7 +483,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case CO64:
 					{
-						auto b = newBox<MP4ConcreteBox<ChunkLargeOffsetBox>>(head);
+						auto b = newBox<mp4_concrete_box<ChunkLargeOffsetBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -491,7 +491,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case STSS:
 					{
-						auto b = newBox<MP4ConcreteBox<SyncSampleBox>>(head);
+						auto b = newBox<mp4_concrete_box<SyncSampleBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -499,7 +499,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case SDTP:
 					{
-						auto b = newBox<MP4ConcreteBox<SampleDependencyTypeBox>>(head);
+						auto b = newBox<mp4_concrete_box<SampleDependencyTypeBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -507,7 +507,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -521,25 +521,25 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 					switch ( _handler_types.back() ) {
 						case HandlerBox::VIDEO:
 							{
-								//auto b = newBox<MP4ConcreteBox<SampleDescriptionBox::VisualSampleEntry>>(head);
+								//auto b = newBox<mp4_concrete_box<SampleDescriptionBox::VisualSampleEntry>>(head);
 								// To be safe
-								auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+								auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 								b->accept(this);
 								boxes.push_back(b);
 								break;
 							}
 						case HandlerBox::AUDIO:
 							{
-								//auto b = newBox<MP4ConcreteBox<SampleDescriptionBox::AudioSampleEntry>>(head);
+								//auto b = newBox<mp4_concrete_box<SampleDescriptionBox::AudioSampleEntry>>(head);
 								// To be safe
-								auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+								auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 								b->accept(this);
 								boxes.push_back(b);
 								break;
 							}
 						default:
 							{
-								auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+								auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 								b->accept(this);
 								boxes.push_back(b);
 							}
@@ -547,7 +547,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 				}
 				else {
 					assert(false);
-					auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+					auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 					b->accept(this);
 					boxes.push_back(b);
 				}
@@ -558,7 +558,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case MFHD:
 					{
-						auto b = newBox<MP4ConcreteBox<MovieFragmentHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<MovieFragmentHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -566,7 +566,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case TRAF:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -574,7 +574,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -586,7 +586,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case TFHD:
 					{
-						auto b = newBox<MP4ConcreteBox<TrackFragmentHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<TrackFragmentHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -594,7 +594,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case TFDT:
 					{
-						auto b = newBox<MP4ConcreteBox<TrackFragmentDecodeTimeBox>>(head);
+						auto b = newBox<mp4_concrete_box<TrackFragmentDecodeTimeBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -602,7 +602,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case TRUN:
 					{
-						auto b = newBox<MP4ConcreteBox<TrackRunBox>>(head);
+						auto b = newBox<mp4_concrete_box<TrackRunBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -610,7 +610,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -622,7 +622,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case ELST:
 					{
-						auto b = newBox<MP4ConcreteBox<EditListBox>>(head);
+						auto b = newBox<mp4_concrete_box<EditListBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -630,7 +630,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -642,7 +642,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case DREF:
 					{
-						auto b = newBox<MP4ContainerBox>(head);
+						auto b = newBox<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -650,7 +650,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case URL:
 					{
-						auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -658,7 +658,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case URN:
 					{
-						auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -666,7 +666,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -678,7 +678,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case URL:
 					{
-						auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -686,7 +686,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case URN:
 					{
-						auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -694,7 +694,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -706,7 +706,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case MEHD:
 					{
-						auto b = newBox<MP4ConcreteBox<MovieExtendsHeaderBox>>(head);
+						auto b = newBox<mp4_concrete_box<MovieExtendsHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -714,7 +714,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case TREX:
 					{
-						auto b = newBox<MP4ConcreteBox<TrackExtendsBox>>(head);
+						auto b = newBox<mp4_concrete_box<TrackExtendsBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -726,7 +726,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case TFRA:
 					{
-						auto b = newBox<MP4ConcreteBox<TrackFragmentRandomAccessBox>>(head);
+						auto b = newBox<mp4_concrete_box<TrackFragmentRandomAccessBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -734,7 +734,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				case MFRO:
 					{
-						auto b = newBox<MP4ConcreteBox<MovieFragmentRandomAccessOffsetBox>>(head);
+						auto b = newBox<mp4_concrete_box<MovieFragmentRandomAccessOffsetBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -742,7 +742,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -752,7 +752,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 		case UDTA:
 			{
-				auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+				auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 				b->accept(this);
 				boxes.push_back(b);
 				break;
@@ -762,7 +762,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 			switch ( head.boxtype ) {
 				case HDLR:
 					{
-						auto b = newBox<MP4ConcreteBox<HandlerBox>>(head);
+						auto b = newBox<mp4_concrete_box<HandlerBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -770,7 +770,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 
 				default:
 					{
-						auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -781,7 +781,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 		default:
 			{
 				assert(false);
-				auto b = newBox<MP4ConcreteBox<EmptyBox>>(head);
+				auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
 				b->accept(this);
 				boxes.push_back(b);
 				break;
@@ -791,7 +791,7 @@ size_t MP4Load::MP4LoadVisitor::readBox(size_t offset, uint32_t ctype, std::vect
 	return head.boxsize;
 }
 
-void MP4Load::MP4LoadVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4Load::MP4LoadVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _f->is_open() );
 
@@ -1423,7 +1423,7 @@ void MP4Load::MP4LoadVisitor::visit(BoxHead& head, DataReferenceBox& dref)
 			case URL:
 			case URN:
 				{
-					auto b = newBox<MP4ConcreteBox<DataBox<std::vector<uint8_t>>>>(dataentry_head);
+					auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(dataentry_head);
 					b->accept(this);
 					//boxes.push_back(b);
 std::cerr << "DREF" << std::endl;
@@ -1751,7 +1751,7 @@ MP4Load::~MP4Load()
 {
 }
 
-void MP4Load::execute(std::shared_ptr<MP4AbstractBox> box)
+void MP4Load::execute(std::shared_ptr<mp4_abstract_box> box)
 {
 	auto f = io::instance()->open( _uri );
 	if ( f->is_open() ) {

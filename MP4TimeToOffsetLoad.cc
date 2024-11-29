@@ -23,7 +23,7 @@ MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::~MP4TimeToOffsetLoadVisitor()
 {
 }
 
-void MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _f->is_open() );
 
@@ -41,7 +41,7 @@ void MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::visit(BoxHead& head, std::
 			return;
 		}
 
-		auto mfro_box = newBox<MP4ConcreteBox<MovieFragmentRandomAccessOffsetBox>>(mfro_head);
+		auto mfro_box = newBox<mp4_concrete_box<MovieFragmentRandomAccessOffsetBox>>(mfro_head);
 		mfro_box->accept(this);
 
 		// MFRA
@@ -79,7 +79,7 @@ MP4TimeToOffsetLoad::~MP4TimeToOffsetLoad()
 {
 }
 
-void MP4TimeToOffsetLoad::execute(std::shared_ptr<MP4AbstractBox> box)
+void MP4TimeToOffsetLoad::execute(std::shared_ptr<mp4_abstract_box> box)
 {
 	auto f = io::instance()->open( _uri );
 	if ( f->is_open() ) {

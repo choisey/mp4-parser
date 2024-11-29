@@ -16,21 +16,21 @@ class MP4Playlist : public MP4AbstractAction {
 
 	private:
 		bool minf_with_stss_to_segments(
-				std::shared_ptr<MP4AbstractBox>,
+				std::shared_ptr<mp4_abstract_box>,
 				uint64_t, uint32_t,
 				const std::vector<uint32_t>&,
 				std::vector<std::pair<uint64_t, uint64_t>>&);
 		bool minf_without_stss_to_segments(
-				std::shared_ptr<MP4AbstractBox>,
+				std::shared_ptr<mp4_abstract_box>,
 				uint64_t, uint32_t,
 				std::vector<std::pair<uint64_t, uint64_t>>&);
 
 	protected:
 		bool minf_to_segments(
-				std::shared_ptr<MP4AbstractBox>,
+				std::shared_ptr<mp4_abstract_box>,
 				uint32_t,
 				std::vector<std::pair<uint64_t, uint64_t>>&);
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

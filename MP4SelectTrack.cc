@@ -25,7 +25,7 @@ MP4SelectTrack::MP4SelectTrackVisitor::SelectByNumber::~SelectByNumber()
 {
 }
 
-bool MP4SelectTrack::MP4SelectTrackVisitor::SelectByNumber::is_selected(std::shared_ptr<MP4AbstractBox> trak)
+bool MP4SelectTrack::MP4SelectTrackVisitor::SelectByNumber::is_selected(std::shared_ptr<mp4_abstract_box> trak)
 {
 	const auto& tkhd = select<TrackHeaderBox>(trak);
 	assert( 1 == tkhd.size() );
@@ -43,7 +43,7 @@ MP4SelectTrack::MP4SelectTrackVisitor::SelectByMedia::~SelectByMedia()
 {
 }
 
-bool MP4SelectTrack::MP4SelectTrackVisitor::SelectByMedia::is_selected(std::shared_ptr<MP4AbstractBox> trak)
+bool MP4SelectTrack::MP4SelectTrackVisitor::SelectByMedia::is_selected(std::shared_ptr<mp4_abstract_box> trak)
 {
 	const auto& hdlr = select<HandlerBox>(trak);
 	assert( 1 == hdlr.size() );
@@ -67,13 +67,13 @@ MP4SelectTrack::MP4SelectTrackVisitor::~MP4SelectTrackVisitor()
 {
 }
 
-void MP4SelectTrack::MP4SelectTrackVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4SelectTrack::MP4SelectTrackVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	switch ( head.boxtype ) {
 		// moov
 		case 0x6d6f6f76:
 			{
-				std::vector<std::shared_ptr<MP4AbstractBox>> new_child_boxes;
+				std::vector<std::shared_ptr<mp4_abstract_box>> new_child_boxes;
 				for ( auto child: boxes ) {
 					switch ( child->head().boxtype ) {
 						// trak
@@ -120,7 +120,7 @@ MP4SelectTrack::~MP4SelectTrack()
 {
 }
 
-void MP4SelectTrack::execute(std::shared_ptr<MP4AbstractBox> mp4)
+void MP4SelectTrack::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 

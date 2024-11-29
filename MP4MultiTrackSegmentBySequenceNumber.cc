@@ -19,7 +19,7 @@ MP4MultiTrackSegmentBySequenceNumber::~MP4MultiTrackSegmentBySequenceNumber()
 {
 }
 
-void MP4MultiTrackSegmentBySequenceNumber::execute(std::shared_ptr<MP4AbstractBox> mp4)
+void MP4MultiTrackSegmentBySequenceNumber::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 

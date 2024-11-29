@@ -19,7 +19,7 @@ MP4Playlist::~MP4Playlist()
 }
 
 bool MP4Playlist::minf_with_stss_to_segments(
-		std::shared_ptr<MP4AbstractBox> box,
+		std::shared_ptr<mp4_abstract_box> box,
 		uint64_t segment_duration, uint32_t timescale,
 		const std::vector<uint32_t>& sync_samples,
 		std::vector<std::pair<uint64_t, uint64_t>>& segments)
@@ -93,7 +93,7 @@ bool MP4Playlist::minf_with_stss_to_segments(
 }
 
 bool MP4Playlist::minf_without_stss_to_segments(
-		std::shared_ptr<MP4AbstractBox> box,
+		std::shared_ptr<mp4_abstract_box> box,
 		uint64_t segment_duration, uint32_t timescale,
 		std::vector<std::pair<uint64_t, uint64_t>>& segments)
 {
@@ -150,7 +150,7 @@ bool MP4Playlist::minf_without_stss_to_segments(
 }
 
 bool MP4Playlist::minf_to_segments(
-		std::shared_ptr<MP4AbstractBox> minf,
+		std::shared_ptr<mp4_abstract_box> minf,
 		uint32_t timescale,
 		std::vector<std::pair<uint64_t, uint64_t>>& segments)
 {
@@ -187,7 +187,7 @@ bool MP4Playlist::minf_to_segments(
 	return true;
 }
 
-void MP4Playlist::execute(std::shared_ptr<MP4AbstractBox> mp4)
+void MP4Playlist::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	/*
 		+------+       +------+

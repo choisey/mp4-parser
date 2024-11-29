@@ -28,5 +28,5 @@ class MP4SetBox : public MP4AbstractAction {
 		std::vector<std::string> _params;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

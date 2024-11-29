@@ -31,7 +31,7 @@ MP4AbstractAction::MP4ValidateVisitor::~MP4ValidateVisitor()
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<MP4AbstractBox>>& boxes)
+void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	for ( auto child: boxes ) {
 		if ( _XX_ == child->head().boxtype 
@@ -632,7 +632,7 @@ MP4AbstractAction::~MP4AbstractAction()
 
 #ifdef _DEBUG
 
-bool MP4AbstractAction::validate_moov(std::shared_ptr<MP4AbstractBox> moov, Context& ctx)
+bool MP4AbstractAction::validate_moov(std::shared_ptr<mp4_abstract_box> moov, Context& ctx)
 {
 	bool valid = true;
 
@@ -666,7 +666,7 @@ bool MP4AbstractAction::validate_moov(std::shared_ptr<MP4AbstractBox> moov, Cont
 	return valid;
 }
 
-bool MP4AbstractAction::validate_trak(std::shared_ptr<MP4AbstractBox> trak, Context& ctx)
+bool MP4AbstractAction::validate_trak(std::shared_ptr<mp4_abstract_box> trak, Context& ctx)
 {
 	bool valid = true;
 
@@ -703,7 +703,7 @@ bool MP4AbstractAction::validate_trak(std::shared_ptr<MP4AbstractBox> trak, Cont
 	return valid;
 }
 
-bool MP4AbstractAction::validate_mdia(std::shared_ptr<MP4AbstractBox> mdia, Context& ctx)
+bool MP4AbstractAction::validate_mdia(std::shared_ptr<mp4_abstract_box> mdia, Context& ctx)
 {
 	std::vector<uint64_t> chunks;
 	std::vector<uint32_t> samples;
@@ -958,7 +958,7 @@ bool MP4AbstractAction::validate_mdia(std::shared_ptr<MP4AbstractBox> mdia, Cont
 	return true;
 }
 
-bool MP4AbstractAction::validate_edts(std::shared_ptr<MP4AbstractBox> mdia, std::shared_ptr<MP4AbstractBox> edts, Context& ctx)
+bool MP4AbstractAction::validate_edts(std::shared_ptr<mp4_abstract_box> mdia, std::shared_ptr<mp4_abstract_box> edts, Context& ctx)
 {
 	const auto& elst = select<EditListBox>(edts);
 	assert ( elst.size() <= 1 );
@@ -991,7 +991,7 @@ bool MP4AbstractAction::validate_edts(std::shared_ptr<MP4AbstractBox> mdia, std:
 	return true;
 }
 
-bool MP4AbstractAction::validate(std::shared_ptr<MP4AbstractBox> box, Context& ctx)
+bool MP4AbstractAction::validate(std::shared_ptr<mp4_abstract_box> box, Context& ctx)
 {
 	assert( MP4FILE ==  box->head().boxtype );
 
@@ -1022,7 +1022,7 @@ bool MP4AbstractAction::validate(std::shared_ptr<MP4AbstractBox> box, Context& c
 
 #endif
 
-void MP4AbstractAction::execute(std::shared_ptr<MP4AbstractBox> box)
+void MP4AbstractAction::execute(std::shared_ptr<mp4_abstract_box> box)
 {
 #ifdef _DEBUG
 	MP4ValidateVisitor v;

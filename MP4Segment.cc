@@ -16,7 +16,7 @@ MP4Segment::~MP4Segment()
 }
 
 bool MP4Segment::mdia_segment_time_and_sample_range(
-		std::shared_ptr<MP4AbstractBox> box, uint32_t timescale,
+		std::shared_ptr<mp4_abstract_box> box, uint32_t timescale,
 		std::pair<uint64_t, uint64_t> segment_time_target_range,
 		std::pair<uint64_t, uint64_t>& segment_time_range,
 		std::pair<uint32_t, uint32_t>& segment_sample_range)
@@ -202,7 +202,7 @@ bool MP4Segment::mdia_segment_time_and_sample_range(
 }
 
 bool MP4Segment::sample_to_chunk(
-		std::shared_ptr<MP4AbstractBox> box,
+		std::shared_ptr<mp4_abstract_box> box,
 		std::pair<uint32_t, uint32_t> ss,
 		std::vector<Chunk>& chunks)
 {
@@ -303,7 +303,7 @@ bool MP4Segment::sample_to_chunk(
 }
 
 bool MP4Segment::minf_divide_samples_and_chunks(
-		std::shared_ptr<MP4AbstractBox> minf,
+		std::shared_ptr<mp4_abstract_box> minf,
 		std::pair<uint32_t, uint32_t> ss,
 		const std::vector<Chunk>& chunks,
 		uint64_t& duration)
@@ -596,7 +596,7 @@ bool MP4Segment::minf_divide_samples_and_chunks(
 }
 
 bool MP4Segment::divide(
-		std::shared_ptr<MP4AbstractBox> minf,
+		std::shared_ptr<mp4_abstract_box> minf,
 		uint32_t media_timescale,
 		std::pair<uint64_t, uint64_t> segment_time_target_range,
 		uint64_t& duration)
@@ -640,7 +640,7 @@ bool MP4Segment::divide(
 
 // create/update edts
 void MP4Segment::update(
-		std::shared_ptr<MP4AbstractBox> trak,
+		std::shared_ptr<mp4_abstract_box> trak,
 		uint32_t movie_timescale,
 		uint32_t media_timescale,
 		uint64_t media_time,
@@ -688,10 +688,10 @@ void MP4Segment::update(
 
 	// no edts/elst is pre-existing
 
-	std::shared_ptr<MP4ContainerBox> new_edts = std::make_shared<MP4ContainerBox>( BoxHead {
+	std::shared_ptr<mp4_container_box> new_edts = std::make_shared<mp4_container_box>( BoxHead {
 			0, 0, 0, EDTS, 1, 0
 			} );
-	std::shared_ptr<MP4ConcreteBox<EditListBox>> new_elst = std::make_shared<MP4ConcreteBox<EditListBox>>( BoxHead {
+	std::shared_ptr<mp4_concrete_box<EditListBox>> new_elst = std::make_shared<mp4_concrete_box<EditListBox>>( BoxHead {
 			0, 0, 0, ELST, 1, 0
 			} );
 	*trak << new_edts;
@@ -709,7 +709,7 @@ void MP4Segment::update(
 }
 
 // update mdat
-void MP4Segment::update(std::shared_ptr<MP4AbstractBox> mp4)
+void MP4Segment::update(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( MP4FILE == mp4->head().boxtype );
 
@@ -717,7 +717,7 @@ void MP4Segment::update(std::shared_ptr<MP4AbstractBox> mp4)
 	if ( mdat.empty() ) return;
 
 	// mdat
-	std::shared_ptr<MP4ConcreteBox<MediaDataBox>> new_mdat = std::make_shared<MP4ConcreteBox<MediaDataBox>>(
+	std::shared_ptr<mp4_concrete_box<MediaDataBox>> new_mdat = std::make_shared<mp4_concrete_box<MediaDataBox>>(
 			BoxHead { 0, 0, 0, MDAT, 0, 0 }
 			);
 

@@ -74,10 +74,10 @@ class MP4Load : public MP4AbstractAction {
 				bool readU32(uint32_t&);
 				bool readU64(uint64_t&);
 				bool readBoxHead(BoxHead&);
-				size_t readBox(size_t, uint32_t, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				size_t readBox(size_t, uint32_t, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 				virtual void visit(BoxHead&, FileTypeBox&);
 				virtual void visit(BoxHead&, MovieHeaderBox&);
 				virtual void visit(BoxHead&, MovieExtendsHeaderBox&);
@@ -120,6 +120,6 @@ class MP4Load : public MP4AbstractAction {
 		std::string _uri;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 		virtual void execute(std::vector<std::shared_ptr<MP4File>>&);
 };

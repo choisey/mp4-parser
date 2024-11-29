@@ -21,7 +21,7 @@ class MP4Relocate : public MP4AbstractAction {
 				void relocateHead(BoxHead&);
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 				virtual void visit(BoxHead&, FileTypeBox&);
 				virtual void visit(BoxHead&, MovieHeaderBox&);
 				virtual void visit(BoxHead&, MovieExtendsHeaderBox&);
@@ -62,7 +62,7 @@ class MP4Relocate : public MP4AbstractAction {
 		size_t _offset;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };
 
-void Relocate(std::shared_ptr<MP4AbstractBox>, size_t = 0);
+void Relocate(std::shared_ptr<mp4_abstract_box>, size_t = 0);

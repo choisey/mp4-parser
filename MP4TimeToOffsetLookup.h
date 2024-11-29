@@ -16,5 +16,5 @@ class MP4TimeToOffsetLookup : public MP4AbstractAction {
 		uint64_t _time;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

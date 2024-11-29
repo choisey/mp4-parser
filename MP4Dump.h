@@ -17,7 +17,7 @@ class MP4Dump : public MP4AbstractAction {
 				std::vector<std::string> _pathvector;
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 				virtual void visit(BoxHead&, FileTypeBox&);
 				virtual void visit(BoxHead&, MovieHeaderBox&);
 				virtual void visit(BoxHead&, MovieExtendsHeaderBox&);
@@ -60,5 +60,5 @@ class MP4Dump : public MP4AbstractAction {
 		MP4DumpVisitor _v;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };

@@ -5,12 +5,12 @@
 #pragma once
 
 #include "mp4_object.h"
-#include "MP4BoxTypes.h"
+#include "mp4_box_types.h"
 #include <assert.h>
 #include <typeinfo>
 #include <memory>
 
-class MP4AbstractBox;
+class mp4_abstract_box;
 
 class MP4Visitor : public MP4Object {
 	public:
@@ -18,7 +18,7 @@ class MP4Visitor : public MP4Object {
 		virtual ~MP4Visitor();
 
 	public:
-		virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+		virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 		virtual void visit(BoxHead&, FileTypeBox&) {}
 		virtual void visit(BoxHead&, MovieHeaderBox&) {}
 		virtual void visit(BoxHead&, MovieExtendsHeaderBox&) {}
@@ -53,11 +53,11 @@ class MP4Visitor : public MP4Object {
 		virtual void visit(BoxHead&, EmptyBox&) {}
 };
 
-class MP4AbstractBox : public MP4Object {
+class mp4_abstract_box : public MP4Object {
 	public:
-		MP4AbstractBox(const MP4AbstractBox&);
-		MP4AbstractBox(const BoxHead&);
-		virtual ~MP4AbstractBox();
+		mp4_abstract_box(const mp4_abstract_box&);
+		mp4_abstract_box(const BoxHead&);
+		virtual ~mp4_abstract_box();
 
 	protected:
 		BoxHead _head;
@@ -65,13 +65,13 @@ class MP4AbstractBox : public MP4Object {
 	public:
 		BoxHead& head() { return _head; }
 
-		virtual std::shared_ptr<MP4AbstractBox> clone() = 0;
+		virtual std::shared_ptr<mp4_abstract_box> clone() = 0;
 		virtual void remove() = 0;
 		virtual void accept(MP4Visitor*) = 0;
-		virtual void select(uint32_t, std::vector<std::shared_ptr<MP4AbstractBox>>&) = 0;
-		virtual void select(const std::type_info&, std::vector<std::shared_ptr<MP4AbstractBox>>&) = 0;
+		virtual void select(uint32_t, std::vector<std::shared_ptr<mp4_abstract_box>>&) = 0;
+		virtual void select(const std::type_info&, std::vector<std::shared_ptr<mp4_abstract_box>>&) = 0;
 		virtual bool istype(const std::type_info&) const = 0;
 
-		virtual void addChild(std::shared_ptr<MP4AbstractBox>);
-		virtual MP4AbstractBox& operator<<(std::shared_ptr<MP4AbstractBox>);
+		virtual void addChild(std::shared_ptr<mp4_abstract_box>);
+		virtual mp4_abstract_box& operator<<(std::shared_ptr<mp4_abstract_box>);
 };

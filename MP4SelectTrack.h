@@ -16,7 +16,7 @@ class MP4SelectTrack : public MP4AbstractAction {
 						virtual ~SelectStrategy();
 
 					public:
-						virtual bool is_selected(std::shared_ptr<MP4AbstractBox>) = 0;
+						virtual bool is_selected(std::shared_ptr<mp4_abstract_box>) = 0;
 				};
 
 				class SelectByNumber : public SelectStrategy {
@@ -28,7 +28,7 @@ class MP4SelectTrack : public MP4AbstractAction {
 						uint32_t _track_id;
 
 					public:
-						virtual bool is_selected(std::shared_ptr<MP4AbstractBox>);
+						virtual bool is_selected(std::shared_ptr<mp4_abstract_box>);
 				};
 
 				class SelectByMedia : public SelectStrategy {
@@ -41,7 +41,7 @@ class MP4SelectTrack : public MP4AbstractAction {
 						int _selected;
 
 					public:
-						virtual bool is_selected(std::shared_ptr<MP4AbstractBox>);
+						virtual bool is_selected(std::shared_ptr<mp4_abstract_box>);
 				};
 
 			public:
@@ -52,7 +52,7 @@ class MP4SelectTrack : public MP4AbstractAction {
 				std::shared_ptr<MP4SelectTrackVisitor::SelectStrategy> _selector;
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<MP4AbstractBox>>&);
+				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 				virtual void visit(BoxHead&, MovieHeaderBox&);
 				virtual void visit(BoxHead&, TrackHeaderBox&);
 		};
@@ -66,5 +66,5 @@ class MP4SelectTrack : public MP4AbstractAction {
 		std::shared_ptr<MP4SelectTrackVisitor::SelectStrategy> _selector;
 
 	public:
-		virtual void execute(std::shared_ptr<MP4AbstractBox>);
+		virtual void execute(std::shared_ptr<mp4_abstract_box>);
 };
