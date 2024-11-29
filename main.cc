@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Seungyeob Choi
+ */
+
 #include "MP4.h"
 #include "MP4File.h"
 #include "MP4Load.h"

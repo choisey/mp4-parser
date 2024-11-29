@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Seungyeob Choi
+ */
+
 #include "MP4SingleTrackSegmentBySequenceNumber.h"
 #include "MP4SequenceToTime.h"
 #include <assert.h>

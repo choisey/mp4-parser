@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Seungyeob Choi
+ */
+
 #include "IO.h"
 #include "LocalFile.h"
 #include "RemoteFile.h"

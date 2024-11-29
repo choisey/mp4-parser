@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Seungyeob Choi
+ */
+
 #include "RemoteFile.h"
 #include <assert.h>
 #include <stdlib.h>

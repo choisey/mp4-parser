@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Seungyeob Choi
+ */
+
 #include "MP4Fragment.h"
 #include "MP4Relocate.h"
 #include "MP4.h"

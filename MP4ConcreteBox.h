@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Seungyeob Choi
+ */
+
 #pragma once
 
 #include "MP4AbstractBox.h"

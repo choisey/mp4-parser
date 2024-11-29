@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Seungyeob Choi
+ */
+
 // MP4 parser
 // based on ISO/IEC 14496-12:2005(E)
 
