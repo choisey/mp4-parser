@@ -37,11 +37,11 @@ void mp4_time_to_offset_load::mp4_time_to_offset_load_visitor::visit(BoxHead& he
 
 		BoxHead mfro_head;
 
-		if ( !readBoxHead(mfro_head) || MFRO != mfro_head.boxtype ) {
+		if ( !read_box_head(mfro_head) || MFRO != mfro_head.boxtype ) {
 			return;
 		}
 
-		auto mfro_box = newBox<mp4_concrete_box<MovieFragmentRandomAccessOffsetBox>>(mfro_head);
+		auto mfro_box = new_box<mp4_concrete_box<MovieFragmentRandomAccessOffsetBox>>(mfro_head);
 		mfro_box->accept(this);
 
 		// MFRA
@@ -57,7 +57,7 @@ void mp4_time_to_offset_load::mp4_time_to_offset_load_visitor::visit(BoxHead& he
 		size_t offset = pos;
 		size_t nb;
 
-		while ( ( nb = readBox(offset, head.boxtype, boxes) ) != 0 ) {
+		while ( ( nb = read_box(offset, head.boxtype, boxes) ) != 0 ) {
 			offset += nb;
 			_f->seek(offset, SEEK_SET);
 		}

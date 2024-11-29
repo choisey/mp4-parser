@@ -7,25 +7,25 @@
 #include <assert.h>
 #include <string.h>
 
-mp4_select_track::mp4_select_track_visitor::SelectStrategy::SelectStrategy()
+mp4_select_track::mp4_select_track_visitor::select_strategy::select_strategy()
 {
 }
 
-mp4_select_track::mp4_select_track_visitor::SelectStrategy::~SelectStrategy()
+mp4_select_track::mp4_select_track_visitor::select_strategy::~select_strategy()
 {
 }
 
-mp4_select_track::mp4_select_track_visitor::SelectByNumber::SelectByNumber(uint32_t track_id)
+mp4_select_track::mp4_select_track_visitor::select_by_number::select_by_number(uint32_t track_id)
 	: _track_id(track_id)
 {
 	 _track_id = track_id;
 }
 
-mp4_select_track::mp4_select_track_visitor::SelectByNumber::~SelectByNumber()
+mp4_select_track::mp4_select_track_visitor::select_by_number::~select_by_number()
 {
 }
 
-bool mp4_select_track::mp4_select_track_visitor::SelectByNumber::is_selected(std::shared_ptr<mp4_abstract_box> trak)
+bool mp4_select_track::mp4_select_track_visitor::select_by_number::is_selected(std::shared_ptr<mp4_abstract_box> trak)
 {
 	const auto& tkhd = select<TrackHeaderBox>(trak);
 	assert( 1 == tkhd.size() );
@@ -33,17 +33,17 @@ bool mp4_select_track::mp4_select_track_visitor::SelectByNumber::is_selected(std
 	return ( tkhd[0]->data().track_ID == _track_id ) ? true : false;
 }
 
-mp4_select_track::mp4_select_track_visitor::SelectByMedia::SelectByMedia(const char* media_type)
+mp4_select_track::mp4_select_track_visitor::select_by_media::select_by_media(const char* media_type)
 	: _media_type(media_type)
 	, _selected(0)
 {
 }
 
-mp4_select_track::mp4_select_track_visitor::SelectByMedia::~SelectByMedia()
+mp4_select_track::mp4_select_track_visitor::select_by_media::~select_by_media()
 {
 }
 
-bool mp4_select_track::mp4_select_track_visitor::SelectByMedia::is_selected(std::shared_ptr<mp4_abstract_box> trak)
+bool mp4_select_track::mp4_select_track_visitor::select_by_media::is_selected(std::shared_ptr<mp4_abstract_box> trak)
 {
 	const auto& hdlr = select<HandlerBox>(trak);
 	assert( 1 == hdlr.size() );
@@ -58,7 +58,7 @@ bool mp4_select_track::mp4_select_track_visitor::SelectByMedia::is_selected(std:
 
 // mp4_select_track_visitor
 
-mp4_select_track::mp4_select_track_visitor::mp4_select_track_visitor(std::shared_ptr<mp4_select_track::mp4_select_track_visitor::SelectStrategy> selector)
+mp4_select_track::mp4_select_track_visitor::mp4_select_track_visitor(std::shared_ptr<mp4_select_track::mp4_select_track_visitor::select_strategy> selector)
 	: _selector(selector)
 {
 }
@@ -108,12 +108,12 @@ void mp4_select_track::mp4_select_track_visitor::visit(BoxHead& head, TrackHeade
 
 mp4_select_track::mp4_select_track(uint32_t track_id)
 {
-	_selector = std::make_shared<mp4_select_track::mp4_select_track_visitor::SelectByNumber>(track_id);
+	_selector = std::make_shared<mp4_select_track::mp4_select_track_visitor::select_by_number>(track_id);
 }
 
 mp4_select_track::mp4_select_track(const char* media_type)
 {
-	_selector = std::make_shared<mp4_select_track::mp4_select_track_visitor::SelectByMedia>(media_type);
+	_selector = std::make_shared<mp4_select_track::mp4_select_track_visitor::select_by_media>(media_type);
 }
 
 mp4_select_track::~mp4_select_track()

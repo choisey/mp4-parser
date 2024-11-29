@@ -15,7 +15,7 @@ mp4_relocate::mp4_relocate_visitor::~mp4_relocate_visitor()
 {
 }
 
-void mp4_relocate::mp4_relocate_visitor::relocateHead(BoxHead& head)
+void mp4_relocate::mp4_relocate_visitor::relocate_head(BoxHead& head)
 {
 #ifdef _DEBUG
 	fprintf(stderr, "** %s:%s(%d) head.boxtype=%c%c%c%c, head.boxheadsize=%lu, head.offset=%lu=>%lu\n", __func__, __FILE__, __LINE__,
@@ -37,7 +37,7 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, std::vector<std::s
 	assert( _XX_ != head.boxtype );
 
 	if ( MP4FILE != head.boxtype ) {
-		relocateHead(head);
+		relocate_head(head);
 		_offset += head.boxheadsize;
 	}
 
@@ -64,70 +64,70 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, std::vector<std::s
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, FileTypeBox& ftyp)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + ftyp.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + mvhd.size( head.version );
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + mehd.size ( head.version );
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + tkhd.size( head.version );
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + mdhd.size( head.version );
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, HandlerBox& hdlr)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + hdlr.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + vmhd.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + smhd.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + hmhd.size();
 	_offset += head.boxsize;
 }
 
 //void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SampleDescriptionBox::VisualSampleEntry& sd)
 //{
-//	relocateHead(head);
+//	relocate_head(head);
 //	head.boxsize = head.boxheadsize
 //		+ sizeof(uint8_t) * 6				// reserved = 0
 //		+ sizeof(uint16_t)				// data_reference_index
@@ -149,7 +149,7 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, HintMediaHeaderBox
 //
 //void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SampleDescriptionBox::AudioSampleEntry& sd)
 //{
-//	relocateHead(head);
+//	relocate_head(head);
 //	head.boxsize = head.boxheadsize
 //		+ sizeof(uint8_t) * 6				// reserved = 0
 //		+ sizeof(uint16_t)				// data_reference_index
@@ -169,7 +169,7 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, HintMediaHeaderBox
 //
 //void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SampleDescriptionBox::HintSampleEntry& sd)
 //{
-//	relocateHead(head);
+//	relocate_head(head);
 //	head.boxsize = head.boxheadsize
 //		+ sizeof(uint8_t) * 6				// reserved = 0
 //		+ sizeof(uint16_t)				// data_reference_index
@@ -180,49 +180,49 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, HintMediaHeaderBox
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + stts.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + ctts.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + stsc.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + stsz.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + stco.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + co64.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SyncSampleBox& stss)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + stss.size();
 	_offset += head.boxsize;
 }
@@ -235,7 +235,7 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SampleDependencyTy
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, EditListBox& elst)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.version = 1;
 	head.boxsize = head.boxheadsize + elst.size( head.version );
 	_offset += head.boxsize;
@@ -243,42 +243,42 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, EditListBox& elst)
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + tfhd.size( head.flag );
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + tfdt.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, TrackRunBox& trun)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + trun.size( head.flag );
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + sidx.size( head.version );
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + mfhd.size();
 	_offset += head.boxsize;
 }
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, TrackExtendsBox& trex)
 {
-	relocateHead(head);
+	relocate_head(head);
 	head.boxsize = head.boxheadsize + trex.size();
 	_offset += head.boxsize;
 }
@@ -286,7 +286,7 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, TrackExtendsBox& t
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 	if ( !mdat.byte_ranges.empty() ) {
-		relocateHead(head);
+		relocate_head(head);
 		head.boxsize = head.boxheadsize;
 
 		for ( auto b: mdat.byte_ranges ) {
@@ -303,7 +303,7 @@ void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, MediaDataBox& mdat
 
 void mp4_relocate::mp4_relocate_visitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
 {
-	relocateHead(head);
+	relocate_head(head);
 	_offset += head.boxsize;
 }
 

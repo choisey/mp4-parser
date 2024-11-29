@@ -17,8 +17,8 @@ class mp4_hls_master_playlist : public mp4_abstract_action, public mp4_codec_con
 		uint32_t _version;
 
 	private:
-		void langCodeToName(uint8_t, uint8_t, uint8_t, std::string&, std::string&);
-		void langCodeToName(uint32_t, std::string&, std::string&);
+		void lang_code_to_name(uint8_t, uint8_t, uint8_t, std::string&, std::string&);
+		void lang_code_to_name(uint32_t, std::string&, std::string&);
 		void hls3_master_m3u8(std::vector<std::shared_ptr<mp4_file>>&);
 		void hls7_master_m3u8(std::vector<std::shared_ptr<mp4_file>>&);
 

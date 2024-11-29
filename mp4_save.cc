@@ -71,12 +71,12 @@ void mp4_save::mp4_save_visitor::write4C(const char* cp)
 	fwrite(buf, sizeof(buf), 1, _fp);
 }
 
-void mp4_save::mp4_save_visitor::writeString(const std::string& str)
+void mp4_save::mp4_save_visitor::write_string(const std::string& str)
 {
 	fwrite(str.c_str(), str.size(), 1, _fp);
 }
 
-void mp4_save::mp4_save_visitor::writeBoxHead(const BoxHead& head)
+void mp4_save::mp4_save_visitor::write_box_head(const BoxHead& head)
 {
 //	if ( BOXSIZE_THRESHOLD < head.boxsize ) {
 //		write32b(0x00000001);
@@ -104,7 +104,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, std::vector<std::shared_pt
 	assert( _XX_ != head.boxtype );
 
 	if ( MP4FILE != head.boxtype ) {
-		writeBoxHead(head);
+		write_box_head(head);
 	}
 
 	// dref and stsd have different structure
@@ -124,7 +124,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, std::vector<std::shared_pt
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, FileTypeBox& ftyp)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write4C(ftyp.major_brand.c_str());
 	write4C(ftyp.minor_version.c_str());
 	for ( auto brand: ftyp.compatible_brands ) {
@@ -134,7 +134,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, FileTypeBox& ftyp)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 
 	switch ( head.version ) {
 		case 1:
@@ -173,7 +173,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	switch ( head.version ) {
 	case 1:
 		write64b(mehd.fragment_duration);
@@ -186,7 +186,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, MovieExtendsHeaderBox& meh
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 
 	switch ( head.version ) {
 		case 1:
@@ -225,7 +225,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 
 	switch ( head.version ) {
 		case 1:
@@ -251,7 +251,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, HandlerBox& hdlr)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(0);
 	write32b(hdlr.handler_type);
 
@@ -260,12 +260,12 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, HandlerBox& hdlr)
 	write32b(0);
 	write32b(0);
 
-	writeString(hdlr.name);
+	write_string(hdlr.name);
 }
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write16b(vmhd.graphicsmode);
 	write16b(vmhd.opcolor[0]);
 	write16b(vmhd.opcolor[1]);
@@ -274,14 +274,14 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write16b(smhd.balance);
 	write16b(0);
 }
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write16b(hmhd.maxPDUsize);
 	write16b(hmhd.avgPDUsize);
 	write32b(hmhd.maxbitrate);
@@ -291,7 +291,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 
 //void mp4_save::mp4_save_visitor::visit(BoxHead& head, SampleDescriptionBox::VisualSampleEntry& sd)
 //{
-//	writeBoxHead(head);
+//	write_box_head(head);
 //	write32b(0);
 //	write32b((uint32_t) sd.data_reference_index);
 //
@@ -323,7 +323,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //
 //void mp4_save::mp4_save_visitor::visit(BoxHead& head, SampleDescriptionBox::AudioSampleEntry& sd)
 //{
-//	writeBoxHead(head);
+//	write_box_head(head);
 //	write32b(0);
 //	write32b((uint32_t) sd.data_reference_index);
 //
@@ -346,7 +346,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //
 //void mp4_save::mp4_save_visitor::visit(BoxHead& head, SampleDescriptionBox::HintSampleEntry& sd)
 //{
-//	writeBoxHead(head);
+//	write_box_head(head);
 //	write32b(0);
 //	write32b((uint32_t) sd.data_reference_index);
 //	for ( auto byte: sd.data ) {
@@ -356,7 +356,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(stts.entries.size());
 	for ( auto e: stts.entries ) {
 		write32b(e.sample_count);
@@ -366,7 +366,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(ctts.entries.size());
 	for ( auto e: ctts.entries ) {
 		write32b(e.sample_count);
@@ -376,7 +376,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(stsc.entries.size());
 	for ( auto e: stsc.entries ) {
 		write32b(e.first_chunk);
@@ -387,7 +387,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(0);
 	write32b(stsz.entry_sizes.size());
 	for ( auto size: stsz.entry_sizes ) {
@@ -397,7 +397,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(stco.chunk_offsets.size());
 	for ( auto co: stco.chunk_offsets ) {
 		write32b(co);
@@ -406,7 +406,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(co64.chunk_offsets.size());
 	for ( auto co: co64.chunk_offsets ) {
 		write64b(co);
@@ -415,7 +415,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, SyncSampleBox& stss)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(stss.sample_numbers.size());
 	for ( auto s: stss.sample_numbers ) {
 		write32b(s);
@@ -429,7 +429,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, SampleDependencyTypeBox& s
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, EditListBox& elst)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(elst.entries.size());
 	for ( auto e: elst.entries ) {
 
@@ -452,7 +452,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, EditListBox& elst)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(tfhd.track_ID);
 	if ( head.flag & 0x000001 ) write64b(tfhd.base_data_offset);
 	if ( head.flag & 0x000002 ) write32b(tfhd.sample_description_index);
@@ -463,13 +463,13 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackFragmentHeaderBox& tf
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write64b(tfdt.decode_time);
 }
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackRunBox& trun)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(trun.samples.size());
 	if ( head.flag & 0x000001 ) write32b(trun.data_offset);
 	if ( head.flag & 0x000004 ) write32b(trun.first_sample_flags);
@@ -483,7 +483,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackRunBox& trun)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	if ( 1 == head.version ) {
 		write32b(sidx.reference_id);
 		write32b(sidx.timescale);
@@ -516,13 +516,13 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(mfhd.sequence_number);
 }
 
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackExtendsBox& trex)
 {
-	writeBoxHead(head);
+	write_box_head(head);
 	write32b(trex.track_ID);
 	write32b(trex.default_sample_description_index);
 	write32b(trex.default_sample_duration);
@@ -533,7 +533,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, TrackExtendsBox& trex)
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 	if ( !mdat.byte_ranges.empty() ) {
-		writeBoxHead(head);
+		write_box_head(head);
 
 		auto f = io::instance()->open(mdat.uri.c_str());
 		if ( f->is_open() ) {
@@ -605,7 +605,7 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
 {
 	if ( 0 != head.boxsize ) {
-		writeBoxHead(head);
+		write_box_head(head);
 		for ( auto b: box.boxdata ) {
 			write8b(b);
 		}

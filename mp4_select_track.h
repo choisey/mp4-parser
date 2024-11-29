@@ -10,19 +10,19 @@ class mp4_select_track : public mp4_abstract_action {
 	protected:
 		class mp4_select_track_visitor : public mp4_visitor {
 			public:
-				class SelectStrategy {
+				class select_strategy {
 					public:
-						SelectStrategy();
-						virtual ~SelectStrategy();
+						select_strategy();
+						virtual ~select_strategy();
 
 					public:
 						virtual bool is_selected(std::shared_ptr<mp4_abstract_box>) = 0;
 				};
 
-				class SelectByNumber : public SelectStrategy {
+				class select_by_number : public select_strategy {
 					public:
-						SelectByNumber(uint32_t);
-						virtual ~SelectByNumber();
+						select_by_number(uint32_t);
+						virtual ~select_by_number();
 
 					protected:
 						uint32_t _track_id;
@@ -31,10 +31,10 @@ class mp4_select_track : public mp4_abstract_action {
 						virtual bool is_selected(std::shared_ptr<mp4_abstract_box>);
 				};
 
-				class SelectByMedia : public SelectStrategy {
+				class select_by_media : public select_strategy {
 					public:
-						SelectByMedia(const char*);
-						virtual ~SelectByMedia();
+						select_by_media(const char*);
+						virtual ~select_by_media();
 
 					protected:
 						std::string _media_type;
@@ -45,11 +45,11 @@ class mp4_select_track : public mp4_abstract_action {
 				};
 
 			public:
-				mp4_select_track_visitor(std::shared_ptr<mp4_select_track_visitor::SelectStrategy>);
+				mp4_select_track_visitor(std::shared_ptr<mp4_select_track_visitor::select_strategy>);
 				virtual ~mp4_select_track_visitor();
 
 			protected:
-				std::shared_ptr<mp4_select_track_visitor::SelectStrategy> _selector;
+				std::shared_ptr<mp4_select_track_visitor::select_strategy> _selector;
 
 			public:
 				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
@@ -63,7 +63,7 @@ class mp4_select_track : public mp4_abstract_action {
 		virtual ~mp4_select_track();
 
 	protected:
-		std::shared_ptr<mp4_select_track_visitor::SelectStrategy> _selector;
+		std::shared_ptr<mp4_select_track_visitor::select_strategy> _selector;
 
 	public:
 		virtual void execute(std::shared_ptr<mp4_abstract_box>);

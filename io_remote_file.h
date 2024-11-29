@@ -44,8 +44,8 @@ class io_remote_file : public io_file
                 } _buffer;
 
         protected:
-                bool onHeader(void*, size_t);
-                bool onContent(void*, size_t);
+                bool on_header(void*, size_t);
+                bool on_content(void*, size_t);
 
         public:
                 virtual std::shared_ptr<io_file::block> allocate_block(size_t = 0);

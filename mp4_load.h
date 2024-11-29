@@ -20,7 +20,7 @@ class mp4_load : public mp4_abstract_action {
 				std::vector<uint32_t> _handler_types;
 
 			protected:
-				template <typename T> inline std::shared_ptr<T> newBox(BoxHead& head) {
+				template <typename T> inline std::shared_ptr<T> new_box(BoxHead& head) {
 					std::shared_ptr<T> b = std::make_shared<T>(head);
 					return b;
 				}
@@ -69,12 +69,12 @@ class mp4_load : public mp4_abstract_action {
 						+ (uint64_t) b7;
 				}
 
-				bool readI32(int&);
-				bool readU8(uint8_t&);
-				bool readU32(uint32_t&);
-				bool readU64(uint64_t&);
-				bool readBoxHead(BoxHead&);
-				size_t readBox(size_t, uint32_t, std::vector<std::shared_ptr<mp4_abstract_box>>&);
+				bool read_i32(int&);
+				bool read_u8(uint8_t&);
+				bool read_u32(uint32_t&);
+				bool read_u64(uint64_t&);
+				bool read_box_head(BoxHead&);
+				size_t read_box(size_t, uint32_t, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 
 			public:
 				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);

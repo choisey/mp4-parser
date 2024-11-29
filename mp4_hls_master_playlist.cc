@@ -21,19 +21,19 @@ mp4_hls_master_playlist::~mp4_hls_master_playlist()
 {
 }
 
-void mp4_hls_master_playlist::langCodeToName(
+void mp4_hls_master_playlist::lang_code_to_name(
 		uint8_t cc1, uint8_t cc2, uint8_t cc3,
 		std::string& lang2,
 		std::string& langName)
 {
-	langCodeToName(
+	lang_code_to_name(
 			((unsigned int) cc1) * 0x10000
 			+ ((unsigned int) cc2) * 0x100
 			+ (unsigned int) cc3,
 			lang2, langName);
 }
 
-void mp4_hls_master_playlist::langCodeToName(
+void mp4_hls_master_playlist::lang_code_to_name(
 		uint32_t langCode,
 		std::string& lang2,
 		std::string& langName)
@@ -452,7 +452,7 @@ void mp4_hls_master_playlist::hls7_master_m3u8(std::vector<std::shared_ptr<mp4_f
 
 				std::string lang2;
 				std::string langName;
-				langCodeToName(
+				lang_code_to_name(
 						mdhd[0]->data().language[0], mdhd[0]->data().language[1], mdhd[0]->data().language[2],
 						lang2, langName);
 

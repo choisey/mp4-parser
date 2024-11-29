@@ -23,7 +23,7 @@ size_t io_remote_file::curl_header_callback(void *ptr, size_t size, size_t nmemb
 		try
 		{
 			size_t bytes = size * nmemb;
-			if ( pio_remote_file->onHeader(ptr, bytes) )
+			if ( pio_remote_file->on_header(ptr, bytes) )
 			{
 				return bytes;
 			}
@@ -53,7 +53,7 @@ size_t io_remote_file::curl_download_callback(void *ptr, size_t size, size_t nme
 		try
 		{
 			size_t bytes = size * nmemb;
-			if ( pio_remote_file->onContent(ptr, bytes) )
+			if ( pio_remote_file->on_content(ptr, bytes) )
 			{
 				return bytes;
 			}
@@ -134,7 +134,7 @@ std::shared_ptr<io_file::block> io_remote_file::allocate_block(size_t size)
 	return std::make_shared<io_file::block>( ( 0 != size ) ? size : BUFFER_SIZE );
 }
 
-bool io_remote_file::onHeader(void* ptr, size_t size)
+bool io_remote_file::on_header(void* ptr, size_t size)
 {
 	std::string header_line((char*) ptr, size);
 
@@ -211,7 +211,7 @@ bool io_remote_file::onHeader(void* ptr, size_t size)
 	return true;
 }
 
-bool io_remote_file::onContent(void* ptr, size_t size)
+bool io_remote_file::on_content(void* ptr, size_t size)
 {
 	if ( NULL != ptr && 0 < size )
 	{

@@ -27,7 +27,7 @@ mp4_load::mp4_load_visitor::~mp4_load_visitor()
 	assert( !_f->is_open() );
 }
 
-bool mp4_load::mp4_load_visitor::readI32(int& i32)
+bool mp4_load::mp4_load_visitor::read_i32(int& i32)
 {
 	uint8_t buf[4];
 	if ( _f->read(buf, sizeof(buf)) == sizeof(buf) ) {
@@ -38,7 +38,7 @@ bool mp4_load::mp4_load_visitor::readI32(int& i32)
 	return false;
 }
 
-bool mp4_load::mp4_load_visitor::readU8(uint8_t& u8)
+bool mp4_load::mp4_load_visitor::read_u8(uint8_t& u8)
 {
 	uint8_t buf[1];
 	if ( _f->read(buf, sizeof(buf)) == sizeof(buf) ) {
@@ -49,7 +49,7 @@ bool mp4_load::mp4_load_visitor::readU8(uint8_t& u8)
 	return false;
 }
 
-bool mp4_load::mp4_load_visitor::readU32(uint32_t& u32)
+bool mp4_load::mp4_load_visitor::read_u32(uint32_t& u32)
 {
 	uint8_t buf[4];
 	if ( _f->read(buf, sizeof(buf)) == sizeof(buf) ) {
@@ -60,7 +60,7 @@ bool mp4_load::mp4_load_visitor::readU32(uint32_t& u32)
 	return false;
 }
 
-bool mp4_load::mp4_load_visitor::readU64(uint64_t& u64)
+bool mp4_load::mp4_load_visitor::read_u64(uint64_t& u64)
 {
 	uint8_t buf[8];
 	if ( _f->read(buf, sizeof(buf)) == sizeof(buf) ) {
@@ -71,7 +71,7 @@ bool mp4_load::mp4_load_visitor::readU64(uint64_t& u64)
 	return false;
 }
 
-bool mp4_load::mp4_load_visitor::readBoxHead(BoxHead& boxhead)
+bool mp4_load::mp4_load_visitor::read_box_head(BoxHead& boxhead)
 {
 	assert( _f->is_open() );
 
@@ -91,14 +91,14 @@ bool mp4_load::mp4_load_visitor::readBoxHead(BoxHead& boxhead)
 //	uint32_t boxsize;
 //	uint32_t boxtype;
 //
-//	if ( !readU32(_fp, boxsize) ) {
+//	if ( !read_u32(_fp, boxsize) ) {
 //		boxhead.boxheadsize = 0;
 //		boxhead.boxsize = 0;
 //		return false;
 //	}
 //
 //	// occasionally we get 0x0000
-//	if ( boxsize <= sizeof(boxsize) || !readU32(_fp, boxtype) ) {
+//	if ( boxsize <= sizeof(boxsize) || !read_u32(_fp, boxtype) ) {
 //		boxhead.boxheadsize = sizeof(boxsize);
 //		boxhead.boxsize = sizeof(boxsize);
 //		return false;
@@ -116,7 +116,7 @@ bool mp4_load::mp4_load_visitor::readBoxHead(BoxHead& boxhead)
 
 	if ( 1 == boxhead.boxsize ) {
 		boxhead.boxheadsize += 8;
-		if ( !readU64(boxhead.boxsize) ) {
+		if ( !read_u64(boxhead.boxsize) ) {
 			return false;
 		}
 	}
@@ -161,14 +161,14 @@ bool mp4_load::mp4_load_visitor::readBoxHead(BoxHead& boxhead)
 	return true;
 }
 
-size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+size_t mp4_load::mp4_load_visitor::read_box(size_t offset, uint32_t ctype, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _f->is_open() );
 
 	BoxHead head;
 	head.offset = offset;
 
-	if ( !readBoxHead(head) ) {
+	if ( !read_box_head(head) ) {
 		return 0;
 	}
 
@@ -178,7 +178,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 		case FREE:
 		case SKIP:
 			{
-				auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+				auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 				b->accept(this);
 				boxes.push_back(b);
 				return head.boxsize;
@@ -194,7 +194,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case META:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						return head.boxsize;
@@ -206,7 +206,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case META:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						return head.boxsize;
@@ -224,7 +224,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			{
 				case FTYP:
 					{
-						auto b = newBox<mp4_concrete_box<FileTypeBox>>(head);
+						auto b = new_box<mp4_concrete_box<FileTypeBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -234,7 +234,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 				case MOOF:
 				case MOOV:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -242,7 +242,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case MDAT:
 					{
-						auto b = newBox<mp4_concrete_box<MediaDataBox>>(head);
+						auto b = new_box<mp4_concrete_box<MediaDataBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -250,7 +250,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case ABST:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -258,7 +258,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case SIDX:
 					{
-						auto b = newBox<mp4_concrete_box<SegmentIndexBox>>(head);
+						auto b = new_box<mp4_concrete_box<SegmentIndexBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -266,7 +266,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -278,7 +278,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case MVHD:
 					{
-						auto b = newBox<mp4_concrete_box<MovieHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<MovieHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -288,7 +288,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 				case TRAK:
 				case UDTA:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -296,7 +296,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -308,7 +308,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case TKHD:
 					{
-						auto b = newBox<mp4_concrete_box<TrackHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<TrackHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -318,7 +318,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 				case MDIA:
 				case UDTA:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -326,7 +326,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case TREF:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -334,7 +334,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -346,7 +346,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case MDHD:
 					{
-						auto b = newBox<mp4_concrete_box<MediaHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<MediaHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -354,7 +354,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case HDLR:
 					{
-						auto b = newBox<mp4_concrete_box<HandlerBox>>(head);
+						auto b = new_box<mp4_concrete_box<HandlerBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -362,7 +362,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case MINF:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -370,7 +370,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -383,7 +383,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 				case DINF:
 				case STBL:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -391,7 +391,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case VMHD:
 					{
-						auto b = newBox<mp4_concrete_box<VideoMediaHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<VideoMediaHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -399,7 +399,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case SMHD:
 					{
-						auto b = newBox<mp4_concrete_box<SoundMediaHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<SoundMediaHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -407,7 +407,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case HMHD:
 					{
-						auto b = newBox<mp4_concrete_box<HintMediaHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<HintMediaHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -415,7 +415,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case NMHD:
 					{
-						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -423,7 +423,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -435,7 +435,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case STSD:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -443,7 +443,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case STTS:
 					{
-						auto b = newBox<mp4_concrete_box<TimeToSampleBox>>(head);
+						auto b = new_box<mp4_concrete_box<TimeToSampleBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -451,7 +451,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case CTTS:
 					{
-						auto b = newBox<mp4_concrete_box<CompositionOffsetBox>>(head);
+						auto b = new_box<mp4_concrete_box<CompositionOffsetBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -459,7 +459,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case STSC:
 					{
-						auto b = newBox<mp4_concrete_box<SampleToChunkBox>>(head);
+						auto b = new_box<mp4_concrete_box<SampleToChunkBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -467,7 +467,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case STSZ:
 					{
-						auto b = newBox<mp4_concrete_box<SampleSizeBox>>(head);
+						auto b = new_box<mp4_concrete_box<SampleSizeBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -475,7 +475,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case STCO:
 					{
-						auto b = newBox<mp4_concrete_box<ChunkOffsetBox>>(head);
+						auto b = new_box<mp4_concrete_box<ChunkOffsetBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -483,7 +483,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case CO64:
 					{
-						auto b = newBox<mp4_concrete_box<ChunkLargeOffsetBox>>(head);
+						auto b = new_box<mp4_concrete_box<ChunkLargeOffsetBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -491,7 +491,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case STSS:
 					{
-						auto b = newBox<mp4_concrete_box<SyncSampleBox>>(head);
+						auto b = new_box<mp4_concrete_box<SyncSampleBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -499,7 +499,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case SDTP:
 					{
-						auto b = newBox<mp4_concrete_box<SampleDependencyTypeBox>>(head);
+						auto b = new_box<mp4_concrete_box<SampleDependencyTypeBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -507,7 +507,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -521,25 +521,25 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 					switch ( _handler_types.back() ) {
 						case HandlerBox::VIDEO:
 							{
-								//auto b = newBox<mp4_concrete_box<SampleDescriptionBox::VisualSampleEntry>>(head);
+								//auto b = new_box<mp4_concrete_box<SampleDescriptionBox::VisualSampleEntry>>(head);
 								// To be safe
-								auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+								auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 								b->accept(this);
 								boxes.push_back(b);
 								break;
 							}
 						case HandlerBox::AUDIO:
 							{
-								//auto b = newBox<mp4_concrete_box<SampleDescriptionBox::AudioSampleEntry>>(head);
+								//auto b = new_box<mp4_concrete_box<SampleDescriptionBox::AudioSampleEntry>>(head);
 								// To be safe
-								auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+								auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 								b->accept(this);
 								boxes.push_back(b);
 								break;
 							}
 						default:
 							{
-								auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+								auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 								b->accept(this);
 								boxes.push_back(b);
 							}
@@ -547,7 +547,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 				}
 				else {
 					assert(false);
-					auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+					auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 					b->accept(this);
 					boxes.push_back(b);
 				}
@@ -558,7 +558,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case MFHD:
 					{
-						auto b = newBox<mp4_concrete_box<MovieFragmentHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<MovieFragmentHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -566,7 +566,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case TRAF:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -574,7 +574,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -586,7 +586,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case TFHD:
 					{
-						auto b = newBox<mp4_concrete_box<TrackFragmentHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<TrackFragmentHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -594,7 +594,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case TFDT:
 					{
-						auto b = newBox<mp4_concrete_box<TrackFragmentDecodeTimeBox>>(head);
+						auto b = new_box<mp4_concrete_box<TrackFragmentDecodeTimeBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -602,7 +602,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case TRUN:
 					{
-						auto b = newBox<mp4_concrete_box<TrackRunBox>>(head);
+						auto b = new_box<mp4_concrete_box<TrackRunBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -610,7 +610,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -622,7 +622,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case ELST:
 					{
-						auto b = newBox<mp4_concrete_box<EditListBox>>(head);
+						auto b = new_box<mp4_concrete_box<EditListBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -630,7 +630,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -642,7 +642,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case DREF:
 					{
-						auto b = newBox<mp4_container_box>(head);
+						auto b = new_box<mp4_container_box>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -650,7 +650,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case URL:
 					{
-						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -658,7 +658,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case URN:
 					{
-						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -666,7 +666,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -678,7 +678,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case URL:
 					{
-						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -686,7 +686,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case URN:
 					{
-						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -694,7 +694,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -706,7 +706,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case MEHD:
 					{
-						auto b = newBox<mp4_concrete_box<MovieExtendsHeaderBox>>(head);
+						auto b = new_box<mp4_concrete_box<MovieExtendsHeaderBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -714,7 +714,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case TREX:
 					{
-						auto b = newBox<mp4_concrete_box<TrackExtendsBox>>(head);
+						auto b = new_box<mp4_concrete_box<TrackExtendsBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -726,7 +726,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case TFRA:
 					{
-						auto b = newBox<mp4_concrete_box<TrackFragmentRandomAccessBox>>(head);
+						auto b = new_box<mp4_concrete_box<TrackFragmentRandomAccessBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -734,7 +734,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				case MFRO:
 					{
-						auto b = newBox<mp4_concrete_box<MovieFragmentRandomAccessOffsetBox>>(head);
+						auto b = new_box<mp4_concrete_box<MovieFragmentRandomAccessOffsetBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -742,7 +742,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+						auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -752,7 +752,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 		case UDTA:
 			{
-				auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+				auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 				b->accept(this);
 				boxes.push_back(b);
 				break;
@@ -762,7 +762,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 			switch ( head.boxtype ) {
 				case HDLR:
 					{
-						auto b = newBox<mp4_concrete_box<HandlerBox>>(head);
+						auto b = new_box<mp4_concrete_box<HandlerBox>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -770,7 +770,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 
 				default:
 					{
-						auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
+						auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(head);
 						b->accept(this);
 						boxes.push_back(b);
 						break;
@@ -781,7 +781,7 @@ size_t mp4_load::mp4_load_visitor::readBox(size_t offset, uint32_t ctype, std::v
 		default:
 			{
 				assert(false);
-				auto b = newBox<mp4_concrete_box<EmptyBox>>(head);
+				auto b = new_box<mp4_concrete_box<EmptyBox>>(head);
 				b->accept(this);
 				boxes.push_back(b);
 				break;
@@ -811,7 +811,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, std::vector<std::shared_pt
 				}
 
 				size_t nb;
-				while ( ( nb = readBox(offset, head.boxtype, boxes) ) != 0 ) {
+				while ( ( nb = read_box(offset, head.boxtype, boxes) ) != 0 ) {
 					offset += nb;
 					if ( end_of_container <= offset ) {
 						return;
@@ -826,7 +826,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, std::vector<std::shared_pt
 		case DREF:
 			{
 				uint32_t entry_count;
-				if ( !readU32(entry_count) ) {
+				if ( !read_u32(entry_count) ) {
 					return;
 				}
 
@@ -837,7 +837,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, std::vector<std::shared_pt
 				}
 
 				for ( uint32_t i = 0; i < entry_count; i++ ) {
-					size_t nb = readBox(offset, head.boxtype, boxes);
+					size_t nb = read_box(offset, head.boxtype, boxes);
 					if ( 0 == nb ) {
 						break;
 					}
@@ -862,7 +862,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, std::vector<std::shared_pt
 				}
 
 				size_t nb;
-				while ( ( nb = readBox(offset, head.boxtype, boxes) ) != 0 ) {
+				while ( ( nb = read_box(offset, head.boxtype, boxes) ) != 0 ) {
 					offset += nb;
 					if ( end_of_container <= offset ) {
 						return;
@@ -1132,7 +1132,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	while ( cur < head.boxsize ) {
 //		BoxHead ext_head;
 //
-//		if ( !readBoxHead(ext_head) ) {
+//		if ( !read_box_head(ext_head) ) {
 //			cur += ext_head.boxsize;
 //			break;
 //		}
@@ -1180,7 +1180,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	while ( cur < head.boxsize ) {
 //		BoxHead ext_head;
 //
-//		if ( !readBoxHead(ext_head) ) {
+//		if ( !read_box_head(ext_head) ) {
 //			cur += ext_head.boxsize;
 //			break;
 //		}
@@ -1216,7 +1216,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 {
 	uint32_t entry_count;
-	if ( !readU32(entry_count) ) {
+	if ( !read_u32(entry_count) ) {
 		return;
 	}
 	for ( uint32_t i = 0; i < entry_count; i++ ) {
@@ -1234,7 +1234,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 {
 	uint32_t entry_count;
-	if ( !readU32(entry_count) ) {
+	if ( !read_u32(entry_count) ) {
 		return;
 	}
 	for ( uint32_t i = 0; i < entry_count; i++ ) {
@@ -1252,7 +1252,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 {
 	uint32_t entry_count;
-	if ( !readU32(entry_count) ) {
+	if ( !read_u32(entry_count) ) {
 		return;
 	}
 	for ( uint32_t i = 0; i < entry_count; i++ ) {
@@ -1279,7 +1279,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 	if ( 0 == stsz.sample_size ) {
 		for ( uint32_t i = 0; i < sample_count; i++ ) {
 			uint32_t entry_size;
-			if ( !readU32(entry_size) ) {
+			if ( !read_u32(entry_size) ) {
 				return;
 			}
 			stsz.entry_sizes.push_back(entry_size);
@@ -1290,12 +1290,12 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 {
 	uint32_t entry_count;
-	if ( !readU32(entry_count) ) {
+	if ( !read_u32(entry_count) ) {
 		return;
 	}
 	for ( uint32_t i = 0; i < entry_count; i++ ) {
 		uint32_t chunk_offset;
-		if ( !readU32(chunk_offset) ) {
+		if ( !read_u32(chunk_offset) ) {
 			return;
 		}
 		stco.chunk_offsets.push_back(chunk_offset);
@@ -1305,12 +1305,12 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 {
 	uint32_t entry_count;
-	if ( !readU32(entry_count) ) {
+	if ( !read_u32(entry_count) ) {
 		return;
 	}
 	for ( uint32_t i = 0; i < entry_count; i++ ) {
 		uint64_t chunk_offset;
-		if ( !readU64(chunk_offset) ) {
+		if ( !read_u64(chunk_offset) ) {
 			return;
 		}
 		co64.chunk_offsets.push_back(chunk_offset);
@@ -1320,12 +1320,12 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, SyncSampleBox& stss)
 {
 	uint32_t entry_count;
-	if ( !readU32(entry_count) ) {
+	if ( !read_u32(entry_count) ) {
 		return;
 	}
 	for ( uint32_t i = 0; i < entry_count; i++ ) {
 		uint32_t sample_number;
-		if ( !readU32(sample_number) ) {
+		if ( !read_u32(sample_number) ) {
 			return;
 		}
 		stss.sample_numbers.push_back(sample_number);
@@ -1338,7 +1338,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleDependencyTypeBox& s
 
 	for ( uint32_t i = 0; i < entry_count; i++ ) {
 		uint8_t sample_dependency;
-		if ( !readU8(sample_dependency) ) {
+		if ( !read_u8(sample_dependency) ) {
 			return;
 		}
 		sdtp.sample_dependencies.push_back(sample_dependency);
@@ -1348,7 +1348,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, SampleDependencyTypeBox& s
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, EditListBox& elst)
 {
 	uint32_t entry_count;
-	if ( !readU32(entry_count) ) {
+	if ( !read_u32(entry_count) ) {
 		return;
 	}
 	if ( 1 == head.version ) {
@@ -1385,7 +1385,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, EditListBox& elst)
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, DataReferenceBox& dref)
 {
 	uint32_t entry_count;
-	if ( !readU32(entry_count) ) {
+	if ( !read_u32(entry_count) ) {
 		return;
 	}
 
@@ -1393,7 +1393,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, DataReferenceBox& dref)
 	dataentry_head.offset = head.offset + head.boxheadsize + sizeof(uint32_t);
 
 	for ( uint32_t i = 0; i < entry_count; i++ ) {
-		if ( !readBoxHead(dataentry_head) ) {
+		if ( !read_box_head(dataentry_head) ) {
 			return;
 		}
 
@@ -1423,7 +1423,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, DataReferenceBox& dref)
 			case URL:
 			case URN:
 				{
-					auto b = newBox<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(dataentry_head);
+					auto b = new_box<mp4_concrete_box<DataBox<std::vector<uint8_t>>>>(dataentry_head);
 					b->accept(this);
 					//boxes.push_back(b);
 std::cerr << "DREF" << std::endl;
@@ -1442,36 +1442,36 @@ std::cerr << "DREF" << std::endl;
 
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 {
-	if ( !readU32(tfhd.track_ID) ) {
+	if ( !read_u32(tfhd.track_ID) ) {
 		return;
 	}
 
 	if ( 0x000001 & head.flag ) {
-		if ( !readU64(tfhd.base_data_offset) ) {
+		if ( !read_u64(tfhd.base_data_offset) ) {
 			return;
 		}
 	}
 
 	if ( 0x000002 & head.flag ) {
-		if ( !readU32(tfhd.sample_description_index) ) {
+		if ( !read_u32(tfhd.sample_description_index) ) {
 			return;
 		}
 	}
 
 	if ( 0x000008 & head.flag ) {
-		if ( !readU32(tfhd.default_sample_duration) ) {
+		if ( !read_u32(tfhd.default_sample_duration) ) {
 			return;
 		}
 	}
 
 	if ( 0x000010 & head.flag ) {
-		if ( !readU32(tfhd.default_sample_size) ) {
+		if ( !read_u32(tfhd.default_sample_size) ) {
 			return;
 		}
 	}
 
 	if ( 0x000020 & head.flag ) {
-		if ( !readU32(tfhd.default_sample_flags) ) {
+		if ( !read_u32(tfhd.default_sample_flags) ) {
 			return;
 		}
 	}
@@ -1480,18 +1480,18 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentHeaderBox& tf
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackRunBox& trun)
 {
 	uint32_t sample_count;
-	if ( !readU32(sample_count) ) {
+	if ( !read_u32(sample_count) ) {
 		return;
 	}
 
 	if ( 0x000001 & head.flag ) {
-		if ( !readI32(trun.data_offset) ) {
+		if ( !read_i32(trun.data_offset) ) {
 			return;
 		}
 	}
 
 	if ( 0x000004 & head.flag ) {
-		if ( !readU32(trun.first_sample_flags) ) {
+		if ( !read_u32(trun.first_sample_flags) ) {
 			return;
 		}
 	}
@@ -1584,21 +1584,21 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
 {
-	if ( !readU32(mfhd.sequence_number) ) {
+	if ( !read_u32(mfhd.sequence_number) ) {
 		return;
 	}
 }
 
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
 {
-	if ( !readU64(tfdt.decode_time) ) {
+	if ( !read_u64(tfdt.decode_time) ) {
 		return;
 	}
 }
 
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentRandomAccessBox& tfra)
 {
-	if ( !readU32(tfra.track_ID) ) {
+	if ( !read_u32(tfra.track_ID) ) {
 		return;
 	}
 
@@ -1612,7 +1612,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentRandomAccessB
 	size_t length_size_of_sample_num = ( buf[3] & 0x03 ) + 1;
 
 	uint32_t number_of_entry;
-	if ( !readU32(number_of_entry) ) {
+	if ( !read_u32(number_of_entry) ) {
 		return;
 	}
 
@@ -1694,7 +1694,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackFragmentRandomAccessB
 
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, MovieFragmentRandomAccessOffsetBox& mfro)
 {
-	if ( !readU32(mfro.size) ) {
+	if ( !read_u32(mfro.size) ) {
 		return;
 	}
 }
