@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4CodecConf.h"
+#include "mp4_codec_conf.h"
 #include "mp4.h"
 #include <assert.h>
 

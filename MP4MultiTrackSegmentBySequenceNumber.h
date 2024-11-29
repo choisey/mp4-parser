@@ -5,7 +5,7 @@
 #pragma once
 
 #include "MP4MultiTrackSegment.h"
-#include "MP4Playlist.h"
+#include "mp4_playlist.h"
 
 class MP4MultiTrackSegmentBySequenceNumber : public MP4MultiTrackSegment {
 	public:

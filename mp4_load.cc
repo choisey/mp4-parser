@@ -5,7 +5,7 @@
 // MP4 parser
 // based on ISO/IEC 14496-12:2005(E)
 
-#include "MP4Load.h"
+#include "mp4_load.h"
 #include "mp4.h"
 #include "mp4_concrete_box.h"
 #include "mp4_container_box.h"

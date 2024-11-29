@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "MP4Playlist.h"
-#include "MP4URLEncode.h"
+#include "mp4_playlist.h"
+#include "mp4_url_encode.h"
 
 class MP4HlsM3u8 : public MP4Playlist, public MP4URLEncode {
 	public:

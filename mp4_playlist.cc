@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4Playlist.h"
+#include "mp4_playlist.h"
 #include "mp4.h"
 #include <assert.h>
 #include <stdio.h>

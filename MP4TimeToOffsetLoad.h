@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "MP4Load.h"
+#include "mp4_load.h"
 #include <map>
 
 class MP4TimeToOffsetLoad : public MP4Load {

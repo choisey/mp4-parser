@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4URLEncode.h"
+#include "mp4_url_encode.h"
 #include "mp4.h"
 #include <assert.h>
 

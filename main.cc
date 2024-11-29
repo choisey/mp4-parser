@@ -4,8 +4,8 @@
 
 #include "mp4.h"
 #include "mp4_file.h"
-#include "MP4Load.h"
-#include "MP4Save.h"
+#include "mp4_load.h"
+#include "mp4_save.h"
 #include "mp4_dump.h"
 #include "MP4HlsM3u8.h"
 #include "MP4HlsMasterPlaylist.h"
@@ -14,14 +14,14 @@
 #include "MP4MultiTrackSegmentBySequenceNumber.h"
 #include "MP4DashMpd.h"
 #include "MP4InitializationSegment.h"
-#include "MP4Fragment.h"
+#include "mp4_fragment.h"
 #include "MP4SingleTrackSegment.h"
 #include "MP4SingleTrackSegmentBySequenceNumber.h"
 #include "MP4TimeToOffsetLoad.h"
 #include "MP4TimeToOffsetLookup.h"
 #include "MP4SetBox.h"
 #include "MP4FragKeyFrame.h"
-#include "MP4MediaStat.h"
+#include "mp4_media_stat.h"
 #include "io.h"
 
 #include <stdio.h>

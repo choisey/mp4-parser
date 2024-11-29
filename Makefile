@@ -5,11 +5,11 @@ srcs := $(srcdir)/mp4_object.cc \
 	$(srcdir)/mp4_container_box.cc \
 	$(srcdir)/mp4_file.cc \
 	$(srcdir)/mp4_abstract_action.cc \
-	$(srcdir)/MP4Playlist.cc \
-	$(srcdir)/MP4CodecConf.cc \
-	$(srcdir)/MP4URLEncode.cc \
-	$(srcdir)/MP4Segment.cc \
-	$(srcdir)/MP4Fragment.cc \
+	$(srcdir)/mp4_playlist.cc \
+	$(srcdir)/mp4_codec_conf.cc \
+	$(srcdir)/mp4_url_encode.cc \
+	$(srcdir)/mp4_segment.cc \
+	$(srcdir)/mp4_fragment.cc \
 	$(srcdir)/MP4MultiTrackSegment.cc \
 	$(srcdir)/MP4SingleTrackSegment.cc \
 	$(srcdir)/MP4SequenceToTime.cc \
@@ -21,12 +21,12 @@ srcs := $(srcdir)/mp4_object.cc \
 	$(srcdir)/MP4DashMpd.cc \
 	$(srcdir)/MP4InitializationSegment.cc \
 	$(srcdir)/MP4Relocate.cc \
-	$(srcdir)/MP4Load.cc \
-	$(srcdir)/MP4Save.cc \
+	$(srcdir)/mp4_load.cc \
+	$(srcdir)/mp4_save.cc \
 	$(srcdir)/mp4_dump.cc \
 	$(srcdir)/MP4SetBox.cc \
 	$(srcdir)/MP4FragKeyFrame.cc \
-	$(srcdir)/MP4MediaStat.cc \
+	$(srcdir)/mp4_media_stat.cc \
 	$(srcdir)/MP4TimeToOffsetLoad.cc \
 	$(srcdir)/MP4TimeToOffsetLookup.cc \
 	$(srcdir)/mp4.cc \

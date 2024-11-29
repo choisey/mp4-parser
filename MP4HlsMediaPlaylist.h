@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "MP4Playlist.h"
+#include "mp4_playlist.h"
 
 class MP4HlsMediaPlaylist : public MP4Playlist {
 	public:

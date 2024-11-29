@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "MP4Playlist.h"
-#include "MP4CodecConf.h"
-#include "MP4URLEncode.h"
+#include "mp4_playlist.h"
+#include "mp4_codec_conf.h"
+#include "mp4_url_encode.h"
 
 class MP4DashMpd : public MP4Playlist, public MP4CodecConf, public MP4URLEncode {
 	public:

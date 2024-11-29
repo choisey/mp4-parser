@@ -2,7 +2,7 @@
  * Copyright (c) Seungyeob Choi
  */
 
-#include "MP4MediaStat.h"
+#include "mp4_media_stat.h"
 #include "mp4.h"
 #include <assert.h>
 #include <stdio.h>
