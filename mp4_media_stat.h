@@ -6,7 +6,7 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4MediaStat : public MP4AbstractAction {
+class MP4MediaStat : public mp4_abstract_action {
 	public:
 		MP4MediaStat();
 		virtual ~MP4MediaStat();

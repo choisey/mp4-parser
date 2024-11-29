@@ -6,7 +6,7 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4Playlist : public MP4AbstractAction {
+class MP4Playlist : public mp4_abstract_action {
 	public:
 		MP4Playlist(uint32_t);
 		virtual ~MP4Playlist();

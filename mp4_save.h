@@ -7,12 +7,12 @@
 #include "mp4_abstract_action.h"
 #include <stdio.h>
 
-class MP4Save : public MP4AbstractAction {
+class mp4_save : public mp4_abstract_action {
 	protected:
-		class MP4SaveVisitor : public MP4Visitor {
+		class mp4_saveVisitor : public mp4_visitor {
 			public:
-				MP4SaveVisitor(FILE*);
-				virtual ~MP4SaveVisitor();
+				mp4_saveVisitor(FILE*);
+				virtual ~mp4_saveVisitor();
 
 			private:
 				FILE* _fp;
@@ -61,9 +61,9 @@ class MP4Save : public MP4AbstractAction {
 		};
 
 	public:
-		MP4Save();
-		MP4Save(const char*);
-		virtual ~MP4Save();
+		mp4_save();
+		mp4_save(const char*);
+		virtual ~mp4_save();
 
 	protected:
 		std::string _filename;

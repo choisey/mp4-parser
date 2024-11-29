@@ -6,9 +6,9 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4SetBox : public MP4AbstractAction {
+class MP4SetBox : public mp4_abstract_action {
 	protected:
-		class MP4SetBoxVisitor : public MP4Visitor {
+		class MP4SetBoxVisitor : public mp4_visitor {
 			public:
 				MP4SetBoxVisitor(const std::vector<std::string>& params);
 				virtual ~MP4SetBoxVisitor();

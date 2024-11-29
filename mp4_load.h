@@ -8,12 +8,12 @@
 #include "io_file.h"
 #include <map>
 
-class MP4Load : public MP4AbstractAction {
+class mp4_load : public mp4_abstract_action {
 	protected:
-		class MP4LoadVisitor : public MP4Visitor {
+		class mp4_loadVisitor : public mp4_visitor {
 			public:
-				MP4LoadVisitor(std::shared_ptr<io_file>);
-				virtual ~MP4LoadVisitor();
+				mp4_loadVisitor(std::shared_ptr<io_file>);
+				virtual ~mp4_loadVisitor();
 
 			protected:
 				std::shared_ptr<io_file> _f;
@@ -113,8 +113,8 @@ class MP4Load : public MP4AbstractAction {
 		};
 
 	public:
-		MP4Load(const char*);
-		virtual ~MP4Load();
+		mp4_load(const char*);
+		virtual ~mp4_load();
 
 	protected:
 		std::string _uri;

@@ -6,7 +6,7 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4Segment : public MP4AbstractAction {
+class MP4Segment : public mp4_abstract_action {
 	protected:
 		struct Chunk {
 			uint32_t chunk_number;

@@ -10,10 +10,10 @@
 
 #define MIN_DURATION_OF_LAST_SEGMENT	1
 
-class MP4AbstractAction : public MP4Object {
+class mp4_abstract_action : public mp4_object {
 #ifdef _DEBUG
 	protected:
-		class MP4ValidateVisitor : public MP4Visitor {
+		class mp4_validate_visitor : public mp4_visitor {
 			protected:
 				struct Chunk {
 					uint64_t offset;
@@ -38,8 +38,8 @@ class MP4AbstractAction : public MP4Object {
 				};
 
 			public:
-				MP4ValidateVisitor();
-				virtual ~MP4ValidateVisitor();
+				mp4_validate_visitor();
+				virtual ~mp4_validate_visitor();
 
 			protected:
 				std::vector<Movie> _movies;
@@ -77,12 +77,12 @@ class MP4AbstractAction : public MP4Object {
 #endif
 
 	public:
-		MP4AbstractAction();
-		virtual ~MP4AbstractAction();
+		mp4_abstract_action();
+		virtual ~mp4_abstract_action();
 
 #ifdef _DEBUG
 	protected:
-		struct Context {
+		struct context {
 			std::vector<std::pair<uint64_t, uint64_t>> mdat;
 			struct {
 				uint32_t timescale;
@@ -91,11 +91,11 @@ class MP4AbstractAction : public MP4Object {
 		};
 
 	protected:
-		bool validate_moov(std::shared_ptr<mp4_abstract_box>, Context&);
-		bool validate_trak(std::shared_ptr<mp4_abstract_box>, Context&);
-		bool validate_mdia(std::shared_ptr<mp4_abstract_box>, Context&);
-		bool validate_edts(std::shared_ptr<mp4_abstract_box>, std::shared_ptr<mp4_abstract_box>, Context&);
-		bool validate(std::shared_ptr<mp4_abstract_box>, Context&);
+		bool validate_moov(std::shared_ptr<mp4_abstract_box>, context&);
+		bool validate_trak(std::shared_ptr<mp4_abstract_box>, context&);
+		bool validate_mdia(std::shared_ptr<mp4_abstract_box>, context&);
+		bool validate_edts(std::shared_ptr<mp4_abstract_box>, std::shared_ptr<mp4_abstract_box>, context&);
+		bool validate(std::shared_ptr<mp4_abstract_box>, context&);
 #endif
 
 	public:

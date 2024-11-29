@@ -7,9 +7,9 @@
 #include "mp4_abstract_action.h"
 #include <stdio.h>
 
-class MP4Relocate : public MP4AbstractAction {
+class MP4Relocate : public mp4_abstract_action {
 	protected:
-		class MP4RelocateVisitor : public MP4Visitor {
+		class MP4RelocateVisitor : public mp4_visitor {
 			public:
 				MP4RelocateVisitor(size_t);
 				virtual ~MP4RelocateVisitor();

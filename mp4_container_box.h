@@ -20,7 +20,7 @@ class mp4_container_box : public mp4_abstract_box {
 	public:
 		virtual std::shared_ptr<mp4_abstract_box> clone();
 		virtual void remove();
-		virtual void accept(MP4Visitor*);
+		virtual void accept(mp4_visitor*);
 		virtual void select(uint32_t, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 		virtual void select(const std::type_info&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
 		virtual bool istype(const std::type_info&) const;

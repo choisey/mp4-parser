@@ -4,17 +4,17 @@
 
 #include "mp4_abstract_box.h"
 
-// MP4Visitor
+// mp4_visitor
 
-MP4Visitor::MP4Visitor()
+mp4_visitor::mp4_visitor()
 {
 }
 
-MP4Visitor::~MP4Visitor()
+mp4_visitor::~mp4_visitor()
 {
 }
 
-void MP4Visitor::visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_visitor::visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	for ( auto child: boxes ) {
 		child->accept(this);

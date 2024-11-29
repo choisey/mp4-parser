@@ -4,10 +4,10 @@
 
 #include "mp4_object.h"
 
-MP4Object::MP4Object()
+mp4_object::mp4_object()
 {
 }
 
-MP4Object::~MP4Object()
+mp4_object::~mp4_object()
 {
 }

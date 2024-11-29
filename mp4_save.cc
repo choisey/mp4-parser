@@ -10,24 +10,24 @@
 #include <assert.h>
 #include <map>
 
-// MP4SaveVisitor
+// mp4_saveVisitor
 
-MP4Save::MP4SaveVisitor::MP4SaveVisitor(FILE* fp)
+mp4_save::mp4_saveVisitor::mp4_saveVisitor(FILE* fp)
 	: _fp(fp)
 {
 	assert( NULL != fp );
 }
 
-MP4Save::MP4SaveVisitor::~MP4SaveVisitor()
+mp4_save::mp4_saveVisitor::~mp4_saveVisitor()
 {
 }
 
-void MP4Save::MP4SaveVisitor::write8b(uint8_t u8)
+void mp4_save::mp4_saveVisitor::write8b(uint8_t u8)
 {
 	fwrite(&u8, sizeof(uint8_t), 1, _fp);
 }
 
-void MP4Save::MP4SaveVisitor::write16b(uint16_t u16)
+void mp4_save::mp4_saveVisitor::write16b(uint16_t u16)
 {
 	unsigned char buf[2];
 	buf[0] = ( u16 / 0x100UL ) & 0xff;
@@ -35,7 +35,7 @@ void MP4Save::MP4SaveVisitor::write16b(uint16_t u16)
 	fwrite(buf, sizeof(buf), 1, _fp);
 }
 
-void MP4Save::MP4SaveVisitor::write32b(uint32_t u32)
+void mp4_save::mp4_saveVisitor::write32b(uint32_t u32)
 {
 	unsigned char buf[4];
 	buf[0] = ( u32 / 0x1000000UL ) & 0xff;
@@ -45,7 +45,7 @@ void MP4Save::MP4SaveVisitor::write32b(uint32_t u32)
 	fwrite(buf, sizeof(buf), 1, _fp);
 }
 
-void MP4Save::MP4SaveVisitor::write64b(uint64_t u64)
+void mp4_save::mp4_saveVisitor::write64b(uint64_t u64)
 {
 	unsigned char buf[8];
 	buf[0] = u64 / 0x100000000000000UL;
@@ -59,7 +59,7 @@ void MP4Save::MP4SaveVisitor::write64b(uint64_t u64)
 	fwrite(buf, sizeof(buf), 1, _fp);
 }
 
-void MP4Save::MP4SaveVisitor::write4C(const char* cp)
+void mp4_save::mp4_saveVisitor::write4C(const char* cp)
 {
 	char buf[4] = { '\0', };
 	for (int i = 0; i < 4; i++) {
@@ -71,12 +71,12 @@ void MP4Save::MP4SaveVisitor::write4C(const char* cp)
 	fwrite(buf, sizeof(buf), 1, _fp);
 }
 
-void MP4Save::MP4SaveVisitor::writeString(const std::string& str)
+void mp4_save::mp4_saveVisitor::writeString(const std::string& str)
 {
 	fwrite(str.c_str(), str.size(), 1, _fp);
 }
 
-void MP4Save::MP4SaveVisitor::writeBoxHead(const BoxHead& head)
+void mp4_save::mp4_saveVisitor::writeBoxHead(const BoxHead& head)
 {
 //	if ( BOXSIZE_THRESHOLD < head.boxsize ) {
 //		write32b(0x00000001);
@@ -99,7 +99,7 @@ void MP4Save::MP4SaveVisitor::writeBoxHead(const BoxHead& head)
 #endif
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	assert( _XX_ != head.boxtype );
 
@@ -122,7 +122,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<m
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
 {
 	writeBoxHead(head);
 	write4C(ftyp.major_brand.c_str());
@@ -132,7 +132,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 {
 	writeBoxHead(head);
 
@@ -171,7 +171,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 	write32b(mvhd.next_track_ID);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
 {
 	writeBoxHead(head);
 	switch ( head.version ) {
@@ -184,7 +184,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 {
 	writeBoxHead(head);
 
@@ -223,7 +223,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 	write32b(tkhd.height);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 {
 	writeBoxHead(head);
 
@@ -249,7 +249,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 	write16b(0);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, HandlerBox& hdlr)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, HandlerBox& hdlr)
 {
 	writeBoxHead(head);
 	write32b(0);
@@ -263,7 +263,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, HandlerBox& hdlr)
 	writeString(hdlr.name);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 {
 	writeBoxHead(head);
 	write16b(vmhd.graphicsmode);
@@ -272,14 +272,14 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 	write16b(vmhd.opcolor[2]);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
 {
 	writeBoxHead(head);
 	write16b(smhd.balance);
 	write16b(0);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 {
 	writeBoxHead(head);
 	write16b(hmhd.maxPDUsize);
@@ -289,7 +289,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 	write32b(0);
 }
 
-//void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SampleDescriptionBox::VisualSampleEntry& sd)
+//void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SampleDescriptionBox::VisualSampleEntry& sd)
 //{
 //	writeBoxHead(head);
 //	write32b(0);
@@ -321,7 +321,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	}
 //}
 //
-//void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SampleDescriptionBox::AudioSampleEntry& sd)
+//void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SampleDescriptionBox::AudioSampleEntry& sd)
 //{
 //	writeBoxHead(head);
 //	write32b(0);
@@ -344,7 +344,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	}
 //}
 //
-//void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SampleDescriptionBox::HintSampleEntry& sd)
+//void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SampleDescriptionBox::HintSampleEntry& sd)
 //{
 //	writeBoxHead(head);
 //	write32b(0);
@@ -354,7 +354,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 //	}
 //}
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
 {
 	writeBoxHead(head);
 	write32b(stts.entries.size());
@@ -364,7 +364,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 {
 	writeBoxHead(head);
 	write32b(ctts.entries.size());
@@ -374,7 +374,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 {
 	writeBoxHead(head);
 	write32b(stsc.entries.size());
@@ -385,7 +385,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
 {
 	writeBoxHead(head);
 	write32b(0);
@@ -395,7 +395,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 {
 	writeBoxHead(head);
 	write32b(stco.chunk_offsets.size());
@@ -404,7 +404,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 {
 	writeBoxHead(head);
 	write32b(co64.chunk_offsets.size());
@@ -413,7 +413,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SyncSampleBox& stss)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SyncSampleBox& stss)
 {
 	writeBoxHead(head);
 	write32b(stss.sample_numbers.size());
@@ -422,12 +422,12 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SyncSampleBox& stss)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SampleDependencyTypeBox& sdtp)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SampleDependencyTypeBox& sdtp)
 {
 	// do nothing.
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, EditListBox& elst)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, EditListBox& elst)
 {
 	writeBoxHead(head);
 	write32b(elst.entries.size());
@@ -450,7 +450,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, EditListBox& elst)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 {
 	writeBoxHead(head);
 	write32b(tfhd.track_ID);
@@ -461,13 +461,13 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 	if ( head.flag & 0x000020 ) write32b(tfhd.default_sample_flags);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
 {
 	writeBoxHead(head);
 	write64b(tfdt.decode_time);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackRunBox& trun)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, TrackRunBox& trun)
 {
 	writeBoxHead(head);
 	write32b(trun.samples.size());
@@ -481,7 +481,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackRunBox& trun)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SegmentIndexBox& sidx)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 {
 	writeBoxHead(head);
 	if ( 1 == head.version ) {
@@ -514,13 +514,13 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, MovieFragmentHeaderBox& mfhd)
 {
 	writeBoxHead(head);
 	write32b(mfhd.sequence_number);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackExtendsBox& trex)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, TrackExtendsBox& trex)
 {
 	writeBoxHead(head);
 	write32b(trex.track_ID);
@@ -530,7 +530,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, TrackExtendsBox& trex)
 	write32b(trex.default_sample_flags);
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MediaDataBox& mdat)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 	if ( !mdat.byte_ranges.empty() ) {
 		writeBoxHead(head);
@@ -602,7 +602,7 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, MediaDataBox& mdat)
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
 {
 	if ( 0 != head.boxsize ) {
 		writeBoxHead(head);
@@ -612,27 +612,27 @@ void MP4Save::MP4SaveVisitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>
 	}
 }
 
-void MP4Save::MP4SaveVisitor::visit(BoxHead& head, EmptyBox& e)
+void mp4_save::mp4_saveVisitor::visit(BoxHead& head, EmptyBox& e)
 {
 	// do nothing.
 }
 
-// MP4Save
+// mp4_save
 
-MP4Save::MP4Save()
+mp4_save::mp4_save()
 {
 }
 
-MP4Save::MP4Save(const char* filename)
+mp4_save::mp4_save(const char* filename)
 	: _filename(filename)
 {
 }
 
-MP4Save::~MP4Save()
+mp4_save::~mp4_save()
 {
 }
 
-void MP4Save::execute(std::shared_ptr<mp4_abstract_box> mp4)
+void mp4_save::execute(std::shared_ptr<mp4_abstract_box> mp4)
 {
 	assert( typeid(*mp4) == typeid(MP4File) );
 	assert( MP4FILE == mp4->head().boxtype );
@@ -686,7 +686,7 @@ void MP4Save::execute(std::shared_ptr<mp4_abstract_box> mp4)
 		FILE* fp = fopen(_filename.c_str(), "w");
 		assert( NULL != fp );
 		if ( NULL != fp ) {
-			MP4SaveVisitor v(fp);
+			mp4_saveVisitor v(fp);
 			mp4->accept(&v);
 			fclose(fp);
 		}
@@ -696,7 +696,7 @@ void MP4Save::execute(std::shared_ptr<mp4_abstract_box> mp4)
 		printf("Content-Length: %lu\n", mp4->head().boxsize);
 		printf("\n");
 
-		MP4SaveVisitor v(stdout);
+		mp4_saveVisitor v(stdout);
 		mp4->accept(&v);
 	}
 }

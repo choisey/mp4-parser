@@ -12,10 +12,10 @@
 
 class mp4_abstract_box;
 
-class MP4Visitor : public MP4Object {
+class mp4_visitor : public mp4_object {
 	public:
-		MP4Visitor();
-		virtual ~MP4Visitor();
+		mp4_visitor();
+		virtual ~mp4_visitor();
 
 	public:
 		virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
@@ -53,7 +53,7 @@ class MP4Visitor : public MP4Object {
 		virtual void visit(BoxHead&, EmptyBox&) {}
 };
 
-class mp4_abstract_box : public MP4Object {
+class mp4_abstract_box : public mp4_object {
 	public:
 		mp4_abstract_box(const mp4_abstract_box&);
 		mp4_abstract_box(const BoxHead&);
@@ -67,7 +67,7 @@ class mp4_abstract_box : public MP4Object {
 
 		virtual std::shared_ptr<mp4_abstract_box> clone() = 0;
 		virtual void remove() = 0;
-		virtual void accept(MP4Visitor*) = 0;
+		virtual void accept(mp4_visitor*) = 0;
 		virtual void select(uint32_t, std::vector<std::shared_ptr<mp4_abstract_box>>&) = 0;
 		virtual void select(const std::type_info&, std::vector<std::shared_ptr<mp4_abstract_box>>&) = 0;
 		virtual bool istype(const std::type_info&) const = 0;

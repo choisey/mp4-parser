@@ -28,7 +28,7 @@ class mp4_concrete_box : public mp4_abstract_box {
 			_head.boxtype = _XX_;
 		}
 
-		virtual void accept(MP4Visitor* visitor) {
+		virtual void accept(mp4_visitor* visitor) {
 			visitor->visit( _head, _data );
 		}
 

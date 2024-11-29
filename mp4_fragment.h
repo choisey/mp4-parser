@@ -6,9 +6,9 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4Fragment : public MP4AbstractAction {
+class MP4Fragment : public mp4_abstract_action {
 	protected:
-		class MP4FragmentVisitor : public MP4Visitor {
+		class MP4FragmentVisitor : public mp4_visitor {
 			public:
 				MP4FragmentVisitor(uint64_t);
 				virtual ~MP4FragmentVisitor();

@@ -7,9 +7,9 @@
 #include "mp4_load.h"
 #include <map>
 
-class MP4TimeToOffsetLoad : public MP4Load {
+class MP4TimeToOffsetLoad : public mp4_load {
 	protected:
-		class MP4TimeToOffsetLoadVisitor : public MP4LoadVisitor {
+		class MP4TimeToOffsetLoadVisitor : public mp4_loadVisitor {
 			public:
 				MP4TimeToOffsetLoadVisitor(std::shared_ptr<io_file>);
 				virtual ~MP4TimeToOffsetLoadVisitor();

@@ -6,7 +6,7 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4TimeToOffsetLookup : public MP4AbstractAction {
+class MP4TimeToOffsetLookup : public mp4_abstract_action {
 	public:
 		MP4TimeToOffsetLookup(uint32_t, uint64_t);
 		virtual ~MP4TimeToOffsetLookup();

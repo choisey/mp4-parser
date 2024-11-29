@@ -42,7 +42,7 @@ void mp4_container_box::remove()
 	_boxes.clear();
 }
 
-void mp4_container_box::accept(MP4Visitor* visitor)
+void mp4_container_box::accept(mp4_visitor* visitor)
 {
 	visitor->visit( _head,  _boxes );
 }

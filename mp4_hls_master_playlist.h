@@ -8,7 +8,7 @@
 #include "mp4_codec_conf.h"
 #include "mp4_url_encode.h"
 
-class MP4HlsMasterPlaylist : public MP4AbstractAction, public MP4CodecConf, public MP4URLEncode {
+class MP4HlsMasterPlaylist : public mp4_abstract_action, public MP4CodecConf, public MP4URLEncode {
 	public:
 		MP4HlsMasterPlaylist(uint32_t = 7);
 		virtual ~MP4HlsMasterPlaylist();

@@ -31,7 +31,7 @@
 
 int main(int argc, char* argv[])
 {
-	std::vector<std::unique_ptr<MP4AbstractAction>> actions;
+	std::vector<std::unique_ptr<mp4_abstract_action>> actions;
 
 	for ( int i = 1; i < argc; i++ ) {
 
@@ -55,8 +55,8 @@ int main(int argc, char* argv[])
 			}
 
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
-						new MP4Load(argv[++i])
+					std::unique_ptr<mp4_abstract_action>(
+						new mp4_load(argv[++i])
 						)
 					);
 		}
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
 
 			uint32_t d = std::stoul(argv[++i]);
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4Playlist(d)
 						)
 					);
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 						// HLS version 6
 						// master playlist
 						actions.push_back(
-								std::unique_ptr<MP4AbstractAction>(
+								std::unique_ptr<mp4_abstract_action>(
 									new MP4HlsMasterPlaylist()
 									)
 								);
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
 						// media playlist (mpeg2ts containing video + audio combined)
 						uint32_t d = std::stoul(argv[++i]);
 						actions.push_back(
-								std::unique_ptr<MP4AbstractAction>(
+								std::unique_ptr<mp4_abstract_action>(
 									new MP4HlsM3u8(d)
 									)
 								);
@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
 						uint32_t track_id = std::stoul(argv[++i]);
 						uint32_t d = std::stoul(argv[++i]);
 						actions.push_back(
-								std::unique_ptr<MP4AbstractAction>(
+								std::unique_ptr<mp4_abstract_action>(
 									new MP4HlsMediaPlaylist(track_id, d)
 									)
 								);
@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
 			}
 			uint32_t v = ( 1 == cparams ) ? std::stoul(argv[++i]) : 7;
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4HlsMasterPlaylist( v )
 						)
 					);
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
 
 			uint32_t d = std::stoul(argv[++i]);
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4DashMpd(d)
 						)
 					);
@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
 
 			uint32_t track_id = std::stoul(argv[++i]);
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4InitializationSegment(track_id)
 						)
 					);
@@ -167,12 +167,12 @@ int main(int argc, char* argv[])
 						uint64_t start = std::stoull(argv[++i]);
 						uint32_t duration = std::stoul(argv[++i]);
 						actions.push_back(
-								std::unique_ptr<MP4AbstractAction>(
+								std::unique_ptr<mp4_abstract_action>(
 									new MP4SingleTrackSegment(track_id, start, duration)
 									)
 								);
 						actions.push_back(
-								std::unique_ptr<MP4AbstractAction>(
+								std::unique_ptr<mp4_abstract_action>(
 									new MP4Fragment(start)
 									)
 								);
@@ -192,7 +192,7 @@ int main(int argc, char* argv[])
 						uint64_t start = std::stoull(argv[++i]);
 						uint32_t duration = std::stoul(argv[++i]);
 						actions.push_back(
-								std::unique_ptr<MP4AbstractAction>(
+								std::unique_ptr<mp4_abstract_action>(
 									new MP4MultiTrackSegment(start, duration)
 									)
 								);
@@ -205,7 +205,7 @@ int main(int argc, char* argv[])
 						uint64_t start = std::stoull(argv[++i]);
 						uint32_t duration = std::stoul(argv[++i]);
 						actions.push_back(
-								std::unique_ptr<MP4AbstractAction>(
+								std::unique_ptr<mp4_abstract_action>(
 									new MP4SingleTrackSegment(track_id, start, duration)
 									)
 								);
@@ -225,7 +225,7 @@ int main(int argc, char* argv[])
 						uint32_t seq = std::stoul(argv[++i]);
 						uint32_t duration = std::stoul(argv[++i]);
 						actions.push_back(
-								std::unique_ptr<MP4AbstractAction>(
+								std::unique_ptr<mp4_abstract_action>(
 									new MP4MultiTrackSegmentBySequenceNumber(seq, duration)
 									)
 								);
@@ -247,7 +247,7 @@ int main(int argc, char* argv[])
 			}
 
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4TimeToOffsetLoad(argv[++i])
 						)
 					);
@@ -261,7 +261,7 @@ int main(int argc, char* argv[])
 			uint64_t track_id = std::stoul(argv[++i]);
 			uint64_t time = std::stoull(argv[++i]);
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4TimeToOffsetLookup(track_id, time)
 						)
 					);
@@ -273,7 +273,7 @@ int main(int argc, char* argv[])
 			}
 
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4FragKeyFrame()
 						)
 					);
@@ -288,7 +288,7 @@ int main(int argc, char* argv[])
 			}
 
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4Dump()
 						)
 					);
@@ -300,7 +300,7 @@ int main(int argc, char* argv[])
 			}
 
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4MediaStat()
 						)
 					);
@@ -318,7 +318,7 @@ int main(int argc, char* argv[])
 			}
 
 			actions.push_back(
-					std::unique_ptr<MP4AbstractAction>(
+					std::unique_ptr<mp4_abstract_action>(
 						new MP4SetBox(params)
 						)
 					);
@@ -326,16 +326,16 @@ int main(int argc, char* argv[])
 		else if ( 0 == strcmp(argv[i], "--output") || 0 == strcmp(argv[i], "-o") ) {
 			if ( 0 == cparams ) {
 				actions.push_back(
-						std::unique_ptr<MP4AbstractAction>(
-							new MP4Save()
+						std::unique_ptr<mp4_abstract_action>(
+							new mp4_save()
 							)
 						);
 			}
 			else {
 				for ( ; 0 < cparams; --cparams ) {
 					actions.push_back(
-							std::unique_ptr<MP4AbstractAction>(
-								new MP4Save(argv[++i])
+							std::unique_ptr<mp4_abstract_action>(
+								new mp4_save(argv[++i])
 								)
 							);
 				}

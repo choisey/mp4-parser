@@ -15,7 +15,7 @@
 // MP4TimeToOffsetLoadVisitor
 
 MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::MP4TimeToOffsetLoadVisitor(std::shared_ptr<io_file> f)
-	: MP4LoadVisitor(f)
+	: mp4_loadVisitor(f)
 {
 }
 
@@ -64,14 +64,14 @@ void MP4TimeToOffsetLoad::MP4TimeToOffsetLoadVisitor::visit(BoxHead& head, std::
 	}
 	else {
 		assert( 0 != head.offset );
-		MP4LoadVisitor::visit(head, boxes);
+		mp4_loadVisitor::visit(head, boxes);
 	}
 }
 
 // MP4TimeToOffsetLoad
 
 MP4TimeToOffsetLoad::MP4TimeToOffsetLoad(const char* uri)
-	: MP4Load(uri)
+	: mp4_load(uri)
 {
 }
 

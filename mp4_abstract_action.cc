@@ -23,15 +23,15 @@
 		<< (char) ( B2.boxtype & 0xff ) \
 		<< std::endl;
 
-MP4AbstractAction::MP4ValidateVisitor::MP4ValidateVisitor()
+mp4_abstract_action::mp4_validate_visitor::mp4_validate_visitor()
 {
 }
 
-MP4AbstractAction::MP4ValidateVisitor::~MP4ValidateVisitor()
+mp4_abstract_action::mp4_validate_visitor::~mp4_validate_visitor()
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, std::vector<std::shared_ptr<mp4_abstract_box>>& boxes)
 {
 	for ( auto child: boxes ) {
 		if ( _XX_ == child->head().boxtype 
@@ -456,22 +456,22 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, std::vector<std
 	}
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, FileTypeBox& ftyp)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, FileTypeBox& ftyp)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, MovieHeaderBox& mvhd)
 {
 	assert( 1 == _movies.size() );
 	assert( _movies.back().mvhd.empty() );
 	_movies.back().mvhd.push_back(mvhd);
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, MovieExtendsHeaderBox& mehd)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, TrackHeaderBox& tkhd)
 {
 	assert( 1 == _movies.size() );
 	assert( 1 == _movies.back().mvhd.size() );
@@ -488,7 +488,7 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, TrackHeaderBox&
 	}
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, MediaHeaderBox& mdhd)
 {
 	assert( 1 == _movies.size() );
 	assert( 1 == _movies.back().mvhd.size() );
@@ -505,7 +505,7 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, MediaHeaderBox&
 	}
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, HandlerBox& hdlr)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, HandlerBox& hdlr)
 {
 	assert( !_tracks.empty() );
 	assert( 0 == _tracks.back().track_type );
@@ -513,19 +513,19 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, HandlerBox& hdl
 	_tracks.back().track_type = hdlr.handler_type;
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, VideoMediaHeaderBox& vmhd)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, SoundMediaHeaderBox& smhd)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, HintMediaHeaderBox& hmhd)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, TimeToSampleBox& stts)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, TimeToSampleBox& stts)
 {
 	assert( !_tracks.empty() );
 	auto& time_to_samples = _tracks.back().time_to_samples;
@@ -533,7 +533,7 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, TimeToSampleBox
 	time_to_samples.insert(time_to_samples.end(), stts.entries.begin(), stts.entries.end());
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, CompositionOffsetBox& ctts)
 {
 	assert( !_tracks.empty() );
 	auto& composition_offsets = _tracks.back().composition_offsets;
@@ -541,7 +541,7 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, CompositionOffs
 	composition_offsets.insert(composition_offsets.end(), ctts.entries.begin(), ctts.entries.end());
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, SampleToChunkBox& stsc)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, SampleToChunkBox& stsc)
 {
 	assert( !_tracks.empty() );
 	auto& sample_to_chunks = _tracks.back().sample_to_chunks;
@@ -549,7 +549,7 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, SampleToChunkBo
 	sample_to_chunks.insert(sample_to_chunks.end(), stsc.entries.begin(), stsc.entries.end());
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, SampleSizeBox& stsz)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, SampleSizeBox& stsz)
 {
 	assert( !_tracks.empty() );
 	auto& sample_sizes = _tracks.back().sample_sizes;
@@ -557,7 +557,7 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, SampleSizeBox& 
 	sample_sizes.insert(sample_sizes.end(), stsz.entry_sizes.begin(), stsz.entry_sizes.end());
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, ChunkOffsetBox& stco)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, ChunkOffsetBox& stco)
 {
 	assert( !_tracks.empty() );
 	auto& chunk_offsets = _tracks.back().chunk_offsets;
@@ -565,7 +565,7 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, ChunkOffsetBox&
 	chunk_offsets.insert(chunk_offsets.end(), stco.chunk_offsets.begin(), stco.chunk_offsets.end());
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, ChunkLargeOffsetBox& co64)
 {
 	assert( !_tracks.empty() );
 	auto& chunk_offsets = _tracks.back().chunk_offsets;
@@ -573,7 +573,7 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, ChunkLargeOffse
 	chunk_offsets.insert(chunk_offsets.end(), co64.chunk_offsets.begin(), co64.chunk_offsets.end());
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, SyncSampleBox& stss)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, SyncSampleBox& stss)
 {
 	assert( !_tracks.empty() );
 	auto& sync_samples = _tracks.back().sync_samples;
@@ -581,58 +581,58 @@ void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, SyncSampleBox& 
 	sync_samples.insert(sync_samples.end(), stss.sample_numbers.begin(), stss.sample_numbers.end());
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, EditListBox& elst)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, EditListBox& elst)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, TrackFragmentHeaderBox& tfhd)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, TrackFragmentDecodeTimeBox& tfdt)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, TrackRunBox& trun)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, TrackRunBox& trun)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, SegmentIndexBox& sidx)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, SegmentIndexBox& sidx)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, TrackExtendsBox& trex)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, TrackExtendsBox& trex)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, MediaDataBox& mdat)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
 	uint64_t offset = head.offset + head.boxheadsize;
 	uint64_t size = head.boxsize - head.boxheadsize;
 	_chunks.push_back( std::make_pair(offset, size) );
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, DataBox<std::vector<uint8_t>>& box)
 {
 }
 
-void MP4AbstractAction::MP4ValidateVisitor::visit(BoxHead& head, EmptyBox& e)
+void mp4_abstract_action::mp4_validate_visitor::visit(BoxHead& head, EmptyBox& e)
 {
 }
 
 #endif
 
-MP4AbstractAction::MP4AbstractAction()
+mp4_abstract_action::mp4_abstract_action()
 {
 }
 
-MP4AbstractAction::~MP4AbstractAction()
+mp4_abstract_action::~mp4_abstract_action()
 {
 }
 
 #ifdef _DEBUG
 
-bool MP4AbstractAction::validate_moov(std::shared_ptr<mp4_abstract_box> moov, Context& ctx)
+bool mp4_abstract_action::validate_moov(std::shared_ptr<mp4_abstract_box> moov, context& ctx)
 {
 	bool valid = true;
 
@@ -666,7 +666,7 @@ bool MP4AbstractAction::validate_moov(std::shared_ptr<mp4_abstract_box> moov, Co
 	return valid;
 }
 
-bool MP4AbstractAction::validate_trak(std::shared_ptr<mp4_abstract_box> trak, Context& ctx)
+bool mp4_abstract_action::validate_trak(std::shared_ptr<mp4_abstract_box> trak, context& ctx)
 {
 	bool valid = true;
 
@@ -703,7 +703,7 @@ bool MP4AbstractAction::validate_trak(std::shared_ptr<mp4_abstract_box> trak, Co
 	return valid;
 }
 
-bool MP4AbstractAction::validate_mdia(std::shared_ptr<mp4_abstract_box> mdia, Context& ctx)
+bool mp4_abstract_action::validate_mdia(std::shared_ptr<mp4_abstract_box> mdia, context& ctx)
 {
 	std::vector<uint64_t> chunks;
 	std::vector<uint32_t> samples;
@@ -958,7 +958,7 @@ bool MP4AbstractAction::validate_mdia(std::shared_ptr<mp4_abstract_box> mdia, Co
 	return true;
 }
 
-bool MP4AbstractAction::validate_edts(std::shared_ptr<mp4_abstract_box> mdia, std::shared_ptr<mp4_abstract_box> edts, Context& ctx)
+bool mp4_abstract_action::validate_edts(std::shared_ptr<mp4_abstract_box> mdia, std::shared_ptr<mp4_abstract_box> edts, context& ctx)
 {
 	const auto& elst = select<EditListBox>(edts);
 	assert ( elst.size() <= 1 );
@@ -991,7 +991,7 @@ bool MP4AbstractAction::validate_edts(std::shared_ptr<mp4_abstract_box> mdia, st
 	return true;
 }
 
-bool MP4AbstractAction::validate(std::shared_ptr<mp4_abstract_box> box, Context& ctx)
+bool mp4_abstract_action::validate(std::shared_ptr<mp4_abstract_box> box, context& ctx)
 {
 	assert( MP4FILE ==  box->head().boxtype );
 
@@ -1022,15 +1022,15 @@ bool MP4AbstractAction::validate(std::shared_ptr<mp4_abstract_box> box, Context&
 
 #endif
 
-void MP4AbstractAction::execute(std::shared_ptr<mp4_abstract_box> box)
+void mp4_abstract_action::execute(std::shared_ptr<mp4_abstract_box> box)
 {
 #ifdef _DEBUG
-	MP4ValidateVisitor v;
+	mp4_validate_visitor v;
 	box->accept(&v);
 #endif
 }
 
-void MP4AbstractAction::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
+void mp4_abstract_action::execute(std::vector<std::shared_ptr<MP4File>>& mp4files)
 {
 	for ( auto mp4: mp4files ) {
 		execute(mp4);

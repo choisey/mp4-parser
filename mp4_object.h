@@ -4,8 +4,8 @@
 
 #pragma once
 
-class MP4Object {
+class mp4_object {
 public:
-	MP4Object();
-	virtual ~MP4Object();
+	mp4_object();
+	virtual ~mp4_object();
 };

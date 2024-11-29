@@ -6,9 +6,9 @@
 
 #include "mp4_abstract_action.h"
 
-class MP4SelectTrack : public MP4AbstractAction {
+class MP4SelectTrack : public mp4_abstract_action {
 	protected:
-		class MP4SelectTrackVisitor : public MP4Visitor {
+		class MP4SelectTrackVisitor : public mp4_visitor {
 			public:
 				class SelectStrategy {
 					public:
