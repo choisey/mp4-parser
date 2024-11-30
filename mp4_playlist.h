@@ -9,7 +9,7 @@
 class mp4_playlist : public mp4_abstract_action {
 	public:
 		mp4_playlist(uint32_t);
-		virtual ~mp4_playlist();
+		~mp4_playlist() override;
 
 	private:
 		uint32_t _segment_duration_in_second;
@@ -32,5 +32,5 @@ class mp4_playlist : public mp4_abstract_action {
 				std::vector<std::pair<uint64_t, uint64_t>>&);
 
 	public:
-		virtual void execute(std::shared_ptr<mp4_abstract_box>);
+		void execute(std::shared_ptr<mp4_abstract_box>) override;
 };

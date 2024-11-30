@@ -39,7 +39,7 @@ class mp4_abstract_action : public mp4_object {
 
 			public:
 				mp4_validate_visitor();
-				virtual ~mp4_validate_visitor();
+				~mp4_validate_visitor() override;
 
 			protected:
 				std::vector<Movie> _movies;
@@ -47,38 +47,38 @@ class mp4_abstract_action : public mp4_object {
 				std::vector<std::pair<uint64_t, uint64_t>> _chunks;
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
-				virtual void visit(BoxHead&, FileTypeBox&);
-				virtual void visit(BoxHead&, MovieHeaderBox&);
-				virtual void visit(BoxHead&, MovieExtendsHeaderBox&);
-				virtual void visit(BoxHead&, TrackHeaderBox&);
-				virtual void visit(BoxHead&, MediaHeaderBox&);
-				virtual void visit(BoxHead&, VideoMediaHeaderBox&);
-				virtual void visit(BoxHead&, SoundMediaHeaderBox&);
-				virtual void visit(BoxHead&, HintMediaHeaderBox&);
-				virtual void visit(BoxHead&, HandlerBox&);
-				virtual void visit(BoxHead&, TimeToSampleBox&);
-				virtual void visit(BoxHead&, CompositionOffsetBox&);
-				virtual void visit(BoxHead&, SampleToChunkBox&);
-				virtual void visit(BoxHead&, SampleSizeBox&);
-				virtual void visit(BoxHead&, ChunkOffsetBox&);
-				virtual void visit(BoxHead&, ChunkLargeOffsetBox&);
-				virtual void visit(BoxHead&, SyncSampleBox&);
-				virtual void visit(BoxHead&, EditListBox&);
-				virtual void visit(BoxHead&, TrackFragmentHeaderBox&);
-				virtual void visit(BoxHead&, TrackFragmentDecodeTimeBox&);
-				virtual void visit(BoxHead&, TrackRunBox&);
-				virtual void visit(BoxHead&, SegmentIndexBox&);
-				virtual void visit(BoxHead&, TrackExtendsBox&);
-				virtual void visit(BoxHead&, MediaDataBox&);
-				virtual void visit(BoxHead&, DataBox<std::vector<uint8_t>>&);
-				virtual void visit(BoxHead&, EmptyBox&);
+				void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&) override;
+				void visit(BoxHead&, FileTypeBox&) override;
+				void visit(BoxHead&, MovieHeaderBox&) override;
+				void visit(BoxHead&, MovieExtendsHeaderBox&) override;
+				void visit(BoxHead&, TrackHeaderBox&) override;
+				void visit(BoxHead&, MediaHeaderBox&) override;
+				void visit(BoxHead&, VideoMediaHeaderBox&) override;
+				void visit(BoxHead&, SoundMediaHeaderBox&) override;
+				void visit(BoxHead&, HintMediaHeaderBox&) override;
+				void visit(BoxHead&, HandlerBox&) override;
+				void visit(BoxHead&, TimeToSampleBox&) override;
+				void visit(BoxHead&, CompositionOffsetBox&) override;
+				void visit(BoxHead&, SampleToChunkBox&) override;
+				void visit(BoxHead&, SampleSizeBox&) override;
+				void visit(BoxHead&, ChunkOffsetBox&) override;
+				void visit(BoxHead&, ChunkLargeOffsetBox&) override;
+				void visit(BoxHead&, SyncSampleBox&) override;
+				void visit(BoxHead&, EditListBox&) override;
+				void visit(BoxHead&, TrackFragmentHeaderBox&) override;
+				void visit(BoxHead&, TrackFragmentDecodeTimeBox&) override;
+				void visit(BoxHead&, TrackRunBox&) override;
+				void visit(BoxHead&, SegmentIndexBox&) override;
+				void visit(BoxHead&, TrackExtendsBox&) override;
+				void visit(BoxHead&, MediaDataBox&) override;
+				void visit(BoxHead&, DataBox<std::vector<uint8_t>>&) override;
+				void visit(BoxHead&, EmptyBox&) override;
 		};
 #endif
 
 	public:
 		mp4_abstract_action();
-		virtual ~mp4_abstract_action();
+		~mp4_abstract_action() override;
 
 #ifdef _DEBUG
 	protected:

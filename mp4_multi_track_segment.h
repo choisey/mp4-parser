@@ -9,7 +9,7 @@
 class mp4_multi_track_segment : public mp4_segment {
 	public:
 		mp4_multi_track_segment(uint64_t, uint32_t);
-		virtual ~mp4_multi_track_segment();
+		~mp4_multi_track_segment() override;
 
 	protected:
 		uint64_t _segment_time_in_millisecond;
@@ -23,5 +23,5 @@ class mp4_multi_track_segment : public mp4_segment {
 		void make_empty(std::shared_ptr<mp4_abstract_box>);
 
 	public:
-		virtual void execute(std::shared_ptr<mp4_abstract_box>);
+		void execute(std::shared_ptr<mp4_abstract_box>) override;
 };

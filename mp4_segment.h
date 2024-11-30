@@ -18,7 +18,7 @@ class mp4_segment : public mp4_abstract_action {
 
 	public:
 		mp4_segment();
-		virtual ~mp4_segment();
+		~mp4_segment() override;
 
 	private:
 		bool mdia_segment_time_and_sample_range(
@@ -55,5 +55,6 @@ class mp4_segment : public mp4_abstract_action {
 		void update(std::shared_ptr<mp4_abstract_box> box);
 
 	public:
+                // only to prevent this class from being instantiated
 		virtual void execute(std::shared_ptr<mp4_abstract_box>) = 0;
 };

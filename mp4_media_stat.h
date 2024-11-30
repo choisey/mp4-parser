@@ -9,7 +9,7 @@
 class mp4_media_stat : public mp4_abstract_action {
 	public:
 		mp4_media_stat();
-		virtual ~mp4_media_stat();
+		~mp4_media_stat() override;
 
 	protected:
 		struct Track {
@@ -21,5 +21,5 @@ class mp4_media_stat : public mp4_abstract_action {
 		};
 
 	public:
-		virtual void execute(std::shared_ptr<mp4_abstract_box>);
+		void execute(std::shared_ptr<mp4_abstract_box>) override;
 };

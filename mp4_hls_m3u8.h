@@ -10,8 +10,8 @@
 class mp4_hls_m3u8 : public mp4_playlist, public mp4_url_encode {
 	public:
 		mp4_hls_m3u8(uint32_t);
-		virtual ~mp4_hls_m3u8();
+		~mp4_hls_m3u8() override;
 
 	public:
-		virtual void execute(std::vector<std::shared_ptr<mp4_file>>&);
+		void execute(std::vector<std::shared_ptr<mp4_file>>&) override;
 };

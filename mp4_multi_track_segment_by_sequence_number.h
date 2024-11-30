@@ -10,11 +10,11 @@
 class mp4_multi_track_segment_by_sequence_number : public mp4_multi_track_segment {
 	public:
 		mp4_multi_track_segment_by_sequence_number(uint32_t, uint32_t);
-		virtual ~mp4_multi_track_segment_by_sequence_number();
+		~mp4_multi_track_segment_by_sequence_number() override;
 
 	protected:
 		uint32_t _segment_sequence;
 
 	public:
-		virtual void execute(std::shared_ptr<mp4_abstract_box>);
+		void execute(std::shared_ptr<mp4_abstract_box>) override;
 };

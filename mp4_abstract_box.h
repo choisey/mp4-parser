@@ -15,7 +15,7 @@ class mp4_abstract_box;
 class mp4_visitor : public mp4_object {
 	public:
 		mp4_visitor();
-		virtual ~mp4_visitor();
+		~mp4_visitor() override;
 
 	public:
 		virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
@@ -57,7 +57,7 @@ class mp4_abstract_box : public mp4_object {
 	public:
 		mp4_abstract_box(const mp4_abstract_box&);
 		mp4_abstract_box(const BoxHead&);
-		virtual ~mp4_abstract_box();
+		~mp4_abstract_box() override;
 
 	protected:
 		BoxHead _head;

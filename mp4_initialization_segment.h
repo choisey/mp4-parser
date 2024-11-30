@@ -11,34 +11,34 @@ class mp4_initialization_segment : public mp4_abstract_action {
 		class mp4_initialization_segment_visitor : public mp4_visitor {
 			public:
 				mp4_initialization_segment_visitor(uint32_t);
-				virtual ~mp4_initialization_segment_visitor();
+				~mp4_initialization_segment_visitor() override;
 
 			protected:
 				uint32_t _track_id;
 
 			public:
-				virtual void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&);
-				virtual void visit(BoxHead&, FileTypeBox&);
-				virtual void visit(BoxHead&, MovieHeaderBox&);
-				virtual void visit(BoxHead&, TrackHeaderBox&);
-				virtual void visit(BoxHead&, MediaHeaderBox&);
-				virtual void visit(BoxHead&, TimeToSampleBox&);
-				virtual void visit(BoxHead&, CompositionOffsetBox&);
-				virtual void visit(BoxHead&, SampleToChunkBox&);
-				virtual void visit(BoxHead&, SampleSizeBox&);
-				virtual void visit(BoxHead&, ChunkOffsetBox&);
-				virtual void visit(BoxHead&, ChunkLargeOffsetBox&);
-				virtual void visit(BoxHead&, SyncSampleBox&);
-				virtual void visit(BoxHead&, MediaDataBox&);
+				void visit(BoxHead&, std::vector<std::shared_ptr<mp4_abstract_box>>&) override;
+				void visit(BoxHead&, FileTypeBox&) override;
+				void visit(BoxHead&, MovieHeaderBox&) override;
+				void visit(BoxHead&, TrackHeaderBox&) override;
+				void visit(BoxHead&, MediaHeaderBox&) override;
+				void visit(BoxHead&, TimeToSampleBox&) override;
+				void visit(BoxHead&, CompositionOffsetBox&) override;
+				void visit(BoxHead&, SampleToChunkBox&) override;
+				void visit(BoxHead&, SampleSizeBox&) override;
+				void visit(BoxHead&, ChunkOffsetBox&) override;
+				void visit(BoxHead&, ChunkLargeOffsetBox&) override;
+				void visit(BoxHead&, SyncSampleBox&) override;
+				void visit(BoxHead&, MediaDataBox&) override;
 		};
 
 	public:
 		mp4_initialization_segment(uint32_t);
-		virtual ~mp4_initialization_segment();
+		~mp4_initialization_segment() override;
 
 	protected:
 		uint32_t _track_id;
 
 	public:
-		virtual void execute(std::vector<std::shared_ptr<mp4_file>>&);
+		void execute(std::vector<std::shared_ptr<mp4_file>>&) override;
 };

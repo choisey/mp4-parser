@@ -9,7 +9,7 @@
 class mp4_file : public mp4_container_box {
 	public:
 		mp4_file(const std::string&);
-		virtual ~mp4_file();
+		~mp4_file() override;
 
 	protected:
 		std::string _path;

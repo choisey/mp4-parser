@@ -11,20 +11,20 @@ class mp4_frag_key_frame : public mp4_abstract_action {
 		class mp4_frag_key_frame_visitor : public mp4_visitor {
 			public:
 				mp4_frag_key_frame_visitor();
-				virtual ~mp4_frag_key_frame_visitor();
+				~mp4_frag_key_frame_visitor() override;
 
 			protected:
 				size_t _mdat_size;
 
 			public:
-				virtual void visit(BoxHead&, TrackRunBox&);
-				virtual void visit(BoxHead&, MediaDataBox&);
+				void visit(BoxHead&, TrackRunBox&) override;
+				void visit(BoxHead&, MediaDataBox&) override;
 		};
 
 	public:
 		mp4_frag_key_frame();
-		virtual ~mp4_frag_key_frame();
+		~mp4_frag_key_frame() override;
 
 	public:
-		virtual void execute(std::shared_ptr<mp4_abstract_box>);
+		void execute(std::shared_ptr<mp4_abstract_box>) override;
 };

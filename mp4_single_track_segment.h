@@ -9,7 +9,7 @@
 class mp4_single_track_segment : public mp4_segment {
 	public:
 		mp4_single_track_segment(uint32_t, uint64_t, uint32_t);
-		virtual ~mp4_single_track_segment();
+		~mp4_single_track_segment() override;
 
 	protected:
 		uint32_t _track_id;
@@ -17,5 +17,5 @@ class mp4_single_track_segment : public mp4_segment {
 		uint32_t _segment_duration_in_second;
 
 	public:
-		virtual void execute(std::shared_ptr<mp4_abstract_box>);
+		void execute(std::shared_ptr<mp4_abstract_box>) override;
 };

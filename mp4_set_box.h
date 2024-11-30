@@ -11,22 +11,22 @@ class mp4_set_box : public mp4_abstract_action {
 		class mp4_set_box_visitor : public mp4_visitor {
 			public:
 				mp4_set_box_visitor(const std::vector<std::string>& params);
-				virtual ~mp4_set_box_visitor();
+				~mp4_set_box_visitor() override;
 
 			protected:
 				std::map<std::string, std::vector<std::pair<std::string, std::string>>> _substitutions;
 
 			public:
-				virtual void visit(BoxHead&, MediaDataBox&);
+				void visit(BoxHead&, MediaDataBox&) override;
 		};
 
 	public:
 		mp4_set_box(const std::vector<std::string>&);
-		virtual ~mp4_set_box();
+		~mp4_set_box() override;
 
 	protected:
 		std::vector<std::string> _params;
 
 	public:
-		virtual void execute(std::shared_ptr<mp4_abstract_box>);
+		void execute(std::shared_ptr<mp4_abstract_box>) override;
 };

@@ -12,18 +12,18 @@ class io_local_file : public io_file
         public:
                 io_local_file();
                 io_local_file(const std::string&);
-                virtual ~io_local_file();
+                ~io_local_file() override;
 
         protected:
                 FILE* _fp;
 
         public:
-                virtual std::shared_ptr<io_file::block> allocate_block(size_t = 0);
+                std::shared_ptr<io_file::block> allocate_block(size_t = 0) override;
 
-                virtual bool open(const std::string&);
-                virtual bool is_open() const { return ( NULL != _fp ); }
-                virtual off_t position() const;
-                virtual bool seek(off_t, int);
-                virtual size_t read(void*, size_t);
-                virtual void close();
+                bool open(const std::string&) override;
+                bool is_open() const override { return ( NULL != _fp ); }
+                off_t position() const override;
+                bool seek(off_t, int) override;
+                size_t read(void*, size_t) override;
+                void close() override;
 };

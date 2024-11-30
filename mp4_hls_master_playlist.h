@@ -11,7 +11,7 @@
 class mp4_hls_master_playlist : public mp4_abstract_action, public mp4_codec_conf, public mp4_url_encode {
 	public:
 		mp4_hls_master_playlist(uint32_t = 7);
-		virtual ~mp4_hls_master_playlist();
+		~mp4_hls_master_playlist() override;
 
 	private:
 		uint32_t _version;
@@ -23,5 +23,5 @@ class mp4_hls_master_playlist : public mp4_abstract_action, public mp4_codec_con
 		void hls7_master_m3u8(std::vector<std::shared_ptr<mp4_file>>&);
 
 	public:
-		virtual void execute(std::vector<std::shared_ptr<mp4_file>>&);
+		void execute(std::vector<std::shared_ptr<mp4_file>>&) override;
 };

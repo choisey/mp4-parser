@@ -20,7 +20,7 @@ class io_remote_file : public io_file
         public:
                 io_remote_file();
                 io_remote_file(const std::string&);
-                virtual ~io_remote_file();
+                ~io_remote_file() override;
 
         protected:
                 const long TIMEOUT = 30;
@@ -48,12 +48,12 @@ class io_remote_file : public io_file
                 bool on_content(void*, size_t);
 
         public:
-                virtual std::shared_ptr<io_file::block> allocate_block(size_t = 0);
+                std::shared_ptr<io_file::block> allocate_block(size_t = 0) override;
 
-                virtual bool open(const std::string&);
-                virtual bool is_open() const { return ( NULL != _cp ); }
-                virtual off_t position() const { return _position; }
-                virtual bool seek(off_t, int);
-                virtual size_t read(void*, size_t);
-                virtual void close();
+                bool open(const std::string&) override;
+                bool is_open() const override { return ( NULL != _cp ); }
+                off_t position() const override { return _position; }
+                bool seek(off_t, int) override;
+                size_t read(void*, size_t) override;
+                void close() override;
 };
