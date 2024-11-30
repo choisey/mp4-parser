@@ -22,7 +22,7 @@ class mp4_save : public mp4_abstract_action {
 				void write16b(uint16_t);
 				void write32b(uint32_t);
 				void write64b(uint64_t);
-				void write4C(const char*);
+				void write4c(const char*);
 				void write_string(const std::string&);
 				void write_box_head(const BoxHead&);
 

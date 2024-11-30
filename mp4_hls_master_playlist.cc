@@ -24,161 +24,161 @@ mp4_hls_master_playlist::~mp4_hls_master_playlist()
 void mp4_hls_master_playlist::lang_code_to_name(
 		uint8_t cc1, uint8_t cc2, uint8_t cc3,
 		std::string& lang2,
-		std::string& langName)
+		std::string& lang_name)
 {
 	lang_code_to_name(
 			((unsigned int) cc1) * 0x10000
 			+ ((unsigned int) cc2) * 0x100
 			+ (unsigned int) cc3,
-			lang2, langName);
+			lang2, lang_name);
 }
 
 void mp4_hls_master_playlist::lang_code_to_name(
-		uint32_t langCode,
+		uint32_t lang_code,
 		std::string& lang2,
-		std::string& langName)
+		std::string& lang_name)
 {
 	// https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-	switch ( langCode ) {
+	switch ( lang_code ) {
 		case 0x617261: // ara
-			langName = "Arabic";
+			lang_name = "Arabic";
 			lang2 = "ar";
 			break;
 
 		case 0x636573: // ces
 		case 0x637a65: // cze
-			langName = "Czech";
+			lang_name = "Czech";
 			lang2 = "cs";
 			break;
 
 		case 0x636869: // chi
 		case 0x7a686f: // zho
-			langName = "Chinese";
+			lang_name = "Chinese";
 			lang2 = "zh";
 			break;
 
 		case 0x64616e: // dan
-			langName = "Danish";
+			lang_name = "Danish";
 			lang2 = "da";
 			break;
 
 		case 0x646575: // deu
 		case 0x676572: // ger
-			langName = "German";
+			lang_name = "German";
 			lang2 = "de";
 			break;
 
 		case 0x656c6c: // ell
 		case 0x677265: // gre
-			langName = "Greek";
+			lang_name = "Greek";
 			lang2 = "el";
 			break;
 
 		case 0x656e67: // eng
-			langName = "English";
+			lang_name = "English";
 			lang2 = "en";
 			break;
 
 		case 0x666173: // fas
 		case 0x706572: // per
-			langName = "Persian";
+			lang_name = "Persian";
 			lang2 = "fa";
 			break;
 
 		case 0x66696e: // fin
-			langName = "Finnish";
+			lang_name = "Finnish";
 			lang2 = "fi";
 			break;
 
 		case 0x667261: // fra
 		case 0x667265: // fre
-			langName = "French";
+			lang_name = "French";
 			lang2 = "fr";
 			break;
 
 		case 0x68696e: // hin
-			langName = "Hindi";
+			lang_name = "Hindi";
 			lang2 = "hi";
 			break;
 
 		case 0x68756e: // hun
-			langName = "Hungarian";
+			lang_name = "Hungarian";
 			lang2 = "hu";
 			break;
 
 		case 0x696e64: // ind
-			langName = "Indonesian";
+			lang_name = "Indonesian";
 			lang2 = "id";
 			break;
 
 		case 0x697461: // ita
-			langName = "Italian";
+			lang_name = "Italian";
 			lang2 = "it";
 			break;
 
 		case 0x6a706e: // jpn
-			langName = "Japanese";
+			lang_name = "Japanese";
 			lang2 = "ja";
 			break;
 
 		case 0x6b6f72: // kor
-			langName = "Korean";
+			lang_name = "Korean";
 			lang2 = "jo";
 			break;
 
 		case 0x6e6f72: // nor
-			langName = "Norwegian";
+			lang_name = "Norwegian";
 			lang2 = "no";
 			break;
 
 		case 0x706f6c: // pol
-			langName = "Polish";
+			lang_name = "Polish";
 			lang2 = "pl";
 			break;
 
 		case 0x706f72: // por
-			langName = "Portuguese";
+			lang_name = "Portuguese";
 			lang2 = "pt";
 			break;
 
 		case 0x727573: // rus
-			langName = "Russian";
+			lang_name = "Russian";
 			lang2 = "ru";
 			break;
 
 		case 0x737061: // spa
-			langName = "Spanish";
+			lang_name = "Spanish";
 			lang2 = "es";
 			break;
 
 		case 0x737765: // swe
-			langName = "Swedish";
+			lang_name = "Swedish";
 			lang2 = "sv";
 			break;
 
 		case 0x746861: // tha
-			langName = "Thai";
+			lang_name = "Thai";
 			lang2 = "th";
 			break;
 
 		case 0x747572: // tur
-			langName = "Turkish";
+			lang_name = "Turkish";
 			lang2 = "tr";
 			break;
 
 		case 0x757264: // urd
-			langName = "Urdu";
+			lang_name = "Urdu";
 			lang2 = "ur";
 			break;
 
 		case 0x766965: // vie
-			langName = "Vietnamese";
+			lang_name = "Vietnamese";
 			lang2 = "vi";
 			break;
 
 		case 0x756e64: // und
 		default:
-			langName = "Undefined";
+			lang_name = "Undefined";
 			lang2 = "xx";
 			break;
 	}
@@ -335,7 +335,7 @@ void mp4_hls_master_playlist::hls7_master_m3u8(std::vector<std::shared_ptr<mp4_f
 		char language[3];
 		std::string codecs;
 		std::string lang2;
-		std::string langName;
+		std::string lang_name;
 		size_t size;
 	};
 
@@ -451,10 +451,10 @@ void mp4_hls_master_playlist::hls7_master_m3u8(std::vector<std::shared_ptr<mp4_f
 				}
 
 				std::string lang2;
-				std::string langName;
+				std::string lang_name;
 				lang_code_to_name(
 						mdhd[0]->data().language[0], mdhd[0]->data().language[1], mdhd[0]->data().language[2],
-						lang2, langName);
+						lang2, lang_name);
 
 				char buf[MAX_FILENAME];
 				snprintf(buf, sizeof(buf), "%s/%u", file.c_str(), tkhd[0]->data().track_ID);
@@ -462,7 +462,7 @@ void mp4_hls_master_playlist::hls7_master_m3u8(std::vector<std::shared_ptr<mp4_f
 					buf, tkhd[0]->data().track_ID,
 					(double) mdhd[0]->data().duration / mdhd[0]->data().timescale,
 					{ mdhd[0]->data().language[0], mdhd[0]->data().language[1], mdhd[0]->data().language[2], },
-					codecs, lang2, langName, size };
+					codecs, lang2, lang_name, size };
 			}
 		}
 	}
@@ -473,7 +473,7 @@ void mp4_hls_master_playlist::hls7_master_m3u8(std::vector<std::shared_ptr<mp4_f
 		for ( auto a: audio_tracks ) {
 			printf("#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"%s\",NAME=\"%s %s\",AUTOSELECT=YES,DEFAULT=YES,URI=\"%s.m3u8\"\n",
 					a.second.name.c_str(),
-					a.second.langName.c_str(), a.second.lang2.c_str(),
+					a.second.lang_name.c_str(), a.second.lang2.c_str(),
 					a.second.name.c_str());
 		}
 
@@ -499,7 +499,7 @@ void mp4_hls_master_playlist::hls7_master_m3u8(std::vector<std::shared_ptr<mp4_f
 			printf("#EXT-X-MEDIA:TYPE=CLOSED-CAPTIONS,GROUP-ID=\"cc%u\",LANGUAGE=\"%s\",NAME=\"%s\",AUTOSELECT=YES,DEFAULT=YES,INSTREAM-ID=\"CC%u\"\n",
 					++cnt,
 					a.second.lang2.c_str(),
-					a.second.langName.c_str(),
+					a.second.lang_name.c_str(),
 					cnt);
 		}
 	}

@@ -59,7 +59,7 @@ void mp4_save::mp4_save_visitor::write64b(uint64_t u64)
 	fwrite(buf, sizeof(buf), 1, _fp);
 }
 
-void mp4_save::mp4_save_visitor::write4C(const char* cp)
+void mp4_save::mp4_save_visitor::write4c(const char* cp)
 {
 	char buf[4] = { '\0', };
 	for (int i = 0; i < 4; i++) {
@@ -125,10 +125,10 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, std::vector<std::shared_pt
 void mp4_save::mp4_save_visitor::visit(BoxHead& head, FileTypeBox& ftyp)
 {
 	write_box_head(head);
-	write4C(ftyp.major_brand.c_str());
-	write4C(ftyp.minor_version.c_str());
+	write4c(ftyp.major_brand.c_str());
+	write4c(ftyp.minor_version.c_str());
 	for ( auto brand: ftyp.compatible_brands ) {
-		write4C(brand.c_str());
+		write4c(brand.c_str());
 	}
 }
 
