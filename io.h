@@ -10,7 +10,6 @@
 class io {
         public:
                 static io* instance();
-                static void cleanup();
 
         private:
                 static io* _instance;

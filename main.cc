@@ -22,7 +22,6 @@
 #include "mp4_set_box.h"
 #include "mp4_frag_key_frame.h"
 #include "mp4_media_stat.h"
-#include "io.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -373,6 +372,4 @@ int main(int argc, char* argv[])
 	for ( auto iter = actions.begin(); iter != actions.end(); iter++ ) {
 		(*iter)->execute(mp4files);
 	}
-
-	io::cleanup();
 }

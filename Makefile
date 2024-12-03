@@ -32,7 +32,6 @@ srcs := $(srcdir)/mp4_object.cc \
 	$(srcdir)/mp4.cc \
 	$(srcdir)/io_file.cc \
 	$(srcdir)/io_local_file.cc \
-	$(srcdir)/io_remote_file.cc \
 	$(srcdir)/io.cc \
 	$(srcdir)/main.cc
 
@@ -40,7 +39,7 @@ DEBUGFLAGS = -g -D _DEBUG
 RELEASEFLAGS = -O -D NDEBUG
 
 CXXFLAGS := -Wextra -std=c++11 -I /opt/local/include $(CXXFLAGS) $(DBGFLAGS)
-LDFLAGS := -Wl,--no-as-needed -lcurl
+LDFLAGS := -Wl,--no-as-needed
 
 BuildDir := .
 
