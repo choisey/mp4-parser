@@ -31,7 +31,6 @@ srcs := $(srcdir)/mp4_object.cc \
 	$(srcdir)/mp4_time_to_offset_lookup.cc \
 	$(srcdir)/mp4.cc \
 	$(srcdir)/io_file.cc \
-	$(srcdir)/io_local_file.cc \
 	$(srcdir)/io.cc \
 	$(srcdir)/main.cc
 

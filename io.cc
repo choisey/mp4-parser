@@ -3,10 +3,8 @@
  */
 
 #include "io.h"
-#include "io_local_file.h"
+#include "io_file.h"
 #include <string.h>
-
-#define SCHEME_HTTP "http://"
 
 // Singleton
 
@@ -32,6 +30,6 @@ io::~io()
 
 std::shared_ptr<io_file> io::open(const std::string& path)
 {
-        std::shared_ptr<io_file> f = std::make_shared<io_local_file>(path);
+        std::shared_ptr<io_file> f = std::make_shared<io_file>(path);
         return f;
 }

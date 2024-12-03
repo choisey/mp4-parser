@@ -42,19 +42,22 @@ class io_file
                 virtual ~io_file();
 
         protected:
+                FILE* _fp;
+
+        protected:
                 std::string _uri;
                 size_t _size;
 
         public:
-                virtual std::shared_ptr<block> allocate_block(size_t = 0) = 0;
+                std::shared_ptr<block> allocate_block(size_t = 0);
 
-                const std::string& uri() const { return _uri; }
+                const std::string& path() const { return _uri; }
                 size_t size() const { return _size; }
 
-                virtual bool open(const std::string&) = 0;
-                virtual bool is_open() const = 0;
-                virtual off_t position() const = 0;
-                virtual bool seek(off_t, int) = 0;
-                virtual size_t read(void*, size_t) = 0;
-                virtual void close() = 0;
+                bool open(const std::string&);
+                bool is_open() const { return ( NULL != _fp ); }
+                off_t position() const;
+                bool seek(off_t, int);
+                size_t read(void*, size_t);
+                void close();
 };

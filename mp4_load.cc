@@ -1714,7 +1714,7 @@ void mp4_load::mp4_load_visitor::visit(BoxHead& head, TrackExtendsBox& trex)
 
 void mp4_load::mp4_load_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 {
-	mdat.uri = _f->uri();
+	mdat.uri = _f->path();
 	//mdat.chunks.push_back( {
 	//	head.offset + head.boxheadsize,
 	//	head.boxsize - head.boxheadsize
