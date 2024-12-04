@@ -5,27 +5,21 @@
 #include "io_file.h"
 
 io_file::io_file()
-	: _size(0)
+        : _path()
 {
 }
 
-io_file::io_file(const std::string& uri)
-	: _uri(uri)
-	, _size(0)
+io_file::io_file(const std::string& path)
+	: _path(path)
 {
-	open(uri);
+	open(path);
 }
 
 io_file::~io_file()
 {
 }
 
-std::shared_ptr<io_file::block> io_file::allocate_block(size_t size)
-{
-	return std::make_shared<io_file::block>( ( 0 != size ) ? size : BUFSIZ );
-}
-
-bool io_file::open(const std::string& uri)
+bool io_file::open(const std::string& path)
 {
 	assert( NULL == _fp );
 	if ( NULL != _fp ) {
@@ -33,7 +27,7 @@ bool io_file::open(const std::string& uri)
 		return false;
 	}
 
-	_fp = fopen(uri.c_str(), "r");
+	_fp = fopen(path.c_str(), "r");
 	if ( NULL == _fp ) {
 		return false;
 	}

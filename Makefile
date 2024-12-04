@@ -37,7 +37,7 @@ srcs := $(srcdir)/mp4_object.cc \
 DEBUGFLAGS = -g -D _DEBUG
 RELEASEFLAGS = -O -D NDEBUG
 
-CXXFLAGS := -Wextra -std=c++11 -I /opt/local/include $(CXXFLAGS) $(DBGFLAGS)
+CXXFLAGS := -Wextra -std=c++17 -I /opt/local/include $(CXXFLAGS) $(DBGFLAGS)
 LDFLAGS := -Wl,--no-as-needed
 
 BuildDir := .

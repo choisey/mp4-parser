@@ -7,51 +7,23 @@
 #include <assert.h>
 #include <sys/types.h>
 #include <string>
-#include <memory>
 
 class io_file
 {
-        public:
-                class block {
-                        public:
-                                block(size_t size) : _size(size)
-                                {
-                                        assert( 0 != size );
-                                        _p = new uint8_t[size];
-                                }
-                                ~block()
-                                {
-                                        assert( NULL != _p );
-                                        if ( NULL != _p ) {
-                                                delete _p;
-                                        }
-                                }
-
-                        private:
-                                uint8_t* _p;
-                                size_t _size;
-
-                        public:
-                                operator uint8_t* () const { return _p; }
-                                size_t size() const { return _size; }
-                };
-
         public:
                 io_file();
                 io_file(const std::string&);
                 virtual ~io_file();
 
         protected:
-                FILE* _fp;
+                FILE* _fp{nullptr};
 
         protected:
-                std::string _uri;
-                size_t _size;
+                std::string _path;
+                size_t _size{0};
 
         public:
-                std::shared_ptr<block> allocate_block(size_t = 0);
-
-                const std::string& path() const { return _uri; }
+                const std::string& path() const { return _path; }
                 size_t size() const { return _size; }
 
                 bool open(const std::string&);

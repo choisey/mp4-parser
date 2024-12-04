@@ -538,7 +538,8 @@ void mp4_save::mp4_save_visitor::visit(BoxHead& head, MediaDataBox& mdat)
 		auto f = io::instance()->open(mdat.uri.c_str());
 		if ( f->is_open() ) {
 			//uint8_t buf[BUFFER_SIZE];
-			auto buf = f->allocate_block();
+			//auto buf = f->allocate_block();
+                        auto buf = std::make_unique<block>( BUFSIZ );
 
 #ifdef _DEBUG
 			uint32_t debug_byte_ranges = 0;

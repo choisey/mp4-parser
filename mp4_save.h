@@ -60,6 +60,30 @@ class mp4_save : public mp4_abstract_action {
 				void visit(BoxHead&, EmptyBox&) override;
 		};
 
+                class block {
+                        public:
+                                block(size_t size) : _size(size)
+                                {
+                                        assert( 0 != size );
+                                        _p = new uint8_t[size];
+                                }
+                                ~block()
+                                {
+                                        assert( NULL != _p );
+                                        if ( NULL != _p ) {
+                                                delete _p;
+                                        }
+                                }
+
+                        private:
+                                uint8_t* _p;
+                                size_t _size;
+
+                        public:
+                                operator uint8_t* () const { return _p; }
+                                size_t size() const { return _size; }
+                };
+
 	public:
 		mp4_save();
 		mp4_save(const char*);
